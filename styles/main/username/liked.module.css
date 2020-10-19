@@ -1,0 +1,21 @@
+.col {
+    margin-bottom: 15px;
+}
+.description{
+    font-size: 14px;
+    color: #808080;
+}
+
+.author{
+    font-size: 14px;
+}
+
+@media (min-width: 768px){
+    .col {
+        margin-bottom: 50px;
+    }
+    .container{
+        padding-left: 6%;
+        padding-right: 6%;
+    }
+}

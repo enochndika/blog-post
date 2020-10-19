@@ -1,0 +1,15 @@
+.title {
+  margin-top: 8%;
+  margin-bottom: 5%;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: 6%;
+    padding-right: 6%;
+  }
+  .title {
+    margin-top: 5%;
+    margin-bottom: 5%;
+  }
+}
