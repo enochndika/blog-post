@@ -9,7 +9,6 @@ import {
   MDBRow,
 } from "mdbreact";
 import style from "../styles/helpers/childComments.module.css";
-import Moment from "react-moment";
 import { useSWRInfinite } from "swr";
 import api from "../utils/axios";
 import { useTheme } from "next-themes";
@@ -20,13 +19,18 @@ import { UpdateComment } from "./updateComment";
 import { loggedUser } from "../auth/useUser";
 import cogoToast from "cogo-toast";
 import { ReportModal } from "./reportModal";
-import { deleteChildComment } from "../utils/actions/childCommentActions";
+import { deleteChildComment } from "../actions/childCommentActions";
 import { AddChildComment } from "./addChildComment";
+import { useTranslation } from "react-i18next";
+import { formatNumericDate } from "../utils/formats";
+import { useRouter } from "next/router";
 
 const fetcher = (url) => api.get(url).then((res) => res.data.data);
 const LIMIT = 6;
 
 export const ChildComments = ({ comment }) => {
+  const router = useRouter();
+  const { t } = useTranslation();
   const [openUpdateComment, setOpenUpdateComment] = useState(false);
   const [reportModal, setReportModal] = useState(false);
   const [selectedCommentRow, setSelectedCommentRow] = useState(undefined);
@@ -49,7 +53,7 @@ export const ChildComments = ({ comment }) => {
 
   const onSelectedComment = (id) => {
     if (!user) {
-      cogoToast.info("You must login before reporting a comment", {
+      cogoToast.info(t("Helpers.comments.selectCommentNotAuth"), {
         position: "top-right",
       });
     }
@@ -75,7 +79,7 @@ export const ChildComments = ({ comment }) => {
   return (
     <div className={style.main}>
       <div>
-        <Collapse title="Reply">
+        <Collapse title={t("Helpers.childComments.collapseTitle")}>
           <AddChildComment comment={comment} mutate={mutate} />
         </Collapse>
       </div>
@@ -84,7 +88,7 @@ export const ChildComments = ({ comment }) => {
           <>
             {comments && comments.length > 0 && (
               <span className="ml-3 mt-3 mr-2 font-weight-bolder">
-                Show replies
+                {t("Helpers.childComments.title")}
               </span>
             )}
           </>
@@ -123,7 +127,9 @@ export const ChildComments = ({ comment }) => {
                           @{comment.user?.username}
                         </span>
                         <span className={style.date}>
-                          <Moment fromNow>{comment.createdAt}</Moment>
+                          {router?.locale === "fr"
+                            ? formatNumericDate(comment.createdAt, "fr-FR")
+                            : formatNumericDate(comment.createdAt, "en-US")}
                         </span>
                       </div>
                       <div className="float-right pr-2">
@@ -143,14 +149,14 @@ export const ChildComments = ({ comment }) => {
                                     await mutate();
                                   }}
                                 >
-                                  delete
+                                  {t("Helpers.comments.dropdown.delete")}
                                 </MDBDropdownItem>
                                 <MDBDropdownItem
                                   onClick={() => {
                                     onSelectedCommentRow(index);
                                   }}
                                 >
-                                  Update
+                                  {t("Helpers.comments.dropdown.update")}
                                 </MDBDropdownItem>
                               </>
                             ) : (
@@ -159,7 +165,7 @@ export const ChildComments = ({ comment }) => {
                                   onSelectedComment(comment.id);
                                 }}
                               >
-                                Report
+                                {t("Helpers.comments.dropdown.report")}
                               </MDBDropdownItem>
                             )}
                           </MDBDropdownMenu>
@@ -187,7 +193,7 @@ export const ChildComments = ({ comment }) => {
               ))}
           </MDBRow>
           <div className="text-center">
-            {comments && comments.length > 0 && (
+            {comments && comments.length > 0 && !isReachingEnd && (
               <MDBBtn
                 color={isMounted && theme === "light" ? "black" : "white"}
                 disabled={isLoadingMore || isReachingEnd}
@@ -196,10 +202,10 @@ export const ChildComments = ({ comment }) => {
                 className="text-lowercase"
               >
                 {isLoadingMore
-                  ? "loading..."
+                  ? t("Helpers.comments.pagination.loading")
                   : isReachingEnd
-                  ? "no more comments"
-                  : "load more"}
+                  ? "Fin de commentaires"
+                  : t("Helpers.comments.pagination.loadMore")}
               </MDBBtn>
             )}
           </div>

@@ -1,25 +1,25 @@
 import jwt from "jwt-decode";
 
-export const formatDate = (value) => {
+export const formatDate = (value, locale) => {
   const options = {
     month: "long",
     day: "numeric",
   };
   const date = new Date(value);
-  return date.toLocaleDateString("fr-FR", options);
+  return date.toLocaleDateString(locale, options);
 };
 
-export const formatFullDate = (value) => {
+export const formatFullDate = (value, locale) => {
   const options = {
     month: "numeric",
     day: "numeric",
     year: "numeric",
   };
   const date = new Date(value);
-  return date.toLocaleDateString("en-EN", options);
+  return date.toLocaleDateString(locale, options);
 };
 
-export const formatNumericDate = (value) => {
+export const formatNumericDate = (value, locale) => {
   const options = {
     month: "numeric",
     day: "numeric",
@@ -29,13 +29,7 @@ export const formatNumericDate = (value) => {
     second: "numeric",
   };
   const date = new Date(value);
-  return date.toLocaleDateString("fr-FR", options);
-};
-export const priceFormatted = (value) => {
-  return new Intl.NumberFormat("fr-FR", {
-    style: "currency",
-    currency: "USD",
-  }).format(value);
+  return date.toLocaleDateString(locale, options);
 };
 
 export const getTotalLikes = (value) => {
@@ -49,29 +43,6 @@ export const decodeToken = (token) => {
   return userData?.username;
 };
 
-export const getUserId = (token) => {
-  const userData = token ? jwt(token) : null;
-  return userData?.id;
-};
-
 export const checkLikeExist = (likes, user) => {
   return likes && likes.map((like) => like.userId).includes(user && user.id);
 };
-
-export const checkLikeNotExist = (likes, user) => {
-  return likes && likes.map((like) => like.userId).includes(user && !user.id);
-};
-export function findWithAttr(array) {
-  for (let i = 0; i < array.length; i += 1) {
-    if (array[i]) {
-      return i;
-    }
-  }
-  return -1;
-}
-
-export function getIndex(comments) {
-  comments.forEach((val) => {
-    console.log(val.id);
-  });
-}

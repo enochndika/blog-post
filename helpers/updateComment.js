@@ -1,12 +1,14 @@
 import { useFormik } from "formik";
-import { updateComment } from "../utils/actions/commentActions";
+import { updateComment } from "../actions/commentActions";
 import { MDBBtn, MDBInput } from "mdbreact";
 import { useTheme } from "next-themes";
 import { useMounted } from "../utils/mounted";
 import { loggedUser } from "../auth/useUser";
-import { updateChildComment } from "../utils/actions/childCommentActions";
+import { updateChildComment } from "../actions/childCommentActions";
+import { useTranslation } from "react-i18next";
 
 export const UpdateComment = ({ content, id, onAbort, onSuccess, child }) => {
+  const { t } = useTranslation();
   const { theme } = useTheme();
   const isMounted = useMounted();
   const { user } = loggedUser();
@@ -21,7 +23,7 @@ export const UpdateComment = ({ content, id, onAbort, onSuccess, child }) => {
         await updateChildComment(user?.id, values);
         onSuccess();
       } else {
-        await updateComment(user?.id, values);
+        await updateComment(user?.id, values, t("Actions.error"));
         onSuccess();
       }
     },
@@ -32,19 +34,21 @@ export const UpdateComment = ({ content, id, onAbort, onSuccess, child }) => {
       <MDBInput
         value={formik.values.content}
         name="content"
+        disabled={formik.isSubmitting}
         onChange={formik.handleChange}
       />
       <div className="float-right" style={{ marginTop: "-25px" }}>
         <span onClick={onAbort} className="text-capitalize dark-grey-text">
-          Cancel
+          {t("Helpers.updateComment.cancelBtn")}
         </span>
         <MDBBtn
           type="submit"
+          disabled={formik.isSubmitting}
           size="sm"
           className="text-capitalize"
           color={isMounted && theme === "light" ? "dark" : "white"}
         >
-          Confirm
+          {t("Helpers.updateComment.confirmBtn")}
         </MDBBtn>
       </div>
     </form>

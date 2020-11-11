@@ -1,10 +1,10 @@
-import DefaultLayout from "../../components/layout/default";
-import api from "../../utils/axios";
+import DefaultLayout from "../components/layout/default";
+import api from "../utils/axios";
 import { MDBContainer } from "mdbreact";
-import style from "../../styles/main/posts/index.module.css";
+import style from "../styles/main/posts/index.module.css";
 import { useRouter } from "next/router";
 import ReactPaginate from "react-paginate";
-import { UniversalPosts } from "../../components/universelPost";
+import { UniversalPosts } from "../components/universelPost";
 import Head from "next/head";
 
 export default function AllPosts({ posts, pageCount, currentPage }) {
@@ -24,7 +24,7 @@ export default function AllPosts({ posts, pageCount, currentPage }) {
   return (
     <>
       <Head>
-        <title>Posts list</title>
+        <title>Liste de posts</title>
       </Head>
       <MDBContainer fluid className={style.container}>
         <h1

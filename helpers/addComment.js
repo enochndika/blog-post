@@ -2,34 +2,36 @@ import { MDBBtn } from "mdbreact";
 import { useTheme } from "next-themes";
 import { useMounted } from "../utils/mounted";
 import { useFormik } from "formik";
-import { addComment } from "../utils/actions/commentActions";
+import { addComment } from "../actions/commentActions";
 import { loggedUser } from "../auth/useUser";
 import cogoToast from "cogo-toast";
+import { useTranslation } from "react-i18next";
 
 export const AddComment = ({ post, mutate }) => {
   const { theme } = useTheme();
   const isMounted = useMounted();
   const { user } = loggedUser();
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {
       content: "",
       userId: "",
     },
-    onSubmit: async (values, actions) => {
+    onSubmit: async (values, { resetForm, setSubmitting }) => {
       const data = { content: values.content, userId: user?.id };
       if (!user) {
-        cogoToast.info("You must log in before adding comment", {
+        cogoToast.info(t("Helpers.addComment.postCommentNotAuth"), {
           position: "top-right",
         });
-        actions.setSubmitting(false);
-        actions.resetForm({ values: "" });
+        setSubmitting(false);
+        resetForm({ values: "" });
       }
       if (user) {
-        await addComment(post, data);
+        await addComment(post, data, t("Actions.error"));
         await mutate();
-        actions.setSubmitting(false);
-        actions.resetForm({ values: "" });
+        setSubmitting(false);
+        resetForm({ values: "" });
       }
     },
   });
@@ -38,7 +40,7 @@ export const AddComment = ({ post, mutate }) => {
     <form onSubmit={formik.handleSubmit} className="mb-5">
       <div className="form-group">
         <label htmlFor="content" className="font-weight-bold">
-          Leave a comment
+          {t("Helpers.addComment.label")}
         </label>
         <textarea
           className="form-control"
@@ -47,6 +49,7 @@ export const AddComment = ({ post, mutate }) => {
           name="content"
           onChange={formik.handleChange}
           value={formik.values.content}
+          disabled={formik.isSubmitting}
         />
       </div>
       <MDBBtn
@@ -55,7 +58,7 @@ export const AddComment = ({ post, mutate }) => {
         type="submit"
         disabled={formik.isSubmitting}
       >
-        Comment
+        {t("Helpers.addComment.submitBtn")}
       </MDBBtn>
     </form>
   );

@@ -9,12 +9,12 @@ import {
   MDBRow,
 } from "mdbreact";
 import useSWR from "swr";
-import { fetcher } from "../../utils/actions/fetcher";
+import { fetcher } from "../../actions/fetcher";
 import { useTheme } from "next-themes";
 import { useMounted } from "../../utils/mounted";
 import { useState } from "react";
 import { AddCategory } from "../../helpers/AddCategory";
-import { deletePostCategory } from "../../utils/actions/postActions";
+import { deletePostCategory } from "../../actions/postActions";
 
 export default function AdminPostCategories() {
   const [openModal, setOpenModal] = useState(false);

@@ -1,10 +1,10 @@
-import api from "../axios";
-import { removeCookie, setCookie } from "../../auth/cookies";
-import { toastError, toastSuccess } from "../toast";
+import api from "../utils/axios";
+import { removeCookie, setCookie } from "../auth/cookies";
+import { toastError, toastSuccess } from "../utils/toast";
 import Router from "next/router";
 import axios from "axios";
 
-export const signin = async (username, password) => {
+export const signin = async (username, password, success, error) => {
   try {
     const { data: token } = await api.post(`/signin`, {
       username: username,
@@ -12,24 +12,24 @@ export const signin = async (username, password) => {
     });
     setCookie("blog-jwt-token", token);
     api.defaults.headers.Authorization = `Bearer ${token}`;
-    toastSuccess("You are now authenticated");
+    toastSuccess(success);
     await Router.push("/");
   } catch (e) {
-    toastError("An error has occured");
+    toastError(error);
   }
 };
 
-export const signup = async (values) => {
+export const signup = async (values, successMessage, errorMessage) => {
   try {
     await api.post(`/signup`, {
       username: values.username,
       password: values.password,
       fullName: values.fullName,
     });
-    toastSuccess("Account created, please login");
+    toastSuccess(successMessage);
     await Router.push("/signin");
   } catch (e) {
-    toastError("An error has occured");
+    toastError(errorMessage);
   }
 };
 
@@ -38,24 +38,24 @@ export const logout = async () => {
   await Router.push("/");
 };
 
-export const updateUser = async (values, id) => {
+export const updateUser = async (values, id, successMessage, errorMessage) => {
   const data = {
     fullName: values.fullName,
   };
   try {
     await api.put(`/users/${id}`, data);
-    toastSuccess("Profile updated");
+    toastSuccess(successMessage);
   } catch (e) {
-    toastError("An error has occured");
+    toastError(errorMessage);
   }
 };
 
-export const deleteUser = async (id) => {
+export const deleteUser = async (id, successMessage, errorMessage) => {
   try {
     await api.delete(`/users/${id}`);
-    toastSuccess("Utilisateur supprimé");
+    toastSuccess(successMessage);
   } catch (e) {
-    toastError("An error has occured");
+    toastError(errorMessage);
   }
 };
 
@@ -68,11 +68,11 @@ export const deleteUserByAdmin = async (id) => {
   }
 };
 
-export const sendingMail = async (values) => {
+export const sendingMail = async (values, successMessage, errorMessage) => {
   try {
-    await axios.post(`/api/sendmail`, values);
-    toastSuccess("Message sent");
+    await axios.post(process.env.NEXT_PUBLIC_SENDMAIL, values);
+    toastSuccess(successMessage);
   } catch (e) {
-    toastError("An error has occured");
+    toastError(errorMessage);
   }
 };

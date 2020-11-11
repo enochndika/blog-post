@@ -2,10 +2,10 @@ import AdminLayout from "../../components/layout/Admin";
 import { formatNumericDate } from "../../utils/formats";
 import { MDBContainer, MDBDataTableV5, MDBIcon } from "mdbreact";
 import useSWR from "swr";
-import { fetcher } from "../../utils/actions/fetcher";
+import { fetcher } from "../../actions/fetcher";
 import { useTheme } from "next-themes";
 import { useMounted } from "../../utils/mounted";
-import { deleteCommentByAdmin } from "../../utils/actions/commentActions";
+import { deleteCommentByAdmin } from "../../actions/commentActions";
 
 export default function AdminSubComments() {
   const { theme } = useTheme();

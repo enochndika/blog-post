@@ -7,7 +7,7 @@ import {
   fetchCategories,
   fetchPost,
   updatePost,
-} from "../../../../utils/actions/postActions";
+} from "../../../../actions/postActions";
 import { convertFromRaw, EditorState } from "draft-js";
 import "../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { MDBBtn, MDBCol, MDBInput, MDBRow, MDBView } from "mdbreact";
@@ -19,19 +19,19 @@ import { Pills } from "../../../../components/pills";
 import { useEffect, useState } from "react";
 import api from "../../../../utils/axios";
 import { stateToHTML } from "draft-js-export-html";
-import cogoToast from "cogo-toast";
 import { Emoji } from "../../../../components/emoji";
-import { toastSuccess } from "../../../../utils/toast";
 import Head from "next/head";
 import { Spinner } from "../../../../components/spinner";
+import { useTranslation } from "react-i18next";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
   { ssr: false }
 );
-const token = getCookieFromBrowser("blog-jwt-token");
 
 export default function UpdatePost() {
+  const token = getCookieFromBrowser("blog-jwt-token");
+  const { t } = useTranslation();
   const router = useRouter();
   const { slug } = router?.query;
   const { post } = fetchPost(slug);
@@ -62,13 +62,13 @@ export default function UpdatePost() {
     if (slug) {
       const getData = async () => {
         const { data } = await api.get(`/posts/read/${slug}`);
-        const contentState = convertFromRaw(data.content);
+        const contentState = convertFromRaw(data?.content);
         const editorState = EditorState.createWithContent(contentState);
         setContent(editorState);
       };
       getData();
     }
-  }, [slug]);
+  }, [slug, token]);
 
   if (!post) {
     return <Spinner />;
@@ -77,10 +77,12 @@ export default function UpdatePost() {
   return (
     <>
       <Head>
-        <title>Update Post</title>
+        <title>{t("Pages.username.posts.update.title")}</title>
       </Head>
-      {token && content && user.id === post.userId ? (
+      {token && content && user?.id === post.userId ? (
         <Pills
+          addPost={t("Pages.username.posts.update.createPill")}
+          previewTitle={t("Pages.username.posts.update.previewPill")}
           preview={
             <div
               dangerouslySetInnerHTML={convertDescriptionFromJSONToHTML()}
@@ -98,8 +100,13 @@ export default function UpdatePost() {
               picture: post?.image,
             }}
             onSubmit={async (values) => {
-              await updatePost(values, user?.id, content);
-              toastSuccess("Post updated");
+              await updatePost(
+                values,
+                user?.id,
+                content,
+                t("Actions.posts.updateMessage"),
+                t("Actions.error")
+              );
               await router.push(
                 "/[username]/posts",
                 `/${user?.username}/posts`
@@ -124,7 +131,7 @@ export default function UpdatePost() {
                       value={values.title}
                       name="title"
                       icon="pen"
-                      label="Title"
+                      label={t("Pages.username.posts.update.form.title")}
                       iconClass="grey-text"
                       onChange={handleChange}
                     />
@@ -139,7 +146,7 @@ export default function UpdatePost() {
                       icon="text-height"
                       iconClass="grey-text"
                       type="textarea"
-                      label="Description "
+                      label={t("Pages.username.posts.update.form.description")}
                       onChange={handleChange}
                     />
                     {errors.description && touched.description && (
@@ -154,7 +161,7 @@ export default function UpdatePost() {
                       value={values.read_time}
                       name="read_time"
                       iconClass="grey-text"
-                      label="Read time estimated (min)"
+                      label={t("Pages.username.posts.update.form.readTime")}
                     />
                     {errors.read_time && touched.read_time && (
                       <FormError message={errors.read_time} />
@@ -176,7 +183,9 @@ export default function UpdatePost() {
                     </div>
                   </MDBCol>
                   <MDBCol md="3" lg="3" className="mt-3 mb-3">
-                    <div className="grey-text mb-2">Illustration image</div>
+                    <div className="grey-text mb-2">
+                      {t("Pages.username.posts.update.img")}
+                    </div>
                     <MDBView>
                       <img src={post.image} className="d-block w-100" />
                     </MDBView>
@@ -216,7 +225,7 @@ export default function UpdatePost() {
                   type="submit"
                   size="md"
                 >
-                  Publish
+                  {t("Pages.username.posts.update.form.submitBtn")}
                 </MDBBtn>
               </Form>
             )}

@@ -18,21 +18,24 @@ import { useMounted } from "../../../utils/mounted";
 import { ThemeChanger } from "../../../utils/themeProvider";
 import Link from "next/link";
 import { loggedUser } from "../../../auth/useUser";
-import { logout } from "../../../utils/actions/userActions";
+import { logout } from "../../../actions/userActions";
 import { useRouter } from "next/router";
 import cogoToast from "cogo-toast";
 import { HeaderSearch } from "../../../helpers/headerSearch";
+import { useTranslation } from "react-i18next";
+import { Language } from "../../../utils/changeLanguage";
 
 export const DefaultTopNavigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+  const { t } = useTranslation();
   const { theme } = useTheme();
   const isMounted = useMounted();
   const { user } = loggedUser();
-  const router = useRouter();
 
   return (
     <MDBContainer fluid className={style.container}>
-      <MDBNavbar expand="md" className={style.navbar}>
+      <MDBNavbar expand="lg" className={style.navbar}>
         <Link href="/">
           <a className={style.navbarBrand}>Enoch Ndika</a>
         </Link>
@@ -41,14 +44,18 @@ export const DefaultTopNavigation = () => {
             onClick={() => setIsOpen(!isOpen)}
             id="navbarCollapse3"
             color={theme === "dark" ? "white" : "black"}
-            className="d-md-none d-lg-none d-xl-none"
+            className="d-lg-none d-xl-none"
           />
         )}
         <MDBCollapse id="navbarCollapse3" isOpen={isOpen} navbar>
           <MDBNavbarNav right>
             <MDBNavItem className={style.navbarItem}>
-              <ThemeChanger />
+              <ThemeChanger
+                darkTheme={t("Layout.header.item.theme.dark")}
+                lightTheme={t("Layout.header.item.theme.light")}
+              />
             </MDBNavItem>
+            <Language />
             {user && user.role === "king" && (
               <MDBNavItem className={style.navbarItem}>
                 <Link href="/admin/users">
@@ -68,13 +75,15 @@ export const DefaultTopNavigation = () => {
                       router.push("/signin");
                       setTimeout(
                         () =>
-                          cogoToast.info("you must login before adding a post"),
+                          cogoToast.info(
+                            t("Layout.header.item.post.notLoggedMessage")
+                          ),
                         100
                       );
                     }}
                   >
                     <MDBIcon icon="plus" className="mr-2 dark-grey-text" />
-                    Add a post
+                    {t("Layout.header.item.post.index")}
                   </div>
                 </MDBNavItem>
                 <MDBNavItem className={style.navbarItem}>
@@ -91,19 +100,16 @@ export const DefaultTopNavigation = () => {
                     <MDBDropdownMenu>
                       <MDBDropdownItem>
                         <Link href="/signin">
-                          <a>Login</a>
+                          <a>{t("Layout.header.item.login")}</a>
                         </Link>
                       </MDBDropdownItem>
                       <MDBDropdownItem>
                         <Link href="/register">
-                          <a>Register</a>
+                          <a>{t("Layout.header.item.register")}</a>
                         </Link>
                       </MDBDropdownItem>
                     </MDBDropdownMenu>
                   </MDBDropdown>
-                </MDBNavItem>
-                <MDBNavItem className={style.navbarItem}>
-                  <HeaderSearch />
                 </MDBNavItem>
               </>
             )}
@@ -117,7 +123,7 @@ export const DefaultTopNavigation = () => {
                     }}
                   >
                     <MDBIcon icon="plus" className="mr-2" />
-                    Add a post
+                    {t("Layout.header.item.post.index")}
                   </div>
                 </MDBNavItem>
                 <MDBNavItem className={style.navbarItem}>
@@ -141,27 +147,30 @@ export const DefaultTopNavigation = () => {
                       </MDBDropdownItem>
                       <MDBDropdownItem>
                         <Link href={`/${user?.username}/posts`}>
-                          <a>posts</a>
+                          <a>{t("Layout.header.item.dropdown.posts")}</a>
                         </Link>
                       </MDBDropdownItem>
                       <MDBDropdownItem>
                         <Link href={`/${user?.username}/posts/liked`}>
-                          <a>likes</a>
+                          <a>{t("Layout.header.item.dropdown.likes")}</a>
                         </Link>
                       </MDBDropdownItem>
                       <MDBDropdownItem>
                         <Link href="/">
-                          <a onClick={logout}>Log out</a>
+                          <a onClick={logout}>
+                            {" "}
+                            {t("Layout.header.item.logout")}
+                          </a>
                         </Link>
                       </MDBDropdownItem>
                     </MDBDropdownMenu>
                   </MDBDropdown>
                 </MDBNavItem>
-                <MDBNavItem className={style.navbarItem}>
-                  <HeaderSearch />
-                </MDBNavItem>
               </>
             )}
+            <MDBNavItem className={style.navbarItem}>
+              <HeaderSearch placeholder={t("Layout.header.item.search")} />
+            </MDBNavItem>
           </MDBNavbarNav>
         </MDBCollapse>
       </MDBNavbar>

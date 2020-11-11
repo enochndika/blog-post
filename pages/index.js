@@ -10,14 +10,19 @@ import { formatDate } from "../utils/formats";
 import { HorizontalLine } from "../components/horizontalLign";
 import Link from "next/link";
 import Head from "next/head";
+import { useTranslation } from "react-i18next";
+import { useRouter } from "next/router";
 
 export default function Home({ data, recentPosts, popularPosts, trendPosts }) {
+  const router = useRouter();
+  const { t } = useTranslation();
   const post = trendPosts[0];
 
   return (
     <>
       <Head>
         <title>Enoch Ndika Blog</title>
+        <meta name="description" content="Blog officiel de Enoch Ndika" />
       </Head>
       <MDBContainer fluid className={styles.container}>
         <MDBRow className={styles.row}>
@@ -40,14 +45,21 @@ export default function Home({ data, recentPosts, popularPosts, trendPosts }) {
                 <span className="font-weight-bolder mr-1">
                   {post.user?.fullName}
                 </span>
-                <span className="grey-text mr-1">in</span>
+                <span className="grey-text mr-1">
+                  {t("Components.default.category")}{" "}
+                </span>
                 <span>{post.posts_category.name}</span>
               </div>
               <div className="grey-text">
-                <span className="mr-1">{formatDate(post.createdAt)}</span>
+                <span className="mr-1">
+                  {router?.locale === "fr"
+                    ? formatDate(post.createdAt, "fr-FR")
+                    : formatDate(post.createdAt, "en-US")}
+                </span>
                 <span>&#9632;</span>
                 <span className="ml-2">
-                  {post.read_time} min read <MDBIcon icon="star" />
+                  {post.read_time} {t("Components.default.estimatedRead")}
+                  <MDBIcon icon="star" className="ml-1" />
                 </span>
               </div>
             </div>
@@ -70,11 +82,11 @@ export default function Home({ data, recentPosts, popularPosts, trendPosts }) {
         <HorizontalLine />
         <MDBRow className={`${styles.rowChildren} `}>
           <MDBCol md="9" lg="9">
-            <RecentPosts posts={recentPosts} lg="12" md="12" text />
+            <RecentPosts posts={recentPosts} lg="12" md="12" text={true} />
           </MDBCol>
           <MDBCol md="3" lg="3">
-            <h5 className="h5-responsive font-weight-bold dark-grey-text mb-5">
-              <u>Popular posts</u>
+            <h5 className="h5-responsive font-weight-bold mb-5">
+              <u>{t("Pages.index.popularPost")}</u>
             </h5>
             <PopularTrendPosts number="01" post={popularPosts[0]} />
             <PopularTrendPosts number="02" post={popularPosts[1]} />

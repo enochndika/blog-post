@@ -1,4 +1,4 @@
-import api from "../axios";
+import api from "../utils/axios";
 
 export const fetcher = (url) => api.get(url).then((res) => res.data.data);
 

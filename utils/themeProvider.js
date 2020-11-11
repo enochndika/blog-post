@@ -2,7 +2,7 @@ import { useTheme } from "next-themes";
 import { MDBIcon } from "mdbreact";
 import { useMounted } from "./mounted";
 
-export const ThemeChanger = () => {
+export const ThemeChanger = ({ darkTheme, lightTheme }) => {
   const { theme, setTheme } = useTheme();
   const isMounted = useMounted();
 
@@ -15,7 +15,7 @@ export const ThemeChanger = () => {
             onClick={() => setTheme("dark")}
             className="mr-1 dark-grey-text"
           />
-          Dark Mode
+          {darkTheme}
         </div>
       ) : (
         <div onClick={() => setTheme("light")}>
@@ -25,7 +25,7 @@ export const ThemeChanger = () => {
             size="lg"
             className="mr-1"
           />
-          Light Mode
+          {lightTheme}
         </div>
       )}
     </div>

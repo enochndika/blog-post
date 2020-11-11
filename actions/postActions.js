@@ -1,5 +1,5 @@
-import { toastError, toastSuccess } from "../toast";
-import api from "../axios";
+import { toastError, toastSuccess } from "../utils/toast";
+import api from "../utils/axios";
 import useSWR from "swr";
 import { fetcher, fetches } from "./fetcher";
 import { convertToRaw } from "draft-js";
@@ -83,16 +83,22 @@ export const addPost = async (userId, values) => {
         read_time: values.read_time,
         image: [image],
       });
-      toastSuccess("Post added");
+      toastSuccess("Post crée");
     } else {
-      toastError("An error has occured, please try again");
+      toastError("Une erreur est survenue, réessayer plus tard");
     }
   } catch (e) {
     toastError(e.response.data.message);
   }
 };
 
-export const updatePost = async (values, userId, content) => {
+export const updatePost = async (
+  values,
+  userId,
+  content,
+  successMessage,
+  errorMessage
+) => {
   const data = {
     title: values.title,
     description: values.description,
@@ -103,15 +109,16 @@ export const updatePost = async (values, userId, content) => {
   };
   try {
     await api.put(`/posts/${values.id}/${userId}`, data);
+    toastSuccess(successMessage);
   } catch (e) {
-    toastError("An error has occured");
+    toastError(errorMessage);
   }
 };
 
 export const deletePost = async (postId, userId) => {
   try {
     await api.delete(`/posts/${postId}/${userId}`);
-    toastSuccess("Post deleted");
+    toastSuccess("Post supprimé");
   } catch (e) {
     toastError(e.response.data.message);
   }
@@ -120,7 +127,7 @@ export const deletePost = async (postId, userId) => {
 export const deletePostByAdmin = async (postId) => {
   try {
     await api.delete(`/posts/${postId}`);
-    toastSuccess("Post deleted");
+    toastSuccess("Post supprimé");
   } catch (e) {
     toastError(e.response.data.message);
   }
@@ -137,7 +144,7 @@ export const addPicture = async (file) => {
       },
     };
   } catch (e) {
-    toastError("An error has occured");
+    toastError("Une erreur est survenue");
   }
 };
 
@@ -146,9 +153,8 @@ export const likePost = async (postId, userId) => {
     await api.post(`/like-posts/${postId}/${userId}`);
   } catch (e) {
     if (e.response.status === 400) {
-      cogoToast.info("You already liked this post");
+      cogoToast.info("Vous aimez déjà ce post");
     }
-    console.log(e);
   }
 };
 
@@ -160,12 +166,18 @@ export const unlikePost = async (postId, userId) => {
   }
 };
 
-export const reportPost = async (postId, userId, subject) => {
+export const reportPost = async (
+  postId,
+  userId,
+  subject,
+  successMessage,
+  errorMessage
+) => {
   try {
     await api.post(`/report-posts/${postId}/${userId}`, subject);
-    cogoToast.info("Your report has been sent");
+    cogoToast.info(successMessage);
   } catch (e) {
-    toastError("An error has occured");
+    toastError(errorMessage);
   }
 };
 
@@ -173,7 +185,7 @@ export const addPostCategory = async (values) => {
   try {
     await api.post(`/post-categories`, { name: values.name });
   } catch (e) {
-    toastError("An error has occured");
+    toastError("Une erreur est survenue");
   }
 };
 
@@ -181,7 +193,7 @@ export const updatePostCategory = async (id, values) => {
   try {
     await api.put(`/post-categories/${id}`, { name: values.name });
   } catch (e) {
-    toastError("An error has occured");
+    toastError("Une erreur est survenue");
   }
 };
 
@@ -189,6 +201,6 @@ export const deletePostCategory = async (id) => {
   try {
     await api.delete(`/post-categories/${id}`);
   } catch (e) {
-    toastError("An error has occured");
+    toastError("Une erreur est survenue");
   }
 };

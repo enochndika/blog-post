@@ -2,8 +2,8 @@ import AdminLayout from "../../components/layout/Admin";
 import { formatNumericDate } from "../../utils/formats";
 import { MDBContainer, MDBDataTableV5, MDBIcon } from "mdbreact";
 import useSWR from "swr";
-import { fetcher } from "../../utils/actions/fetcher";
-import { deleteUser, deleteUserByAdmin } from "../../utils/actions/userActions";
+import { fetcher } from "../../actions/fetcher";
+import { deleteUser, deleteUserByAdmin } from "../../actions/userActions";
 import { useTheme } from "next-themes";
 import { useMounted } from "../../utils/mounted";
 

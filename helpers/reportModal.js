@@ -8,9 +8,11 @@ import {
 import { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import { reportType } from "../utils/reportText";
-import { reportChildComment } from "../utils/actions/childCommentActions";
-import { reportComment } from "../utils/actions/commentActions";
-import { reportPost } from "../utils/actions/postActions";
+import { reportChildComment } from "../actions/childCommentActions";
+import { reportComment } from "../actions/commentActions";
+import { reportPost } from "../actions/postActions";
+import { useTranslation } from "react-i18next";
+
 export const ReportModal = ({
   isOpen,
   toggle,
@@ -21,6 +23,7 @@ export const ReportModal = ({
   comment,
 }) => {
   const [open, setOpen] = useState(isOpen);
+  const { t } = useTranslation();
 
   return (
     <MDBContainer>
@@ -39,15 +42,33 @@ export const ReportModal = ({
           }}
           onSubmit={async (values) => {
             if (child) {
-              await reportChildComment(id, userId, values);
+              await reportChildComment(
+                id,
+                userId,
+                values,
+                t("Actions.comment.reportSuccess"),
+                t("Actions.error")
+              );
               toggle();
             }
             if (post) {
-              await reportPost(id, userId, values);
+              await reportPost(
+                id,
+                userId,
+                values,
+                t("Actions.comment.reportSuccess"),
+                t("Actions.error")
+              );
               toggle();
             }
             if (comment) {
-              await reportComment(id, userId, values);
+              await reportComment(
+                id,
+                userId,
+                values,
+                t("Actions.comment.reportSuccess"),
+                t("Actions.error")
+              );
               toggle();
             }
           }}
@@ -56,8 +77,7 @@ export const ReportModal = ({
             <Form>
               <MDBModalBody className="grey-text">
                 <div id="my-radio-group" className="mb-3 h4-responsive">
-                  {comment || (child && "Report comment")}
-                  {post && "Report this post"}
+                  {t("Helpers.reportModal.title")}
                 </div>
                 <div role="group" aria-labelledby="my-radio-group">
                   <div>
@@ -65,9 +85,13 @@ export const ReportModal = ({
                       <Field
                         type="radio"
                         name="subject"
-                        value={reportType.spam}
+                        value={
+                          reportType(t("Helpers.reportModal.type.spam")).spam
+                        }
                       />
-                      <span className="ml-2"> {reportType.spam}</span>
+                      <span className="ml-2">
+                        {reportType(t("Helpers.reportModal.type.spam")).spam}
+                      </span>
                     </label>
                   </div>
                   <div>
@@ -75,9 +99,23 @@ export const ReportModal = ({
                       <Field
                         type="radio"
                         name="subject"
-                        value={reportType.social}
+                        value={
+                          reportType(
+                            null,
+                            null,
+                            t("Helpers.reportModal.type.social")
+                          ).social
+                        }
                       />
-                      <span className="ml-2"> {reportType.social}</span>
+                      <span className="ml-2">
+                        {
+                          reportType(
+                            null,
+                            null,
+                            t("Helpers.reportModal.type.social")
+                          ).social
+                        }
+                      </span>
                     </label>
                   </div>
                   <div>
@@ -85,19 +123,33 @@ export const ReportModal = ({
                       <Field
                         type="radio"
                         name="subject"
-                        value={reportType.violence}
+                        value={
+                          reportType(
+                            null,
+                            t("Helpers.reportModal.type.violence"),
+                            null
+                          ).violence
+                        }
                       />
-                      <span className="ml-2"> {reportType.violence}</span>
+                      <span className="ml-2">
+                        {
+                          reportType(
+                            null,
+                            t("Helpers.reportModal.type.violence"),
+                            null
+                          ).violence
+                        }
+                      </span>
                     </label>
                   </div>
                 </div>
               </MDBModalBody>
               <MDBModalFooter>
                 <MDBBtn color="red" size="sm" onClick={toggle}>
-                  Cancel
+                  {t("Helpers.reportModal.cancelBtn")}
                 </MDBBtn>
                 <MDBBtn color="primary" size="sm" type="submit">
-                  Report
+                  {t("Helpers.reportModal.confirmBtn")}
                 </MDBBtn>
               </MDBModalFooter>
             </Form>

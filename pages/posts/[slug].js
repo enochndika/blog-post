@@ -1,3 +1,4 @@
+import { useState } from "react";
 import DefaultLayout from "../../components/layout/default";
 import api from "../../utils/axios";
 import { stateToHTML } from "draft-js-export-html";
@@ -24,19 +25,20 @@ import { useMounted } from "../../utils/mounted";
 import { useRouter } from "next/router";
 import { loggedUser } from "../../auth/useUser";
 import { ReportModal } from "../../helpers/reportModal";
-import { useState } from "react";
+
 import {
   fetchPost,
   fetchPostLikes,
   likePost,
   unlikePost,
-} from "../../utils/actions/postActions";
+} from "../../actions/postActions";
 import cogoToast from "cogo-toast";
 import Head from "next/head";
-import DefaultErrorPage from "next/error";
+import { useTranslation } from "react-i18next";
 
 const fetcher = (url) => api.get(url).then((res) => res.data.data);
 export default function PostSlug({ post }) {
+  const { t } = useTranslation();
   const [reportModal, setReportModal] = useState(false);
   const router = useRouter();
   const slug = router?.query?.slug;
@@ -64,7 +66,7 @@ export default function PostSlug({ post }) {
       await mutateLike();
     }
     if (!user) {
-      cogoToast.info("You must log in before liking a post");
+      cogoToast.info(t("Pages.post.slug.likePostNotAuth"));
     }
   };
 
@@ -74,7 +76,7 @@ export default function PostSlug({ post }) {
       await mutateLike();
     }
     if (!user) {
-      cogoToast.info("You must log in");
+      cogoToast.info(t("Pages.post.slug.dislikePostNotAuth"));
     }
   };
 
@@ -83,25 +85,14 @@ export default function PostSlug({ post }) {
       setReportModal(true);
     }
     if (!user) {
-      cogoToast.info("You must log in before reporting a post");
+      cogoToast.info(t("Pages.post.slug.reportPostNotAuth"));
     }
   };
   const { theme } = useTheme();
   const isMounted = useMounted();
 
   if (router.isFallback) {
-    return <div>Loading</div>;
-  }
-
-  if (!post) {
-    return (
-      <>
-        <Head>
-          <meta name="robots" content="noindex" />
-        </Head>
-        <DefaultErrorPage statusCode={404} />
-      </>
-    );
+    return <div>{t("Pages.post.slug.fallback")}</div>;
   }
 
   return (
@@ -110,6 +101,7 @@ export default function PostSlug({ post }) {
         <>
           <Head>
             <title>{post.title}</title>
+            <meta name="description" content="Les details du post" />
           </Head>
           <MDBContainer fluid className={style.container}>
             <ReportModal
@@ -136,16 +128,24 @@ export default function PostSlug({ post }) {
                         <span className="font-weight-bolder mr-1">
                           {post.user?.fullName}
                         </span>
-                        <span className="grey-text mr-1">in</span>
+                        <span className="grey-text mr-1">
+                          {t("Components.default.category")}
+                        </span>
                         <span>{post.posts_category?.name}</span>
                       </div>
                       <div className="grey-text">
                         <span className="mr-1">
-                          {formatDate(post.createdAt)}
+                          <span className="mr-1">
+                            {router?.locale === "fr"
+                              ? formatDate(post.createdAt, "fr-FR")
+                              : formatDate(post.createdAt, "en-US")}
+                          </span>
                         </span>
                         <span>&#9632;</span>
                         <span className="ml-2">
-                          {post.read_time} min read <MDBIcon icon="star" />
+                          {post.read_time}{" "}
+                          {t("Components.default.estimatedRead")}
+                          <MDBIcon icon="star" />
                         </span>
                       </div>
                     </div>
@@ -203,7 +203,7 @@ export default function PostSlug({ post }) {
                           <MDBDropdownMenu>
                             <MDBDropdownItem onClick={checkUserOnOpenModal}>
                               <MDBIcon icon="flag" className="mr-2" />
-                              Report
+                              {t("Pages.post.slug.report")}
                             </MDBDropdownItem>
                           </MDBDropdownMenu>
                         </MDBDropdown>
@@ -237,7 +237,7 @@ export default function PostSlug({ post }) {
               related={
                 <div>
                   <div className="h5-responsive font-weight-bold mt-5">
-                    More from Enoch Ndika
+                    {t("Pages.post.slug.morePost")}
                   </div>
                   <HorizontalLine desktop />
                 </div>
@@ -259,7 +259,7 @@ export const getStaticPaths = async () => {
     params: { slug: post.slug },
   }));
 
-  return { paths, fallback: true };
+  return { paths, fallback: "blocking" };
 };
 
 export const getStaticProps = async ({ params }) => {

@@ -9,12 +9,11 @@ import {
   MDBRow,
 } from "mdbreact";
 import style from "../styles/components/postComment.module.css";
-import Moment from "react-moment";
 import { useSWRInfinite } from "swr";
 import api from "../utils/axios";
 import { useTheme } from "next-themes";
 import { useMounted } from "../utils/mounted";
-import { deleteComment } from "../utils/actions/commentActions";
+import { deleteComment } from "../actions/commentActions";
 import { AddComment } from "./addComment";
 import { ChildComments } from "./childComments";
 import { useState } from "react";
@@ -22,17 +21,21 @@ import { UpdateComment } from "./updateComment";
 import { loggedUser } from "../auth/useUser";
 import { ReportModal } from "./reportModal";
 import cogoToast from "cogo-toast";
+import { useTranslation } from "react-i18next";
+import { useRouter } from "next/router";
+import { formatNumericDate } from "../utils/formats";
 
 const fetcher = (url) => api.get(url).then((res) => res.data.data);
 const LIMIT = 6;
 
 export const PostComments = ({ post }) => {
+  const { t } = useTranslation();
   const [openUpdateComment, setOpenUpdateComment] = useState(false);
   const [reportModal, setReportModal] = useState(false);
   const [showComments, setShowComments] = useState(true);
   const [selectedCommentRow, setSelectedCommentRow] = useState(undefined);
   const [commentId, setCommentId] = useState(null);
-
+  const router = useRouter();
   const { theme } = useTheme();
   const isMounted = useMounted();
   const { user } = loggedUser();
@@ -50,7 +53,7 @@ export const PostComments = ({ post }) => {
 
   const onSelectedComment = (id) => {
     if (!user) {
-      cogoToast.info("You must login before reporting a comment");
+      cogoToast.info(t("Helpers.comments.selectCommentNotAuth"));
     }
     if (user) {
       setCommentId(id);
@@ -77,11 +80,11 @@ export const PostComments = ({ post }) => {
       {comments && comments.length > 0 && (
         <div className="h5-responsive mb-4 font-weight-bold">
           <span onClick={() => setShowComments(!showComments)}>
-            Show comments
+            {t("Helpers.comments.title")}
             {showComments ? (
-              <MDBIcon icon="angle-down" />
+              <MDBIcon icon="angle-down" className="ml-1" />
             ) : (
-              <MDBIcon icon="angle-up" />
+              <MDBIcon icon="angle-up" className="ml-1" />
             )}
           </span>
         </div>
@@ -120,7 +123,11 @@ export const PostComments = ({ post }) => {
                             @{comment.user?.username}
                           </span>
                           <span>
-                            <Moment fromNow>{comment.createdAt}</Moment>
+                            <small className="font-weight-bold">
+                              {router?.locale === "fr"
+                                ? formatNumericDate(comment.createdAt, "fr-FR")
+                                : formatNumericDate(comment.createdAt, "en-US")}
+                            </small>
                           </span>
                         </div>
                         <div className="float-right pr-2">
@@ -133,18 +140,22 @@ export const PostComments = ({ post }) => {
                                 <>
                                   <MDBDropdownItem
                                     onClick={async () => {
-                                      await deleteComment(comment.id, user.id);
+                                      await deleteComment(
+                                        comment.id,
+                                        user.id,
+                                        t("Actions.error")
+                                      );
                                       await mutate();
                                     }}
                                   >
-                                    Delete
+                                    {t("Helpers.comments.dropdown.delete")}
                                   </MDBDropdownItem>
                                   <MDBDropdownItem
                                     onClick={() => {
                                       onSelectedCommentRow(index);
                                     }}
                                   >
-                                    Update
+                                    {t("Helpers.comments.dropdown.update")}
                                   </MDBDropdownItem>
                                 </>
                               ) : (
@@ -154,7 +165,7 @@ export const PostComments = ({ post }) => {
                                   }}
                                 >
                                   <MDBIcon icon="flag" className="mr-2" />{" "}
-                                  Report
+                                  {t("Helpers.comments.dropdown.report")}
                                 </MDBDropdownItem>
                               )}
                             </MDBDropdownMenu>
@@ -184,7 +195,7 @@ export const PostComments = ({ post }) => {
               })}
           </MDBRow>
           <div className="text-center">
-            {comments.length > 0 && (
+            {comments.length > 0 && !isReachingEnd && (
               <MDBBtn
                 color={isMounted && theme === "light" ? "black" : "white"}
                 disabled={isLoadingMore || isReachingEnd}
@@ -193,10 +204,10 @@ export const PostComments = ({ post }) => {
                 className="text-lowercase"
               >
                 {isLoadingMore
-                  ? "loading..."
+                  ? t("Helpers.comments.pagination.loading")
                   : isReachingEnd
-                  ? "No more comments"
-                  : "Load more"}
+                  ? "fin de commentaires"
+                  : t("Helpers.comments.pagination.loadMore")}
               </MDBBtn>
             )}
           </div>

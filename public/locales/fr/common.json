@@ -1,0 +1,253 @@
+{
+  "Layout": {
+    "header": {
+      "item": {
+        "post": {
+          "index": "Créer un post",
+          "notLoggedMessage": "Vous devez vous authentifier avant de créer un post"
+        },
+        "dropdown": {
+          "posts": "Mes posts",
+          "likes": "Posts aimés"
+        },
+        "language":{
+          "index": "Langue",
+          "french": "Français",
+          "english": "Anglais"
+        },
+        "login": "Connexion",
+        "register": "Créer un compte",
+        "logout": "Déconnexion",
+        "search": "Rechercher",
+        "theme": {
+          "dark": "Theme sombre",
+          "light": "Theme clair"
+        }
+      }
+    },
+    "footer": {
+      "p1": "Cette application est réalisée avec React (Next.js), Node.js (Express.js) et PostgreSQL",
+      "p2": "Pour toute demande de renseignement ou de collaboration, veuillez\n  remplir le formulaire de contact par",
+      "p2Link": "ici"
+    }
+  },
+
+  "Helpers": {
+    "auth": {
+      "title": {
+        "login": "Se connecter",
+        "register": "Créer un compte"
+      },
+      "form": {
+        "username": "Nom d'utilisateur",
+        "password": "Mot de passe",
+        "fullName": "Prénom et Nom",
+        "submit": {
+          "login": "Connexion",
+          "register": "Créer"
+        }
+      }
+    },
+    "addChildComment": {
+      "replyNotAuth": "vous devez vous authentifier avant de répondre à un commentaire",
+      "label": "Répondre à ce commentaire",
+      "submitBtn": "Répondre"
+    },
+    "addComment": {
+      "postCommentNotAuth": "vous devez vous authentifier avant de poster un commentaire",
+      "label": "Laisser un commenter",
+      "submitBtn": "Poster"
+    },
+    "comments": {
+      "selectCommentNotAuth": "vous devez vous authentifier avant de signaler un commentaire",
+      "title": "Afficher le(s) commentaire(s)",
+      "dropdown": {
+        "delete": "Supprimer",
+        "update": "Modifier",
+        "report": "Signaler"
+      },
+      "pagination": {
+        "loadMore": "Afficher plus",
+        "loading": "Chargement..."
+      }
+    },
+    "childComments": {
+      "selectCommentNotAuth": "vous devez vous authentifier avant de signaler un commentaire",
+      "title": "Afficher le(s) réponse(s)",
+      "collapseTitle": "Répondre"
+    },
+    "reportModal": {
+      "title": "Signaler ce commentaire",
+      "cancelBtn": "Annuler",
+      "confirmBtn": "Signaler",
+      "type": {
+        "spam": "Contenu indésirable  ou spam",
+        "violence": "Harcèlement ou intimidation",
+        "social": "Propos raciste"
+      }
+    },
+    "updateComment": {
+      "cancelBtn": "Annuler",
+      "confirmBtn": "Confirmer"
+    }
+  },
+
+  "Validators": {
+    "user": {
+      "userLogin": {
+        "username": "veuillez saisir votre nom d'utilisateur",
+        "password": "veuillez saisir votre mot de passe"
+      },
+      "userRegister": {
+        "username": "Nom d'utilisateur ne peut pas être vide",
+        "password": "Mot de passe ne peut pas être vide",
+        "fullName": "Ce champ ne peut pas être vide"
+      },
+      "sendingMail": {
+        "emailReq": "veuillez saisir votre adresse mail",
+        "email": "La valeur saisie ne respecte pas le format email",
+        "name": "Veuillez saisir votre prénom et nom",
+        "message": "Veuillez saisir un message"
+      }
+    }
+  },
+
+  "Actions": {
+    "error": "Une erreur est survenue, veuillez réessayer plus tard",
+    "userActions": {
+      "signin": {
+        "success": "Connexion réussie",
+        "error": "Identifiants invalides"
+      },
+      "signup": {
+        "success": "Compte crée, veuillez vous connecter",
+        "error": "Création du compte non aboutie"
+      },
+      "userUpdate": {
+        "success": "Profil mis à jour"
+      },
+      "deleteUser": {
+        "success": "utilisateur supprimé"
+      },
+      "sendingMail": {
+        "success": "Message envoyé",
+        "error": "Message non envoyé, veuillez réessayer plus tard"
+      }
+    },
+    "comment": {
+      "reportSuccess": "Votre signalement a été pris en compte"
+    },
+    "posts": {
+      "updateMessage": "Post mis à jour"
+    }
+  },
+
+  "Components": {
+    "default": {
+      "category": "dans",
+      "estimatedRead": "min de lecture"
+    },
+    "recentPost": {
+      "title": "Posts récents",
+      "link": "Afficher tous"
+    }
+  },
+
+  "Pages": {
+    "register": {
+      "title": "Créer un compte"
+    },
+    "signin": {
+      "title": "Connexion"
+    },
+    "contact": {
+      "fullName": "Votre Prénom et Nom",
+      "email": "Votre adresse e-mail",
+      "message": "Votre message",
+      "submitBtn": "Envoyer"
+    },
+    "index": {
+      "popularPost": "Posts populaires"
+    },
+    "post": {
+      "slug": {
+        "likePostNotAuth": "Vous devez vous authentifier avant de liker un post",
+        "dislikePostNotAuth": "Vous devez vous authentifier avant d'effectuer cette action",
+        "reportPostNotAuth": "Vous devez vous authentifier avant de signaler un post",
+        "fallback": "Chargement...",
+        "report": "Signaler",
+        "morePost": "Plus de posts dans Enoch Ndika"
+      },
+      "create": {
+        "title": "Créer un post",
+        "previewPill": "Prévisualiser",
+        "createPill": "Créer un post",
+        "redirectNotAUth": "Vous devez être authentifié avant de créer un post",
+        "modalContent": "Creation en cours...",
+        "form": {
+          "title": "Titre",
+          "description": "Description",
+          "readTime": "Temps de lecture estimé (min)",
+          "selectOption": "Sélectionner une catégorie",
+          "uploadFileTitle": "Ajouter une image d'illustration",
+          "submitBtn": "Publier"
+        }
+      },
+      "search": {
+        "title": "Recherche",
+        "h1": "Post(s) trouvé(s) avec le mot clé",
+        "notFound": "Aucun post trouvé"
+      }
+    },
+    "username": {
+      "profile": {
+        "index": {
+          "title": "Informations personnelles",
+          "submitBtn": "Confirmer"
+        }
+      },
+      "posts": {
+        "index": {
+          "title": "Mes posts",
+          "table": {
+            "title": "Titre",
+            "description": "Description",
+            "image": "Image",
+            "date": "Date",
+            "actions": "Actions"
+          },
+          "tableDetail": {
+            "noRecordsFoundLabel": "Vous n'avez aucun post, pourquoi pas en créer un ?",
+            "entriesLabel": "Posts par page",
+            "infoLabel": {
+              "a": "Affiche",
+              "b": "à",
+              "c": "de",
+              "d": "posts"
+            }
+          },
+          "postNotFound": "Vous ne possédez aucun post",
+          "deleteConfirm": "Etes-vous sûr ?"
+        },
+        "liked": {
+          "title": "Posts aimés",
+          "h1": "Posts que vous avez aimé",
+          "h1NotFound": "Vous n'avez aimé aucun post"
+        },
+        "update": {
+          "title": "Créer un post",
+          "previewPill": "Prévisualiser",
+          "createPill": "Créer un post",
+          "modalContent": "Creation en cours...",
+          "img": "Image d'illustration",
+          "form": {
+            "title": "Titre",
+            "description": "Description",
+            "readTime": "Temps de lecture estimé (min)",
+            "submitBtn": "Modifier"
+          }
+        }
+      }
+    }
+  }
+}

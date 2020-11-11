@@ -1,12 +1,21 @@
 import { useFormik } from "formik";
-import { MDBBtn, MDBCol, MDBContainer, MDBInput, MDBRow } from "mdbreact";
+import {
+  MDBBtn,
+  MDBCol,
+  MDBContainer,
+  MDBIcon,
+  MDBInput,
+  MDBRow,
+} from "mdbreact";
 import style from "../styles/helpers/auth.module.css";
-import { signin, signup } from "../utils/actions/userActions";
+import { signin, signup } from "../actions/userActions";
 import { userLoginSchema, userRegisterSchema } from "../validators/user";
 import { FormError } from "../components/formError";
 import { loggedUser } from "../auth/useUser";
+import { useTranslation } from "react-i18next";
 
 export const Auth = ({ register }) => {
+  const { t } = useTranslation();
   const { mutate } = loggedUser();
   const formik = useFormik({
     initialValues: {
@@ -14,12 +23,32 @@ export const Auth = ({ register }) => {
       password: "",
       fullName: "",
     },
-    validationSchema: register ? userRegisterSchema : userLoginSchema,
-    onSubmit: async (values) => {
+    validationSchema: register
+      ? userRegisterSchema(
+          t("Validators.user.userRegister.username"),
+          t("Validators.user.userRegister.password"),
+          t("Validators.user.userRegister.fullName")
+        )
+      : userLoginSchema(
+          t("Validators.user.userLogin.username"),
+          t("Validators.user.userLogin.password")
+        ),
+    onSubmit: async (values, { setSubmitting }) => {
       if (register) {
-        await signup(values);
+        await signup(
+          values,
+          t("Actions.userActions.signup.success"),
+          t("Actions.userActions.signup.error")
+        );
+        await setSubmitting(false);
       } else {
-        await signin(values.username, values.password);
+        await signin(
+          values.username,
+          values.password,
+          t("Actions.userActions.signin.success"),
+          t("Actions.userActions.signin.error")
+        );
+        await setSubmitting(false);
         await mutate();
       }
     },
@@ -31,10 +60,13 @@ export const Auth = ({ register }) => {
         <MDBCol md="6">
           <form onSubmit={formik.handleSubmit} className="grey-text">
             <div className="h3-responsive font-weight-bold text-center mb-4">
-              {register ? "Register" : "Login"}
+              {register
+                ? t("Helpers.auth.title.register")
+                : t("Helpers.auth.title.login")}
             </div>
             <MDBInput
-              label="Username"
+              disabled={formik.isSubmitting}
+              label={t("Helpers.auth.form.username")}
               icon="user-md"
               onChange={formik.handleChange}
               value={formik.values.username}
@@ -46,10 +78,11 @@ export const Auth = ({ register }) => {
             )}
             <MDBInput
               icon="lock"
+              disabled={formik.isSubmitting}
               onChange={formik.handleChange}
               value={formik.values.password}
               type="password"
-              label="Password"
+              label={t("Helpers.auth.form.password")}
               name="password"
             />
             {formik.errors.password && formik.touched.password && (
@@ -59,9 +92,10 @@ export const Auth = ({ register }) => {
               <>
                 <MDBInput
                   icon="male"
-                  label="First and Lastname"
+                  label={t("Helpers.auth.form.fullName")}
                   onChange={formik.handleChange}
                   value={formik.values.fullName}
+                  disabled={formik.isSubmitting}
                   type="text"
                   name="fullName"
                 />
@@ -71,8 +105,22 @@ export const Auth = ({ register }) => {
               </>
             )}
             <div className="text-center mt-4">
-              <MDBBtn color="indigo" type="submit" size="sm">
-                {register ? "Register" : "login"}
+              <MDBBtn
+                color="indigo"
+                type="submit"
+                className="text-capitalize"
+                size="sm"
+                disabled={formik.isSubmitting}
+              >
+                {register
+                  ? t("Helpers.auth.form.submit.register")
+                  : t("Helpers.auth.form.submit.login")}
+                {formik.isSubmitting && (
+                  <span className="ml-1">
+                    ...
+                    <MDBIcon icon="circle-notch" spin />
+                  </span>
+                )}
               </MDBBtn>
             </div>
           </form>

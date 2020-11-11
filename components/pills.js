@@ -8,7 +8,7 @@ import {
 } from "mdbreact";
 import style from "../styles/components/pills.module.css";
 
-export const Pills = ({ children, preview }) => {
+export const Pills = ({ children, preview, previewTitle, addPost }) => {
   const [items, setItems] = useState({
     default: "1",
   });
@@ -31,7 +31,7 @@ export const Pills = ({ children, preview }) => {
           active={items["default"] === "1"}
           onClick={togglePills("default", "1")}
         >
-          Add a post
+          {addPost}
         </MDBNavItem>
         <MDBNavItem
           tag="div"
@@ -39,7 +39,7 @@ export const Pills = ({ children, preview }) => {
           active={items["default"] === "2"}
           onClick={togglePills("default", "2")}
         >
-          Preview
+          {previewTitle}
         </MDBNavItem>
       </MDBNav>
       <MDBTabContent activeItem={items["default"]}>

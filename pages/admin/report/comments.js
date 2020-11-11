@@ -9,7 +9,7 @@ import {
   MDBRow,
 } from "mdbreact";
 import useSWR from "swr";
-import { fetcher } from "../../../utils/actions/fetcher";
+import { fetcher } from "../../../actions/fetcher";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useMounted } from "../../../utils/mounted";

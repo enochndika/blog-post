@@ -3,8 +3,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { getCookieFromBrowser } from "../../auth/cookies";
 import { useRouter } from "next/router";
-import { Pills } from "../../components/pills";
-import { Modal } from "../../components/modal";
+import cogoToast from "cogo-toast";
 import { MDBBtn, MDBCol, MDBInput, MDBRow } from "mdbreact";
 import { FormError } from "../../components/formError";
 import { Option } from "../../utils/option";
@@ -14,24 +13,31 @@ import {
   addPicture,
   addPost,
   fetchCategories,
-} from "../../utils/actions/postActions";
+} from "../../actions/postActions";
 import { loggedUser } from "../../auth/useUser";
 import { useFormik } from "formik";
 import { EditorState } from "draft-js";
 import { postCreateSchema } from "../../validators/posts";
 import { stateToHTML } from "draft-js-export-html";
 import Head from "next/head";
+import { Modal } from "../../components/modal";
+import { useTranslation } from "react-i18next";
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((module) => module.Editor),
+  { ssr: false, loading: () => <p>Chargement...</p> }
+);
+const Pills = dynamic(
+  () => import("../../components/pills").then((mod) => mod.Pills),
   { ssr: false }
 );
 
 export default function CreatePost() {
+  const token = getCookieFromBrowser("blog-jwt-token");
+  const { t } = useTranslation();
   const router = useRouter();
   const { user } = loggedUser();
   const { categories } = fetchCategories();
   const [loading, setLoading] = useState(false);
-  const token = getCookieFromBrowser("blog-jwt-token");
 
   const styles = {
     wrapperStyle: {
@@ -42,6 +48,7 @@ export default function CreatePost() {
   useEffect(() => {
     if (!token) {
       router.replace("/");
+      cogoToast.info(t("Pages.post.create.redirectNotAUth"));
     }
   }, [token, router]);
 
@@ -81,9 +88,15 @@ export default function CreatePost() {
       {token && (
         <>
           <Head>
-            <title>Add a post</title>
+            <title>{t("Pages.post.create.title")}</title>
           </Head>
+          <Modal
+            isOpen={loading}
+            content={t("Pages.post.create.modalContent")}
+          />
           <Pills
+            addPost={t("Pages.post.create.createPill")}
+            previewTitle={t("Pages.post.create.previewPill")}
             preview={
               <div
                 dangerouslySetInnerHTML={convertDescriptionFromJSONToHTML()}
@@ -91,7 +104,6 @@ export default function CreatePost() {
               />
             }
           >
-            <Modal isOpen={loading} content="Creating ..." />
             <form onSubmit={formik.handleSubmit}>
               <MDBRow>
                 <MDBCol md="12" lg="12">
@@ -99,7 +111,7 @@ export default function CreatePost() {
                     value={formik.values.title}
                     name="title"
                     icon="pen"
-                    label="Title"
+                    label={t("Pages.post.create.form.title")}
                     iconClass="grey-text"
                     onChange={formik.handleChange}
                   />
@@ -114,7 +126,7 @@ export default function CreatePost() {
                     icon="text-height"
                     iconClass="grey-text"
                     type="textarea"
-                    label="Description "
+                    label={t("Pages.post.create.form.description")}
                     onChange={formik.handleChange}
                   />
                   {formik.errors.description && formik.touched.description && (
@@ -129,7 +141,7 @@ export default function CreatePost() {
                     value={formik.values.read_time}
                     name="read_time"
                     iconClass="grey-text"
-                    label="Estimated read time (min)"
+                    label={t("Pages.post.create.form.readTime")}
                   />
                   {formik.errors.read_time && formik.touched.read_time && (
                     <FormError message={formik.errors.read_time} />
@@ -143,7 +155,9 @@ export default function CreatePost() {
                       value={formik.values.postsCategoryId}
                       onChange={formik.handleChange}
                     >
-                      <option value="selected">Sélect a category</option>
+                      <option value="selected">
+                        {t("Pages.post.create.form.selectOption")}
+                      </option>
                       <Option data={categories} />
                     </select>
                     {formik.errors.postsCategoryId &&
@@ -155,7 +169,11 @@ export default function CreatePost() {
                 <MDBCol md="12" lg="12">
                   <div className="mt-4 mb-4">
                     <UploadFile
-                      title={<small>Add an illustration picture</small>}
+                      title={
+                        <small>
+                          {t("Pages.post.create.form.uploadFileTitle")}
+                        </small>
+                      }
                       setFieldValue={formik.setFieldValue}
                     />
                   </div>
@@ -196,8 +214,9 @@ export default function CreatePost() {
                   gradient="blue"
                   type="submit"
                   size="md"
+                  disabled={formik.isSubmitting}
                 >
-                  Publish
+                  {t("Pages.post.create.form.submitBtn")}
                 </MDBBtn>
               </div>
             </form>

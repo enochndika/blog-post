@@ -1,8 +1,8 @@
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
-import { MDBFormInline } from "mdbreact";
+import { MDBFormInline, MDBNavItem } from "mdbreact";
 
-export const HeaderSearch = () => {
+export const HeaderSearch = ({ placeholder }) => {
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -22,14 +22,18 @@ export const HeaderSearch = () => {
   });
 
   return (
-    <MDBFormInline waves onSubmit={formik.handleSubmit}>
+    <MDBFormInline
+      waves
+      onSubmit={formik.handleSubmit}
+      style={{ marginTop: "-5px" }}
+    >
       <div className="md-form my-0">
         <input
           className="form-control mr-sm-2"
           type="text"
           name="title"
           value={formik.values.title}
-          placeholder="Search"
+          placeholder={placeholder}
           aria-label="Search"
           onChange={formik.handleChange}
         />

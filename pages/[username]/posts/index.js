@@ -9,14 +9,13 @@ import { useMounted } from "../../../utils/mounted";
 import { formatFullDate } from "../../../utils/formats";
 import { useEffect } from "react";
 import { getCookieFromBrowser } from "../../../auth/cookies";
-import {
-  deletePost,
-  fetchPostsByUser,
-} from "../../../utils/actions/postActions";
+import { deletePost, fetchPostsByUser } from "../../../actions/postActions";
 import Head from "next/head";
+import { useTranslation } from "react-i18next";
 
-const token = getCookieFromBrowser("blog-jwt-token");
 export default function Posts() {
+  const { t } = useTranslation();
+  const token = getCookieFromBrowser("blog-jwt-token");
   const { user } = loggedUser();
   const { theme } = useTheme();
   const isMounted = useMounted();
@@ -36,31 +35,31 @@ export default function Posts() {
     if (!token) {
       router.push("/");
     }
-  });
+  }, [token]);
   const datatable = {
     columns: [
       {
-        label: "Title",
+        label: t("Pages.username.posts.index.table.title"),
         field: "title",
         sort: "asc",
       },
       {
-        label: "Description",
+        label: t("Pages.username.posts.index.table.description"),
         field: "description",
         sort: "asc",
       },
       {
-        label: "Picture",
+        label: t("Pages.username.posts.index.table.image"),
         field: "image",
         sort: "asc",
       },
       {
-        label: "Date",
+        label: t("Pages.username.posts.index.table.date"),
         field: "createdAt",
         sort: "asc",
       },
       {
-        label: "Actions",
+        label: t("Pages.username.posts.index.table.actions"),
         field: "actions",
         sort: "asc",
       },
@@ -75,13 +74,21 @@ export default function Posts() {
           image: (
             <img src={post.image} alt={post.title} height={60} width={80} />
           ),
-          createdAt: formatFullDate(post.createdAt),
+          createdAt:
+            router?.locale === "fr"
+              ? formatFullDate(post.createdAt, "fr-FR")
+              : formatFullDate(post.createdAt, "en-US"),
           actions: (
             <div>
               <div className="text-center" style={styles.forcedInline}>
                 <Link href={`/${user.username}/posts/update/${post.slug}`}>
                   <a>
-                    <MDBIcon icon="edit" />
+                    <MDBIcon
+                      icon="edit"
+                      className={
+                        isMounted && theme === "dark" ? "white-text" : null
+                      }
+                    />
                   </a>
                 </Link>
               </div>
@@ -98,7 +105,11 @@ export default function Posts() {
                   icon="trash-alt"
                   className="text-danger"
                   onClick={async () => {
-                    if (window.confirm(`Are you sure ?`)) {
+                    if (
+                      window.confirm(
+                        t("Pages.username.posts.index.deleteConfirm")
+                      )
+                    ) {
                       await deletePost(post.id, user?.id);
                       await mutate();
                     }
@@ -117,7 +128,7 @@ export default function Posts() {
   return (
     <>
       <Head>
-        <title>My posts</title>
+        <title>{t("Pages.username.posts.index.title")}</title>
       </Head>
       <MDBContainer fluid className={style.container}>
         {user?.id === posts[0]?.userId ? (
@@ -133,16 +144,27 @@ export default function Posts() {
             responsive
             responsiveMd
             responsiveSm
-            noRecordsFoundLabel="You have 0 post, Why not adding one?"
+            noRecordsFoundLabel={t(
+              "Pages.username.posts.index.tableDetail.noRecordsFoundLabel"
+            )}
             small
             tbodyTextWhite={isMounted && theme === "dark"}
             theadTextWhite={isMounted && theme === "dark"}
-            entriesLabel="Posts by page"
-            infoLabel={["Show", "to", "of", "posts"]}
+            entriesLabel={t(
+              "Pages.username.posts.index.tableDetail.entriesLabel"
+            )}
+            infoLabel={[
+              t("Pages.username.posts.index.tableDetail.infoLabel.a"),
+              t("Pages.username.posts.index.tableDetail.infoLabel.b"),
+              t("Pages.username.posts.index.tableDetail.infoLabel.c"),
+              t("Pages.username.posts.index.tableDetail.infoLabel.d"),
+            ]}
           />
         ) : (
           <div className="text-center mt-5">
-            <h3 className="grey-text ">You don't have posts</h3>
+            <h3 className="grey-text ">
+              {t("Pages.username.posts.index.postNotFound")}
+            </h3>
           </div>
         )}
       </MDBContainer>

@@ -9,10 +9,10 @@ import {
   MDBRow,
 } from "mdbreact";
 import useSWR from "swr";
-import { fetcher } from "../../utils/actions/fetcher";
+import { fetcher } from "../../actions/fetcher";
 import { useTheme } from "next-themes";
 import { useMounted } from "../../utils/mounted";
-import { deletePostByAdmin } from "../../utils/actions/postActions";
+import { deletePostByAdmin } from "../../actions/postActions";
 
 export default function AdminPosts() {
   const { theme } = useTheme();

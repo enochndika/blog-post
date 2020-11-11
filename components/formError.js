@@ -1,5 +1,11 @@
 import React from "react";
 
-export const FormError = ({message}) => (
-    <div className="text-danger">{message}</div>
+const styles = {
+  fontSize: 13,
+  marginTop: -15,
+};
+export const FormError = ({ message }) => (
+  <div className="text-danger" style={styles}>
+    {message}
+  </div>
 );

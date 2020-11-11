@@ -9,13 +9,13 @@ import {
 import { useState } from "react";
 import { Field, Form, Formik, useFormik } from "formik";
 import { reportType } from "../utils/reportText";
-import { reportChildComment } from "../utils/actions/childCommentActions";
-import { reportComment } from "../utils/actions/commentActions";
+import { reportChildComment } from "../actions/childCommentActions";
+import { reportComment } from "../actions/commentActions";
 import {
   addPostCategory,
   reportPost,
   updatePostCategory,
-} from "../utils/actions/postActions";
+} from "../actions/postActions";
 export const AddCategory = ({ isOpen, toggle, mutate }) => {
   const [open, setOpen] = useState(isOpen);
 

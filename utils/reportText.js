@@ -1,5 +1,5 @@
-export const reportType = {
-  spam: "junk or spam content",
-  violence: "harassment or bullying",
-  social: "racist statement",
-};
+export const reportType = (spam, violence, social) => ({
+  spam: spam,
+  violence: violence,
+  social: social,
+});

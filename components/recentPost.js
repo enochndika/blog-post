@@ -4,14 +4,18 @@ import style from "../styles/components/recentPost.module.css";
 import { formatDate } from "../utils/formats";
 import { HorizontalLine } from "./horizontalLign";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
+import { useRouter } from "next/router";
 
 export const RecentPosts = ({ posts, md, lg, related, line, text }) => {
+  const router = useRouter();
+  const { t } = useTranslation();
   return (
     <Fragment>
       {related}
       {!related && (
-        <h1 className="h5-responsive font-weight-bold dark-grey-text mb-5">
-          <u>Recent Posts</u>
+        <h1 className="h5-responsive font-weight-bold mb-5">
+          <u> {t("Components.recentPost.title")}</u>
         </h1>
       )}
       <MDBRow className="mt-2">
@@ -44,14 +48,21 @@ export const RecentPosts = ({ posts, md, lg, related, line, text }) => {
                       <span className="font-weight-bolder mr-1">
                         {post.user?.fullName}
                       </span>
-                      <span className="grey-text mr-1">in</span>
+                      <span className="grey-text mr-1">
+                        {t("Components.default.category")}
+                      </span>
                       <span>{post.posts_category.name}</span>
                     </div>
                     <div className="grey-text">
-                      <span className="mr-1">{formatDate(post.createdAt)}</span>
+                      <span className="mr-1">
+                        {router?.locale === "fr"
+                          ? formatDate(post.createdAt, "fr-FR")
+                          : formatDate(post.createdAt, "en-US")}
+                      </span>
                       <span>&#9632;</span>
                       <span className="ml-2">
-                        {post.read_time} min read <MDBIcon icon="star" />
+                        {post.read_time} {t("Components.default.estimatedRead")}{" "}
+                        <MDBIcon icon="star" />
                       </span>
                     </div>
                   </div>
@@ -62,8 +73,10 @@ export const RecentPosts = ({ posts, md, lg, related, line, text }) => {
       </MDBRow>
       {text && (
         <div>
-          <Link href="/posts">
-            <a className="grey-text font-weight-bold h4-responsive">See all</a>
+          <Link href="/all-posts">
+            <a className="font-weight-bold h4-responsive">
+              {t("Components.recentPost.link")}
+            </a>
           </Link>
         </div>
       )}

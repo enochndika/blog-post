@@ -1,0 +1,253 @@
+{
+  "Layout": {
+    "header": {
+      "item": {
+        "post": {
+          "index": "Add a post",
+          "notLoggedMessage": "You must login before adding a post"
+        },
+        "dropdown": {
+          "posts": "My posts",
+          "likes": "Liked Posts"
+        },
+        "language":{
+          "index": "Language",
+          "french": "French",
+          "english": "English"
+        },
+        "login": "Login",
+        "register": "Register",
+        "logout": "Log out",
+        "search": "Search",
+        "theme": {
+          "dark": "Dark Theme",
+          "light": "Light Theme"
+        }
+      }
+    },
+    "footer": {
+      "p1": "This application is made with React (Next.js), Node.js(Express.js) and PostgreSQL",
+      "p2": "For any request for information or collaboration, please complete the contact form",
+      "p2Link": "here"
+    }
+  },
+
+  "Helpers": {
+    "auth": {
+      "title": {
+        "login": "Log in",
+        "register": "Create account"
+      },
+      "form": {
+        "username": "Username",
+        "password": "Password",
+        "fullName": "Full Name",
+        "submit": {
+          "login": "Login",
+          "register": "Create"
+        }
+      }
+    },
+    "addChildComment": {
+      "replyNotAuth": "You must log in before replying to a post",
+      "label": "Reply to this comment",
+      "submitBtn": "Reply"
+    },
+    "addComment": {
+      "postCommentNotAuth": "You must log in before leaving a comment",
+      "label": "Leave a comment",
+      "submitBtn": "Comment"
+    },
+    "comments": {
+      "selectCommentNotAuth": "You must log in before reporting a comment",
+      "title": "Show comments",
+      "dropdown": {
+        "delete": "Delete",
+        "update": "Update",
+        "report": "Report"
+      },
+      "pagination": {
+        "loadMore": "Show more",
+        "loading": "Loading..."
+      }
+    },
+    "childComments": {
+      "title": "Show replies",
+      "collapseTitle": "Reply"
+    },
+    "reportModal": {
+      "title": "Report this comment",
+      "cancelBtn": "Cancel",
+      "confirmBtn": "Report",
+      "type": {
+        "spam": "Junk or Spam content",
+        "violence": " Harassment or Bullying",
+        "social": "Racist statement"
+      }
+    },
+    "updateComment": {
+      "cancelBtn": "Cancel",
+      "confirmBtn": "Confirm"
+    }
+  },
+
+  "Validators": {
+    "user": {
+      "userLogin": {
+        "username": "Username is required",
+        "password": "Password is required"
+      },
+      "userRegister": {
+        "username": "Username is required",
+        "password": "password is required",
+        "fullName": "Full Name is required"
+      },
+      "sendingMail": {
+        "emailReq": "Email is required",
+        "email": "This email is not correct",
+        "name": "Full Name is required",
+        "message": "Message is required"
+      }
+    }
+  },
+
+  "Actions": {
+    "error": "An error has occurred, please try again later",
+    "userActions": {
+      "signin": {
+        "success": "You are now authenticated",
+        "error": "Invalid credentials"
+      },
+      "signup": {
+        "success": "Account created, please login",
+        "error": "Unsuccessful account creation"
+      },
+      "userUpdate": {
+        "success": "Profil updated"
+      },
+      "deleteUser": {
+        "success": "User deleted"
+      },
+      "sendingMail": {
+        "success": "Message sent",
+        "error": "Message not sent, please try again later"
+      }
+    },
+    "comment": {
+      "reportSuccess": "your report has been taken into account"
+    },
+    "posts": {
+      "updateMessage": "Post updated"
+    }
+  },
+
+  "Components": {
+    "default": {
+      "category": "in",
+      "estimatedRead": "min read"
+    },
+    "recentPost": {
+      "title": "Recent Posts",
+      "link": "View all"
+    }
+  },
+
+  "Pages": {
+    "register": {
+      "title": "Create account"
+    },
+    "signin": {
+      "title": "Login"
+    },
+    "contact": {
+      "fullName": "Your Full Name",
+      "email": "Your email",
+      "message": "Your message",
+      "submitBtn": "Send"
+    },
+    "index": {
+      "popularPost": "Popular posts"
+    },
+    "post": {
+      "slug": {
+        "likePostNotAuth": "You must log in before liking a post",
+        "dislikePostNotAuth": "You must log in before disliking a post",
+        "reportPostNotAuth": "You must log in before reporting a post",
+        "fallback": "Loading...",
+        "report": "Report",
+        "morePost": "More posts from Enoch Ndika"
+      },
+      "create": {
+        "title": "Add a post",
+        "previewPill": "Preview",
+        "createPill": "Add a post",
+        "redirectNotAUth": "You must be logged in before adding a post",
+        "modalContent": "In progress...",
+        "form": {
+          "title": "Title",
+          "description": "Description",
+          "readTime": "Estimated reading time (min)",
+          "selectOption": "Sélect a category",
+          "uploadFileTitle": "Add an illustration image",
+          "submitBtn": "Publish"
+        }
+      },
+      "search": {
+        "title": "Search",
+        "h1": "Post(s) found with the keyword",
+        "notFound": "No post found"
+      }
+    },
+    "username": {
+      "profile": {
+        "index": {
+          "title": "Personal Informations",
+          "submitBtn": "Confirm"
+        }
+      },
+      "posts": {
+        "index": {
+          "title": "My posts",
+          "table": {
+            "title": "Title",
+            "description": "Description",
+            "image": "Image",
+            "date": "Date",
+            "actions": "Actions"
+          },
+          "tableDetail": {
+            "noRecordsFoundLabel": "You don't have any post, why not create one ?",
+            "entriesLabel": "Posts by page",
+            "infoLabel": {
+              "a": "Show",
+              "b": "to",
+              "c": "of",
+              "d": "posts"
+            }
+          },
+          "postNotFound": "You don't own any post",
+          "deleteConfirm": "Are you sure ?"
+        },
+        "liked": {
+          "title": "Liked Posts",
+          "h1": "Posts you liked",
+          "h1NotFound": "You didn't like any post"
+        },
+        "update": {
+          "title": "Update a post",
+          "previewPill": "Preview",
+          "img": "Illustration img",
+          "createPill": "Post",
+          "modalContent": "In progress...",
+          "form": {
+            "title": "Title",
+            "description": "Description",
+            "readTime": "Estimated reading time (min)",
+            "uploadFileTitle": "Add an illustration image",
+            "submitBtn": "Update"
+          }
+        }
+      }
+    }
+  }
+}

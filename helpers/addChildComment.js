@@ -4,12 +4,14 @@ import { useMounted } from "../utils/mounted";
 import { useFormik } from "formik";
 import { loggedUser } from "../auth/useUser";
 import cogoToast from "cogo-toast";
-import { addChildComment } from "../utils/actions/childCommentActions";
+import { addChildComment } from "../actions/childCommentActions";
+import { useTranslation } from "react-i18next";
 
 export const AddChildComment = ({ comment, mutate }) => {
   const { theme } = useTheme();
   const isMounted = useMounted();
   const { user } = loggedUser();
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {
@@ -17,25 +19,25 @@ export const AddChildComment = ({ comment, mutate }) => {
       content: "",
       userId: "",
     },
-    onSubmit: async (values, actions) => {
+    onSubmit: async (values, { resetForm, setSubmitting }) => {
       const data = {
         content: values.content,
         userId: user && user.id,
         commentId: comment,
       };
       if (!user) {
-        cogoToast.info("You must log in before replying to a comment", {
+        cogoToast.info(t("Helpers.addChildComment.replyNotAuth"), {
           position: "top-right",
         });
-        actions.setSubmitting(false);
-        actions.resetForm({ values: "" });
+        setSubmitting(false);
+        resetForm({ values: "" });
       }
       if (user) {
         await addChildComment(data);
         await mutate();
-        actions.setSubmitting(false);
-        actions.resetForm({ values: "" });
-        actions.setSubmitting(false);
+        setSubmitting(false);
+        resetForm({ values: "" });
+        setSubmitting(false);
       }
     },
   });
@@ -44,11 +46,12 @@ export const AddChildComment = ({ comment, mutate }) => {
     <form onSubmit={formik.handleSubmit}>
       <div>
         <MDBInput
-          label="Reply to this comment"
+          label={t("Helpers.addChildComment.label")}
           name="content"
           onChange={formik.handleChange}
           value={formik.values.content}
           className="pb-1"
+          disabled={formik.isSubmitting}
         />
       </div>
       <MDBBtn
@@ -59,7 +62,7 @@ export const AddChildComment = ({ comment, mutate }) => {
         className="text-capitalize"
         disabled={formik.isSubmitting}
       >
-        Reply
+        {t("Helpers.addChildComment.submitBtn")}
       </MDBBtn>
     </form>
   );
