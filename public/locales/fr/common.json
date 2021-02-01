@@ -10,7 +10,7 @@
           "posts": "Mes posts",
           "likes": "Posts aimés"
         },
-        "language":{
+        "language": {
           "index": "Langue",
           "french": "Français",
           "english": "Anglais"
@@ -50,17 +50,19 @@
     },
     "addChildComment": {
       "replyNotAuth": "vous devez vous authentifier avant de répondre à un commentaire",
-      "label": "Répondre à ce commentaire",
-      "submitBtn": "Répondre"
+      "label": "Votre message",
+      "submitBtn": "Répondre",
+      "textAreaRequired": "Veuillez remplir votre commentaire"
     },
     "addComment": {
       "postCommentNotAuth": "vous devez vous authentifier avant de poster un commentaire",
       "label": "Laisser un commenter",
-      "submitBtn": "Poster"
+      "submitBtn": "Poster",
+      "textAreaRequired": "Veuillez remplir votre commentaire"
     },
     "comments": {
       "selectCommentNotAuth": "vous devez vous authentifier avant de signaler un commentaire",
-      "title": "Afficher le(s) commentaire(s)",
+      "title": "Commentaire(s)",
       "dropdown": {
         "delete": "Supprimer",
         "update": "Modifier",
@@ -73,13 +75,14 @@
     },
     "childComments": {
       "selectCommentNotAuth": "vous devez vous authentifier avant de signaler un commentaire",
-      "title": "Afficher le(s) réponse(s)",
+      "title": "Voir les réponses",
       "collapseTitle": "Répondre"
     },
     "reportModal": {
       "title": "Signaler ce commentaire",
       "cancelBtn": "Annuler",
       "confirmBtn": "Signaler",
+      "requiredField": "Veuillez sélectionner une option",
       "type": {
         "spam": "Contenu indésirable  ou spam",
         "violence": "Harcèlement ou intimidation",
@@ -166,6 +169,10 @@
       "message": "Votre message",
       "submitBtn": "Envoyer"
     },
+    "all-posts": {
+      "previousLabel": "Précédent",
+      "nextLabel": "Suivant"
+    },
     "index": {
       "popularPost": "Posts populaires"
     },
@@ -235,9 +242,9 @@
           "h1NotFound": "Vous n'avez aimé aucun post"
         },
         "update": {
-          "title": "Créer un post",
+          "title": "Mise à jour",
           "previewPill": "Prévisualiser",
-          "createPill": "Créer un post",
+          "createPill": "Post",
           "modalContent": "Creation en cours...",
           "img": "Image d'illustration",
           "form": {

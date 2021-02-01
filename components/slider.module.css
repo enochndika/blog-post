@@ -1,0 +1,38 @@
+.arrow,
+.arrowDisabled,
+.arrowLeft,
+.arrowRight {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .arrow,
+  .arrowDisabled,
+  .arrowLeft,
+  .arrowRight {
+    display: block;
+  }
+  .arrow {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    fill: blue;
+    cursor: pointer;
+  }
+
+  .arrowLeft {
+    left: 5px;
+  }
+
+  .arrowRight {
+    left: auto;
+    right: 5px;
+  }
+
+  .arrowDisabled {
+    fill: rgba(255, 255, 255, 0.5);
+  }
+}

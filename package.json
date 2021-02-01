@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "blogger-tailwindcss",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,26 +8,40 @@
     "start": "next start"
   },
   "dependencies": {
-    "axios": "^0.21.0",
+    "@hookform/resolvers": "1.2.0",
+    "@reach/portal": "^0.13.0",
+    "axios": "^0.21.1",
     "cogo-toast": "^4.2.3",
     "draft-js": "^0.11.7",
     "draft-js-export-html": "^1.4.1",
-    "formik": "^2.2.4",
-    "i18next": "^19.8.3",
+    "i18next": "^19.8.4",
     "js-cookie": "^2.2.1",
-    "jwt-decode": "^3.1.1",
-    "mdbreact": "^4.27.0",
-    "next": "^10.0.0",
+    "jwt-decode": "^3.1.2",
+    "keen-slider": "^5.4.0",
+    "match-sorter": "^6.1.0",
+    "next": "^10.0.6",
     "next-themes": "^0.0.10",
     "nprogress": "^0.2.0",
-    "react": "16.13.1",
-    "react-country-flag": "^2.3.0",
-    "react-dom": "16.13.1",
+    "react": "17.0.1",
+    "react-content-loader": "^5.1.4",
+    "react-dom": "17.0.1",
     "react-draft-wysiwyg": "^1.14.5",
     "react-dropzone": "^11.2.4",
-    "react-i18next": "^11.7.3",
-    "react-paginate": "^6.5.0",
-    "swr": "^0.3.8",
-    "yup": "^0.29.3"
+    "react-hook-form": "^6.14.2",
+    "react-i18next": "^11.8.5",
+    "react-paginate": "^7.0.0",
+    "react-table": "^7.6.3",
+    "swr": "^0.4.0",
+    "yup": "^0.32.8"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "^10.0.6",
+    "@types/node": "^14.14.22",
+    "@types/react": "^17.0.0",
+    "autoprefixer": "^10.2.1",
+    "postcss": "^8.2.4",
+    "tailwind-bootstrap-grid": "^3.1.0",
+    "tailwindcss": "^2.0.2",
+    "typescript": "^4.1.3"
   }
 }

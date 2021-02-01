@@ -10,7 +10,7 @@
           "posts": "My posts",
           "likes": "Liked Posts"
         },
-        "language":{
+        "language": {
           "index": "Language",
           "french": "French",
           "english": "English"
@@ -20,8 +20,8 @@
         "logout": "Log out",
         "search": "Search",
         "theme": {
-          "dark": "Dark Theme",
-          "light": "Light Theme"
+          "dark": "Dark theme",
+          "light": "Light theme"
         }
       }
     },
@@ -50,17 +50,19 @@
     },
     "addChildComment": {
       "replyNotAuth": "You must log in before replying to a post",
-      "label": "Reply to this comment",
-      "submitBtn": "Reply"
+      "label": "Your message",
+      "submitBtn": "Reply",
+      "textAreaRequired": "Please fill in your comment"
     },
     "addComment": {
       "postCommentNotAuth": "You must log in before leaving a comment",
       "label": "Leave a comment",
-      "submitBtn": "Comment"
+      "submitBtn": "Comment",
+      "textAreaRequired": "Please fill in your comment"
     },
     "comments": {
       "selectCommentNotAuth": "You must log in before reporting a comment",
-      "title": "Show comments",
+      "title": "Comments",
       "dropdown": {
         "delete": "Delete",
         "update": "Update",
@@ -78,6 +80,7 @@
     "reportModal": {
       "title": "Report this comment",
       "cancelBtn": "Cancel",
+      "requiredField": "Please select one option",
       "confirmBtn": "Report",
       "type": {
         "spam": "Junk or Spam content",
@@ -165,6 +168,10 @@
       "message": "Your message",
       "submitBtn": "Send"
     },
+    "all-posts": {
+      "previousLabel": "Previous",
+      "nextLabel": "Next"
+    },
     "index": {
       "popularPost": "Popular posts"
     },
@@ -234,7 +241,7 @@
           "h1NotFound": "You didn't like any post"
         },
         "update": {
-          "title": "Update a post",
+          "title": "Update",
           "previewPill": "Preview",
           "img": "Illustration img",
           "createPill": "Post",
