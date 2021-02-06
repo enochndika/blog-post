@@ -3,7 +3,7 @@ import { StarIcon } from "./ui/icons";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 
-interface PostDetailsProps {
+export interface PostDetailsProps {
   author: string;
   category: string;
   date: Date;

@@ -4,21 +4,49 @@ import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import Row from "../components/ui/row";
 import { Separator } from "../components/separator";
-import { TrendPost } from "../components/trendPosts";
-import { PopularTrendPosts } from "../components/popularTrendPosts";
 import api from "../utils/axios";
-import { Image } from "../components/image";
-import { PostDetails } from "../components/postDetails";
-import { Post } from "../components/posts";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { ComponentType } from "react";
 import { SliderProps } from "../components/slider";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { PostProps } from "../utils/defaultProps";
+import { PostDetailsProps } from "../components/postDetails";
+import { ImageProps } from "../components/image";
+import { PostsProps } from "../components/posts";
+
+/* Using dynamic import to improve TTFB */
+const TrendPost: ComponentType<any> = dynamic(
+  () => import("../components/trendPosts").then((mod) => mod.TrendPost),
+  { ssr: true }
+);
+
+const PopularTrendPosts: ComponentType<PostProps> = dynamic(
+  () =>
+    import("../components/popularTrendPosts").then(
+      (mod) => mod.PopularTrendPosts
+    ),
+  { ssr: true }
+);
+
+const PostDetails: ComponentType<PostDetailsProps> = dynamic(
+  () => import("../components/postDetails").then((mod) => mod.PostDetails),
+  { ssr: true }
+);
+
+const Post: ComponentType<PostsProps> = dynamic(
+  () => import("../components/posts").then((mod) => mod.Post),
+  { ssr: true }
+);
+
+const Image: ComponentType<ImageProps> = dynamic(
+  () => import("../components/image").then((mod) => mod.Image),
+  { ssr: false }
+);
 
 const Slider: ComponentType<SliderProps> = dynamic(
   () => import("../components/slider").then((mod) => mod.Slider),
-  { ssr: true }
+  { ssr: false }
 );
 
 export default function Home({
@@ -120,7 +148,7 @@ export const getStaticProps: GetStaticProps = async () => {
   } = await api.get("/post-filters/trend-posts?limit=8");
   return {
     props: { data, recentPosts, popularPosts, trendPosts },
-    revalidate: 30,
+    revalidate: 5,
   };
 };
 

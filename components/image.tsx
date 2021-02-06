@@ -1,7 +1,7 @@
 import style from "./image.module.css";
 import { HTMLAttributes } from "react";
 
-interface ImageProps {
+export interface ImageProps {
   className?: string;
   alt: any;
   src: string;
