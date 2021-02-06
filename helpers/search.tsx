@@ -1,12 +1,17 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import ReactPaginate from "react-paginate";
+import { ComponentType, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { className } from "../pages/all-posts/[page]";
 import Reddit from "../components/skeleton/card";
 import Row from "../components/ui/row";
 import api from "../utils/axios";
 import { Post } from "../components/posts";
+import PaginationProps from "../components/pagination";
+import dynamic from "next/dynamic";
+
+const Pagination: ComponentType<PaginationProps> = dynamic(
+  () => import("../components/pagination").then((mod) => mod.Pagination),
+  { ssr: false }
+);
 
 export const Search = () => {
   const { t } = useTranslation();
@@ -58,23 +63,10 @@ export const Search = () => {
         </div>
       </Row>
       {data.data && data.data.length > 0 && (
-        <ReactPaginate
+        <Pagination
           onPageChange={paginationHandler}
           initialPage={data.currentPage - 1}
           pageCount={data.totalPages}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          previousLabel={t("Pages.all-posts.previousLabel")}
-          nextLabel={t("Pages.all-posts.nextLabel")}
-          breakClassName={`${className.default} ${className.break}`}
-          containerClassName={className.container}
-          pageClassName={`${className.default} ${className.page}`}
-          pageLinkClassName={"focus:outline-none"}
-          previousClassName={`${className.default} ${className.previous}`}
-          previousLinkClassName={"focus:outline-none"}
-          nextClassName={`${className.default} ${className.next}`}
-          nextLinkClassName={"focus:outline-none"}
-          activeClassName={className.active}
         />
       )}
     </>

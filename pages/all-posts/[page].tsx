@@ -1,13 +1,20 @@
 import DefaultLayout from "../../components/layout/default";
 import api from "../../utils/axios";
 import { useRouter } from "next/router";
-import ReactPaginate from "react-paginate";
 import Head from "next/head";
 import Container from "../../components/ui/container";
 import { Post } from "../../components/posts";
 import Row from "../../components/ui/row";
 import { useTranslation } from "react-i18next";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import dynamic from "next/dynamic";
+import { ComponentType } from "react";
+import PaginationProps from "../../components/pagination";
+
+const Pagination: ComponentType<PaginationProps> = dynamic(
+  () => import("../../components/pagination").then((mod) => mod.Pagination),
+  { ssr: false }
+);
 
 export default function AllPosts({
   posts,
@@ -41,31 +48,18 @@ export default function AllPosts({
         <Row className="justify-center">
           <div className="col-12 md:col-10">
             <Post
+              mainColClass="col-12"
               firstColClass="col-12 md:col-3 mb-3 md:mb-12"
               secondColClass="col-12 md:col-8 mb-12 md:mb-0"
               post={posts}
             />
           </div>
         </Row>
-        <ReactPaginate
+        <Pagination
           onPageChange={paginationHandler}
           initialPage={currentPage - 1}
           pageCount={pages}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          previousLabel={t("Pages.all-posts.previousLabel")}
-          nextLabel={t("Pages.all-posts.nextLabel")}
-          breakClassName={`${className.default} ${className.break}`}
-          containerClassName={className.container}
-          pageClassName={`${className.default} ${className.page}`}
-          pageLinkClassName={"focus:outline-none"}
-          previousClassName={`${className.default} ${className.previous}`}
-          previousLinkClassName={"focus:outline-none"}
-          nextClassName={`${className.default} ${className.next}`}
-          nextLinkClassName={"focus:outline-none"}
-          activeClassName={className.active}
         />
-        <div className="font-bold pointer-events-none bg-blue-900" />
       </Container>
     </>
   );
@@ -97,18 +91,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   return {
     props: { posts, pageCount, currentPage, pages },
-    revalidate: 30,
+    revalidate: 5,
   };
-};
-
-export const className = {
-  default: `relative block text-xs md:text-base py-2 px-1.5 md:px-2 dark:text-white text-gray-700 hover:bg-gray-200 dark:hover:bg-gray-800`,
-  container: `flex flex-wrap pl-0 list-none rounded my-2 justify-start md:justify-center`,
-  active: `font-bold bg-gray-400 dark:bg-blue-900 dark:hover:bg-blue-900 hover:bg-gray-400`,
-  break: `border-t border-b border-gray-300`,
-  previous: `border-t border-b border-l border-gray-300 ml-0 rounded-l`,
-  next: `border-t border-b border-r border-gray-300 rounded-r`,
-  page: `border-t border-b border-gray-300 block`,
 };
 
 AllPosts.Layout = DefaultLayout;

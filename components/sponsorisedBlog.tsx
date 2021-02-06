@@ -2,15 +2,20 @@ import style from "./sponsorisedBlog.module.css";
 import { Image } from "./image";
 import Row from "./ui/row";
 import { PostDetails } from "./postDetails";
+import Link from "next/link";
 
 export const SponsoredBlog = ({ posts }: { posts: any }) => (
   <Row>
     <div className={`${style.col} col-12 md:col-6 dark:bg-darker`}>
-      <Image
-        src={posts.image}
-        className="w-full cursor-pointer h-full"
-        alt={posts.title}
-      />
+      <Link href={`/posts/${posts.slug}`}>
+        <a>
+          <Image
+            src={posts.image}
+            className="w-full cursor-pointer h-full"
+            alt={posts.title}
+          />
+        </a>
+      </Link>
     </div>
     <div className={`${style.col} col-12 md:col-6 dark:bg-darker`}>
       <div className="mt-4 md:mt-0">
