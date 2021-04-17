@@ -1,24 +1,24 @@
-import { deleteComment, useFetchComments } from "../actions/commentActions";
-import { ChildComments } from "./childComments";
-import { useState } from "react";
-import { loggedUser } from "../auth/useUser";
-import cogoToast from "cogo-toast";
-import { useTranslation } from "react-i18next";
-import { useRouter } from "next/router";
-import { formatNumericDate } from "../utils/formats";
+import { deleteComment, useFetchComments } from '../actions/commentActions';
+import { ChildComments } from './childComments';
+import { useState } from 'react';
+import { loggedUser } from '../auth/useUser';
+import cogoToast from 'cogo-toast';
+import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/router';
+import { formatNumericDate } from '../utils/formats';
 import {
   AngleDownIcon,
   AngleUpIcon,
   EllipsisVIcon,
   FlagIcon,
   UserCircleIcon,
-} from "../components/ui/icons";
-import Row from "../components/ui/row";
-import Dropdown from "../components/ui/dropdown";
-import { Button } from "../components/ui/button";
-import { AddComment } from "./addComment";
-import { ReportModal } from "./reportModal";
-import { UpdateComment } from "./updateComment";
+} from '../components/ui/icons';
+import Row from '../components/ui/row';
+import Dropdown from '../components/ui/dropdown';
+import { Button } from '../components/ui/button';
+import { AddComment } from './addComment';
+import { ReportModal } from './reportModal';
+import { UpdateComment } from './updateComment';
 
 export const PostComments = ({ post }) => {
   const { t } = useTranslation();
@@ -48,7 +48,7 @@ export const PostComments = ({ post }) => {
 
   const onSelectedComment = (id) => {
     if (!user) {
-      cogoToast.info(t("Helpers.comments.selectCommentNotAuth"));
+      cogoToast.info(t('Helpers.comments.selectCommentNotAuth'));
     }
     if (user) {
       setCommentId(id);
@@ -66,7 +66,7 @@ export const PostComments = ({ post }) => {
       {comments && comments.length > 0 && (
         <div className="text-2xl mb-10 font-medium">
           <span onClick={() => setShowComments(!showComments)} className="flex">
-            {t("Helpers.comments.title")}
+            {t('Helpers.comments.title')}
             {showComments ? (
               <AngleDownIcon className="ml-1 h-5 mt-2" />
             ) : (
@@ -108,9 +108,9 @@ export const PostComments = ({ post }) => {
                           </span>
                           <span>
                             <small className="font-medium">
-                              {router?.locale === "fr"
-                                ? formatNumericDate(comment.createdAt, "fr-FR")
-                                : formatNumericDate(comment.createdAt, "en-US")}
+                              {router?.locale === 'fr'
+                                ? formatNumericDate(comment.createdAt, 'fr-FR')
+                                : formatNumericDate(comment.createdAt, 'en-US')}
                             </small>
                           </span>
                         </div>
@@ -127,19 +127,19 @@ export const PostComments = ({ post }) => {
                                       await deleteComment(
                                         comment.id,
                                         user.id,
-                                        t("Actions.error")
+                                        t('Actions.error'),
                                       );
                                       await mutate();
                                     }}
                                   >
-                                    {t("Helpers.comments.dropdown.delete")}
+                                    {t('Helpers.comments.dropdown.delete')}
                                   </Dropdown.Item>
                                   <Dropdown.Item
                                     onClick={() => {
                                       onSelectedCommentRow(index);
                                     }}
                                   >
-                                    {t("Helpers.comments.dropdown.update")}
+                                    {t('Helpers.comments.dropdown.update')}
                                   </Dropdown.Item>
                                 </>
                               ) : (
@@ -150,7 +150,7 @@ export const PostComments = ({ post }) => {
                                 >
                                   <div className="flex">
                                     <FlagIcon className="mr-2 h-4" />
-                                    {t("Helpers.comments.dropdown.report")}
+                                    {t('Helpers.comments.dropdown.report')}
                                   </div>
                                 </Dropdown.Item>
                               )}
@@ -190,10 +190,10 @@ export const PostComments = ({ post }) => {
                 className="text-lowercase font-weight-bold"
               >
                 {isLoadingMore
-                  ? t("Helpers.comments.pagination.loading")
+                  ? t('Helpers.comments.pagination.loading')
                   : isReachingEnd
-                  ? "fin de commentaires"
-                  : t("Helpers.comments.pagination.loadMore")}
+                  ? 'fin de commentaires'
+                  : t('Helpers.comments.pagination.loadMore')}
               </Button>
             )}
           </div>

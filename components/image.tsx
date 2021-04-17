@@ -1,5 +1,5 @@
-import style from "./image.module.css";
-import { HTMLAttributes } from "react";
+import style from './image.module.css';
+import { HTMLAttributes } from 'react';
 
 export interface ImageProps {
   className?: string;

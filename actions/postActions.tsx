@@ -1,9 +1,9 @@
-import { toastError, toastSuccess } from "../utils/toast";
-import api from "../utils/axios";
-import useSWR from "swr";
-import { fetcher, fetches } from "./fetcher";
-import { convertToRaw } from "draft-js";
-import cogoToast from "cogo-toast";
+import { toastError, toastSuccess } from '../utils/toast';
+import api from '../utils/axios';
+import useSWR from 'swr';
+import { fetcher, fetches } from './fetcher';
+import { convertToRaw } from 'draft-js';
+import cogoToast from 'cogo-toast';
 
 export const useFetchCategories = () => {
   const { data, error, mutate } = useSWR(`/post-categories`, fetcher);
@@ -18,7 +18,7 @@ export const useFetchCategories = () => {
 export const useFetchPostLikes = (postId: number) => {
   const { data, error, mutate } = useSWR(
     postId ? `/like-posts/${postId}` : null,
-    fetcher
+    fetcher,
   );
   return {
     likes: data,
@@ -31,7 +31,7 @@ export const useFetchPostLikes = (postId: number) => {
 export const useFetchTotalPostLikedByUser = (userId: number) => {
   const { data, error, mutate } = useSWR(
     userId ? `/like-posts/total/${userId}` : null,
-    fetcher
+    fetcher,
   );
   return {
     likes: data,
@@ -44,7 +44,7 @@ export const useFetchTotalPostLikedByUser = (userId: number) => {
 export const useFetchPostsByUser = (userId: number) => {
   const { data, error, mutate } = useSWR(
     userId ? `/post-filters/user/${userId}` : null,
-    fetcher
+    fetcher,
   );
   return {
     posts: data,
@@ -57,7 +57,7 @@ export const useFetchPostsByUser = (userId: number) => {
 export const useFetchPostRelated = (post: { id: number }) => {
   const { data, mutate, error } = useSWR(
     post ? `/post-filters/related/${post?.id}?limit=8` : null,
-    fetcher
+    fetcher,
   );
   return {
     data,
@@ -71,7 +71,7 @@ export const useFetchPost = (post: any, slug: string | string[]) => {
   const { data, error, mutate } = useSWR(
     slug ? `/posts/read/${slug} ` : null,
     fetches,
-    { initialData: post ? post : null }
+    { initialData: post ? post : null },
   );
   return {
     data,
@@ -85,7 +85,7 @@ export const addPost = async (userId: number, values, content) => {
   const formData = new FormData();
 
   for (const key of Object.keys(values.picture)) {
-    formData.append("picture", values.picture[key]);
+    formData.append('picture', values.picture[key]);
   }
 
   try {
@@ -99,9 +99,9 @@ export const addPost = async (userId: number, values, content) => {
         read_time: values.read_time,
         image: [image],
       });
-      toastSuccess("Post crée");
+      toastSuccess('Post crée');
     } else {
-      toastError("Une erreur est survenue, réessayer plus tard");
+      toastError('Une erreur est survenue, réessayer plus tard');
     }
   } catch (e) {
     toastError(e.response.data.message);
@@ -113,7 +113,7 @@ export const updatePost = async (
   userId: number,
   content: any,
   successMessage?: string,
-  errorMessage?: string
+  errorMessage?: string,
 ) => {
   const data = {
     title: values.title,
@@ -134,7 +134,7 @@ export const updatePost = async (
 export const deletePost = async (postId: number, userId: number) => {
   try {
     await api.delete(`/posts/${postId}/${userId}`);
-    toastSuccess("Post supprimé");
+    toastSuccess('Post supprimé');
   } catch (e) {
     toastError(e.response.data.message);
   }
@@ -143,7 +143,7 @@ export const deletePost = async (postId: number, userId: number) => {
 export const deletePostByAdmin = async (postId: number) => {
   try {
     await api.delete(`/posts/${postId}`);
-    toastSuccess("Post supprimé");
+    toastSuccess('Post supprimé');
   } catch (e) {
     toastError(e.response.data.message);
   }
@@ -151,7 +151,7 @@ export const deletePostByAdmin = async (postId: number) => {
 
 export const addPicture = async (file: File) => {
   const formData = new FormData();
-  formData.append("picture", file);
+  formData.append('picture', file);
   try {
     const { data } = await api.post(`/upload`, formData);
     return {
@@ -160,7 +160,7 @@ export const addPicture = async (file: File) => {
       },
     };
   } catch (e) {
-    toastError("Une erreur est survenue");
+    toastError('Une erreur est survenue');
   }
 };
 
@@ -169,7 +169,7 @@ export const likePost = async (postId: number, userId: number) => {
     await api.post(`/like-posts/${postId}/${userId}`);
   } catch (e) {
     if (e.response.status === 400) {
-      cogoToast.info("Vous aimez déjà ce post");
+      cogoToast.info('Vous aimez déjà ce post');
     }
   }
 };
@@ -187,7 +187,7 @@ export const reportPost = async (
   userId: number,
   subject: string,
   successMessage?: string,
-  errorMessage?: string
+  errorMessage?: string,
 ) => {
   try {
     await api.post(`/report-posts/${postId}/${userId}`, subject);
@@ -201,7 +201,7 @@ export const addPostCategory = async (values: { name: string }) => {
   try {
     await api.post(`/post-categories`, { name: values.name });
   } catch (e) {
-    toastError("Une erreur est survenue");
+    toastError('Une erreur est survenue');
   }
 };
 
@@ -217,9 +217,9 @@ export const deletePostCategory = async (id: number, mutate: () => void) => {
   try {
     await api.delete(`/post-categories/${id}`);
     await mutate();
-    toastSuccess("Catégorie supprimée");
+    toastSuccess('Catégorie supprimée');
   } catch (e) {
-    toastError("Une erreur est survenue");
+    toastError('Une erreur est survenue');
   }
 };
 
@@ -227,7 +227,7 @@ export const deletePostReport = async (id: number, mutate: () => void) => {
   try {
     await api.delete(`/report-posts/${id}`);
     await mutate();
-    toastSuccess("Signalement supprimé");
+    toastSuccess('Signalement supprimé');
   } catch (e) {
     toastError(e.response.data.message);
   }

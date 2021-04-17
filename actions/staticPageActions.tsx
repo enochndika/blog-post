@@ -1,7 +1,7 @@
-import api from "../utils/axios";
-import { toastError } from "../utils/toast";
-import useSWR from "swr";
-import { fetcher } from "./fetcher";
+import api from '../utils/axios';
+import { toastError } from '../utils/toast';
+import useSWR from 'swr';
+import { fetcher } from './fetcher';
 
 export const useFetchStaticPages = () => {
   const { data, error, mutate } = useSWR(`/static-pages`, fetcher);
@@ -20,7 +20,7 @@ export const addStaticPage = async (values) => {
   try {
     await api.post(`/static-pages`, data);
   } catch (e) {
-    toastError("Une erreur est survenue");
+    toastError('Une erreur est survenue');
   }
 };
 

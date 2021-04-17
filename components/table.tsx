@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react';
 import {
   usePagination,
   useTable,
@@ -6,14 +6,14 @@ import {
   useAsyncDebounce,
   useFilters,
   useGlobalFilter,
-} from "react-table";
+} from 'react-table';
 import {
   AngleDoubleLeftIcon,
   AngleDoubleRightIcon,
   AngleLeftIcon,
   AngleRightIcon,
-} from "./ui/icons";
-import * as matchSorter from "match-sorter";
+} from './ui/icons';
+import * as matchSorter from 'match-sorter';
 
 const sorter: any = matchSorter;
 function GlobalFilter({
@@ -31,7 +31,7 @@ function GlobalFilter({
     <span>
       Search :
       <input
-        value={value || ""}
+        value={value || ''}
         onChange={(e) => {
           setValue(e.target.value);
           onChange(e.target.value);
@@ -50,7 +50,7 @@ function DefaultColumnFilter({
   const count = preFilteredRows.length;
   return (
     <input
-      value={filterValue || ""}
+      value={filterValue || ''}
       onChange={(e) => {
         setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
       }}
@@ -74,7 +74,7 @@ export interface TableProps {
   children?: ReactNode;
   data: any;
 }
-export const Table = ({ columns, data, children }:TableProps) => {
+export const Table = ({ columns, data, children }: TableProps) => {
   const filterTypes = React.useMemo(
     () => ({
       // Add a new fuzzyTextFilterFn filter type.
@@ -92,7 +92,7 @@ export const Table = ({ columns, data, children }:TableProps) => {
         });
       },
     }),
-    []
+    [],
   );
 
   const defaultColumn = React.useMemo(
@@ -100,7 +100,7 @@ export const Table = ({ columns, data, children }:TableProps) => {
       // Let's set up our default Filter UI
       Filter: DefaultColumnFilter,
     }),
-    []
+    [],
   );
   const {
     getTableProps,
@@ -130,7 +130,7 @@ export const Table = ({ columns, data, children }:TableProps) => {
     useFilters,
     useGlobalFilter,
     useSortBy,
-    usePagination
+    usePagination,
   );
 
   return (
@@ -154,7 +154,7 @@ export const Table = ({ columns, data, children }:TableProps) => {
               const page = e.target.value ? Number(e.target.value) - 1 : 0;
               gotoPage(page);
             }}
-            style={{ width: "100px" }}
+            style={{ width: '100px' }}
           />
         </div>
         <div>
@@ -180,14 +180,15 @@ export const Table = ({ columns, data, children }:TableProps) => {
       <div className="max-w-full overflow-x-scroll md:overflow-x-hidden">
         <table {...getTableProps()} className="w-full border-collapse">
           <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
+            {headerGroups.map((headerGroup, i) => (
+              <tr {...headerGroup.getHeaderGroupProps()} key={i}>
+                {headerGroup.headers.map((column, i) => (
                   <th
+                    key={i}
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                     className="pb-5"
                   >
-                    {column.render("Header")}
+                    {column.render('Header')}
                     {/* <div>
                       {column.canFilter ? column.render("Filter") : null}
                     </div>*/}
@@ -195,9 +196,9 @@ export const Table = ({ columns, data, children }:TableProps) => {
                     <span>
                       {column.isSorted
                         ? column.isSortedDesc
-                          ? " 🔽"
-                          : " 🔼"
-                        : ""}
+                          ? ' 🔽'
+                          : ' 🔼'
+                        : ''}
                     </span>
                   </th>
                 ))}
@@ -209,16 +210,18 @@ export const Table = ({ columns, data, children }:TableProps) => {
               prepareRow(row);
               return (
                 <tr
+                  key={i}
                   {...row.getRowProps()}
                   className="md:hover:bg-gray-100 md:dark:hover:bg-gray-600"
                 >
-                  {row.cells.map((cell) => {
+                  {row.cells.map((cell, i) => {
                     return (
                       <td
+                        key={i}
                         {...cell.getCellProps()}
                         className="border-b border-gray-300 text-sm"
                       >
-                        {cell.render("Cell")}
+                        {cell.render('Cell')}
                       </td>
                     );
                   })}

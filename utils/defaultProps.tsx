@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 export default interface Props {
   children: ReactNode;
@@ -18,5 +18,5 @@ export interface PostProps {
       name?: string;
     };
   };
-  number?: string
+  number?: string;
 }

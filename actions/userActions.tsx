@@ -1,18 +1,18 @@
-import api from "../utils/axios";
-import { removeCookie, setCookie } from "../auth/cookies";
-import { toastError, toastSuccess } from "../utils/toast";
-import Router from "next/router";
+import api from '../utils/axios';
+import { removeCookie, setCookie } from '../auth/cookies';
+import { toastError, toastSuccess } from '../utils/toast';
+import Router from 'next/router';
 
 export const signin = async (
   data: {
     username: string;
     password: string;
   },
-  error: string
+  error: string,
 ) => {
   try {
     const { data: token } = await api.post(`/signin`, data);
-    await setCookie("blog-jwt-token", token);
+    await setCookie('blog-jwt-token', token);
     api.defaults.headers.Authorization = `Bearer ${token}`;
     return token;
   } catch (e) {
@@ -26,7 +26,7 @@ export const signup = async (
     password: string;
     fullName: string;
   },
-  errorMessage?: string
+  errorMessage?: string,
 ) => {
   try {
     const { data } = await api.post(`/signup`, values);
@@ -37,15 +37,15 @@ export const signup = async (
 };
 
 export const logout = async () => {
-  await removeCookie("blog-jwt-token");
-  await Router.push("/");
+  await removeCookie('blog-jwt-token');
+  await Router.push('/');
 };
 
 export const updateUser = async (
   values,
   id: number,
   successMessage?: string,
-  errorMessage?: string
+  errorMessage?: string,
 ) => {
   try {
     await api.put(`/users/${id}`, values);
@@ -67,9 +67,9 @@ export const updateUser = async (
 export const deleteUserByAdmin = async (id: number) => {
   try {
     await api.delete(`/users/admin/${id}`);
-    toastSuccess("Utilisateur supprimé");
+    toastSuccess('Utilisateur supprimé');
   } catch (e) {
-    toastError("Une erreur est survenue");
+    toastError('Une erreur est survenue');
   }
 };
 

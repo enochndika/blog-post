@@ -1,16 +1,16 @@
-import { useRouter } from "next/router";
-import { ComponentType, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import Reddit from "../components/skeleton/card";
-import Row from "../components/ui/row";
-import api from "../utils/axios";
-import { Post } from "../components/posts";
-import PaginationProps from "../components/pagination";
-import dynamic from "next/dynamic";
+import { useRouter } from 'next/router';
+import { ComponentType, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import Reddit from '../components/skeleton/card';
+import Row from '../components/ui/row';
+import api from '../utils/axios';
+import { Post } from '../components/posts';
+import PaginationProps from '../components/pagination';
+import dynamic from 'next/dynamic';
 
 const Pagination: ComponentType<PaginationProps> = dynamic(
-  () => import("../components/pagination").then((mod) => mod.Pagination),
-  { ssr: false }
+  () => import('../components/pagination').then((mod) => mod.Pagination),
+  { ssr: false },
 );
 
 export const Search = () => {
@@ -36,7 +36,7 @@ export const Search = () => {
     if (title) {
       const fetchQuery = async () => {
         const { data } = await api.get(
-          `/post-filters/search?title=${title}&page=${page}`
+          `/post-filters/search?title=${title}&page=${page}`,
         );
         setData(data);
       };
@@ -49,8 +49,8 @@ export const Search = () => {
       <h1 className="text-3xl text-gray-700 font-medium my-20 dark:text-white text-center">
         {!data.data && <Reddit />}
         {data.data && data.data.length > 0
-          ? t("Pages.post.search.h1") + " " + title
-          : t("Pages.post.search.notFound")}
+          ? t('Pages.post.search.h1') + ' ' + title
+          : t('Pages.post.search.notFound')}
       </h1>
       <Row className="justify-center">
         <div className="col-12 md:col-10">

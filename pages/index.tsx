@@ -1,52 +1,52 @@
-import Container from "../components/ui/container";
-import DefaultLayout from "../components/layout/default";
-import Link from "next/link";
-import { useTranslation } from "react-i18next";
-import Row from "../components/ui/row";
-import { Separator } from "../components/separator";
-import api from "../utils/axios";
-import dynamic from "next/dynamic";
-import Head from "next/head";
-import { ComponentType } from "react";
-import { SliderProps } from "../components/slider";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
-import { PostProps } from "../utils/defaultProps";
-import { PostDetailsProps } from "../components/postDetails";
-import { ImageProps } from "../components/image";
-import { PostsProps } from "../components/posts";
+import Container from '../components/ui/container';
+import DefaultLayout from '../components/layout/default';
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
+import Row from '../components/ui/row';
+import { Separator } from '../components/separator';
+import api from '../utils/axios';
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
+import { ComponentType } from 'react';
+import { SliderProps } from '../components/slider';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
+import { PostProps } from '../utils/defaultProps';
+import { PostDetailsProps } from '../components/postDetails';
+import { ImageProps } from '../components/image';
+import { PostsProps } from '../components/posts';
 
 /* Using dynamic import to improve TTFB */
 const TrendPost: ComponentType<any> = dynamic(
-  () => import("../components/trendPosts").then((mod) => mod.TrendPost),
-  { ssr: true }
+  () => import('../components/trendPosts').then((mod) => mod.TrendPost),
+  { ssr: true },
 );
 
 const PopularTrendPosts: ComponentType<PostProps> = dynamic(
   () =>
-    import("../components/popularTrendPosts").then(
-      (mod) => mod.PopularTrendPosts
+    import('../components/popularTrendPosts').then(
+      (mod) => mod.PopularTrendPosts,
     ),
-  { ssr: true }
+  { ssr: true },
 );
 
 const PostDetails: ComponentType<PostDetailsProps> = dynamic(
-  () => import("../components/postDetails").then((mod) => mod.PostDetails),
-  { ssr: true }
+  () => import('../components/postDetails').then((mod) => mod.PostDetails),
+  { ssr: true },
 );
 
 const Post: ComponentType<PostsProps> = dynamic(
-  () => import("../components/posts").then((mod) => mod.Post),
-  { ssr: true }
+  () => import('../components/posts').then((mod) => mod.Post),
+  { ssr: true },
 );
 
 const Image: ComponentType<ImageProps> = dynamic(
-  () => import("../components/image").then((mod) => mod.Image),
-  { ssr: false }
+  () => import('../components/image').then((mod) => mod.Image),
+  { ssr: false },
 );
 
 const Slider: ComponentType<SliderProps> = dynamic(
-  () => import("../components/slider").then((mod) => mod.Slider),
-  { ssr: false }
+  () => import('../components/slider').then((mod) => mod.Slider),
+  { ssr: false },
 );
 
 export default function Home({
@@ -103,7 +103,7 @@ export default function Home({
         <Row className="mt-12 md:mt-32 flex-col-reverse md:flex-row">
           <div className="col-12 md:col-9 -mt-8 md:-mt-0">
             <h3 className="text-3xl font-medium mb-10">
-              {t("Components.recentPost.title")}
+              {t('Components.recentPost.title')}
             </h3>
             <Post
               post={recentPosts}
@@ -113,14 +113,14 @@ export default function Home({
             >
               <div className="text-lg ml-4 font-medium mt-5 mb-5 md:mt-0">
                 <Link href="/all-posts/1">
-                  <a>{t("Components.recentPost.link")}</a>
+                  <a>{t('Components.recentPost.link')}</a>
                 </Link>
               </div>
             </Post>
           </div>
           <div className="col-12 md:col-3 mb-16 md:mb-0">
             <h3 className="text-3xl font-medium mb-10">
-              {t("Pages.index.popularPost")}
+              {t('Pages.index.popularPost')}
             </h3>
             <PopularTrendPosts number="01" post={popularPosts[0]} />
             <PopularTrendPosts number="02" post={popularPosts[1]} />
@@ -135,17 +135,17 @@ export default function Home({
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data } = await api.get("/post-filters/vip");
+  const { data } = await api.get('/post-filters/vip');
   const {
     data: { data: recentPosts },
-  } = await api.get("/posts?limit=4");
+  } = await api.get('/posts?limit=4');
 
   const {
     data: { data: popularPosts },
-  } = await api.get("/posts?limit=4&sortBy=read_time");
+  } = await api.get('/posts?limit=4&sortBy=read_time');
   const {
     data: { data: trendPosts },
-  } = await api.get("/post-filters/trend-posts?limit=8");
+  } = await api.get('/post-filters/trend-posts?limit=8');
   return {
     props: { data, recentPosts, popularPosts, trendPosts },
     revalidate: 5,

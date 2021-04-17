@@ -1,13 +1,13 @@
-import { FC } from "react";
-import ContentLoader from "react-content-loader";
-import { useMounted } from "../../utils/mounted";
+import { FC } from 'react';
+import ContentLoader from 'react-content-loader';
+import { useMounted } from '../../utils/mounted';
 
 const ProfileShow: FC = (props) => {
   const isMounted = useMounted();
   return (
     <>
       {isMounted && (
-        <div style={{ width: "70%", marginTop: "10%", left: "10%" }}>
+        <div style={{ width: '70%', marginTop: '10%', left: '10%' }}>
           <ContentLoader
             speed={2}
             width="100%"

@@ -1,8 +1,8 @@
-import React, { FC } from "react";
-import ContentLoader from "react-content-loader";
-import { useMounted } from "../../utils/mounted";
-import { useTheme } from "next-themes";
-import Container from "../ui/container";
+import React, { FC } from 'react';
+import ContentLoader from 'react-content-loader';
+import { useMounted } from '../../utils/mounted';
+import { useTheme } from 'next-themes';
+import Container from '../ui/container';
 
 const DataTable: FC = () => {
   const isMounted = useMounted();
@@ -14,7 +14,7 @@ const DataTable: FC = () => {
           width="100%"
           height={400}
           viewBox="0 0 1500 400"
-          backgroundColor={theme === "light" ? "#bdbdbd" : "#424242"}
+          backgroundColor={theme === 'light' ? '#bdbdbd' : '#424242'}
           foregroundColor="#ecebeb"
         >
           <rect x="27" y="139" rx="4" ry="4" width="20" height="20" />

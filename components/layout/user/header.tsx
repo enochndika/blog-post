@@ -1,13 +1,13 @@
-import { ThemeChanger } from "../../../helpers/themeProvider";
-import Link from "next/link";
-import { useTranslation } from "react-i18next";
-import { Language } from "../../../helpers/changeLanguage";
-import Navbar from "../../ui/navbar";
-import { AngleDownIcon, PlusIcon, UserCircleIcon } from "../../ui/icons";
-import Dropdown from "../../ui/dropdown";
-import { HeaderSearch } from "../../../helpers/headerSearch";
-import { logout } from "../../../actions/userActions";
-import { loggedUser } from "../../../auth/useUser";
+import { ThemeChanger } from '../../../helpers/themeProvider';
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
+import { Language } from '../../../helpers/changeLanguage';
+import Navbar from '../../ui/navbar';
+import { AngleDownIcon, PlusIcon, UserCircleIcon } from '../../ui/icons';
+import Dropdown from '../../ui/dropdown';
+import { HeaderSearch } from '../../../helpers/headerSearch';
+import { logout } from '../../../actions/userActions';
+import { loggedUser } from '../../../auth/useUser';
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -26,8 +26,8 @@ export const Header = () => {
             <Navbar.Item>
               <Navbar.Link>
                 <ThemeChanger
-                  darkTheme={t("Layout.header.item.theme.dark")}
-                  lightTheme={t("Layout.header.item.theme.light")}
+                  darkTheme={t('Layout.header.item.theme.dark')}
+                  lightTheme={t('Layout.header.item.theme.light')}
                   iconClass="h-4 mr-1 mt-1"
                 />
               </Navbar.Link>
@@ -38,7 +38,7 @@ export const Header = () => {
             <Navbar.Item>
               <Navbar.Link href="/posts/create" className="flex">
                 <PlusIcon size={20} className="mr-2" />
-                {t("Layout.header.item.post.index")}
+                {t('Layout.header.item.post.index')}
               </Navbar.Link>
             </Navbar.Item>
             <Navbar.Link>
@@ -68,20 +68,20 @@ export const Header = () => {
                   </Dropdown.Item>
                   <Dropdown.Item>
                     <Link href={`/${user && user?.username}/posts`}>
-                      <a>{t("Layout.header.item.dropdown.posts")}</a>
+                      <a>{t('Layout.header.item.dropdown.posts')}</a>
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item>
                     <Link href={`/${user && user?.username}/posts/liked`}>
-                      <a>{t("Layout.header.item.dropdown.likes")}</a>
+                      <a>{t('Layout.header.item.dropdown.likes')}</a>
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item>
                     <Link href="/">
-                      <a onClick={logout}>{t("Layout.header.item.logout")}</a>
+                      <a onClick={logout}>{t('Layout.header.item.logout')}</a>
                     </Link>
                   </Dropdown.Item>
-                  {user && user.role === "king" && (
+                  {user && user.role === 'king' && (
                     <Dropdown.Item>
                       <Link href="/admin/users">
                         <a>Dashboard</a>
@@ -93,7 +93,7 @@ export const Header = () => {
             </Navbar.Link>
             <Navbar.Item>
               <Navbar.Link>
-                <HeaderSearch placeholder={t("Layout.header.item.search")} />
+                <HeaderSearch placeholder={t('Layout.header.item.search')} />
               </Navbar.Link>
             </Navbar.Item>
           </Navbar.Nav>

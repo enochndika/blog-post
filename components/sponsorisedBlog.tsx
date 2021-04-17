@@ -1,8 +1,8 @@
-import style from "./sponsorisedBlog.module.css";
-import { Image } from "./image";
-import Row from "./ui/row";
-import { PostDetails } from "./postDetails";
-import Link from "next/link";
+import style from './sponsorisedBlog.module.css';
+import { Image } from './image';
+import Row from './ui/row';
+import { PostDetails } from './postDetails';
+import Link from 'next/link';
 
 export const SponsoredBlog = ({ posts }: { posts: any }) => (
   <Row>

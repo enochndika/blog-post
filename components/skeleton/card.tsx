@@ -1,16 +1,16 @@
-import React, { FC } from "react";
-import ContentLoader from "react-content-loader";
-import { useMounted } from "../../utils/mounted";
-import { useTheme } from "next-themes";
-import Container from "../ui/container";
-import Row from "../ui/row";
+import React, { FC } from 'react';
+import ContentLoader from 'react-content-loader';
+import { useMounted } from '../../utils/mounted';
+import { useTheme } from 'next-themes';
+import Container from '../ui/container';
+import Row from '../ui/row';
 
 const Reddit: FC = () => {
   const isMounted = useMounted();
   return (
     <>
       {isMounted && (
-        <Container style={{ marginTop: "10%" }}>
+        <Container style={{ marginTop: '10%' }}>
           <Row>
             <div className="col-6">
               <FadingLoaderCard1 />
@@ -38,7 +38,7 @@ const FadingLoaderCard1 = () => {
     <ContentLoader
       width="100%"
       height={100}
-      backgroundColor={isMounted && theme === "light" ? "#eeeeee" : "#424242"}
+      backgroundColor={isMounted && theme === 'light' ? '#eeeeee' : '#424242'}
       foregroundColor="#fafafa"
     >
       <rect x="70" y="15" rx="5" ry="5" width="300" height="15" />
@@ -55,7 +55,7 @@ const FadingLoaderCard2 = () => {
     <ContentLoader
       width="100%"
       height={100}
-      backgroundColor={isMounted && theme === "light" ? "#eeeeee" : "#424242"}
+      backgroundColor={isMounted && theme === 'light' ? '#eeeeee' : '#424242'}
       foregroundColor="#fafafa"
     >
       <rect x="70" y="15" rx="5" ry="5" width="300" height="15" />

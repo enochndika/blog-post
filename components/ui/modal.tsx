@@ -1,6 +1,6 @@
-import Portal from "@reach/portal";
-import { useEffect, useRef } from "react";
-import Props from "../../utils/defaultProps";
+import Portal from '@reach/portal';
+import { useEffect, useRef } from 'react';
+import Props from '../../utils/defaultProps';
 
 interface ModalProps extends Props {
   isOpen: boolean;
@@ -23,8 +23,8 @@ const Modal = ({ children, isOpen, toggle, backdrop, padding }: ModalProps) => {
         toggle(false);
       }
     };
-    window.addEventListener("click", handleOutsideClick);
-    return () => window.removeEventListener("click", handleOutsideClick);
+    window.addEventListener('click', handleOutsideClick);
+    return () => window.removeEventListener('click', handleOutsideClick);
   }, [isOpen, ref]);
 
   return (
@@ -35,7 +35,7 @@ const Modal = ({ children, isOpen, toggle, backdrop, padding }: ModalProps) => {
           <div className="fixed top-0 left-0 z-40 w-full h-full m-0">
             <div
               className={`${positions.default} ${
-                padding ? padding : " md:pt-12"
+                padding ? padding : ' md:pt-12'
               }`}
               ref={backdrop ? ref : null}
               role="dialogue"
@@ -71,11 +71,11 @@ Modal.Footer = ({ children }: Props) => (
 );
 
 const positions = {
-  default: "mt-96 mx-8 md:m-auto md:w-4/12 ",
+  default: 'mt-96 mx-8 md:m-auto md:w-4/12 ',
 };
 
 const animations = {
-  default: "animate-modal-top",
+  default: 'animate-modal-top',
 };
 
 export default Modal;

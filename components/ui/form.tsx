@@ -3,7 +3,7 @@ import {
   forwardRef,
   ReactNode,
   InputHTMLAttributes,
-} from "react";
+} from 'react';
 
 interface FormProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
@@ -17,7 +17,7 @@ type InputRef = ForwardedRef<HTMLInputElement>;
 export const Input = forwardRef(
   (
     { className, children, name, label, ...props }: FormProps,
-    ref: InputRef
+    ref: InputRef,
   ) => {
     return (
       <div className="flex flex-col mb-7">
@@ -40,5 +40,5 @@ export const Input = forwardRef(
         </div>
       </div>
     );
-  }
+  },
 );

@@ -1,4 +1,4 @@
-import { ReactNode, HTMLAttributes } from "react";
+import { ReactNode, HTMLAttributes } from 'react';
 
 interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
   noPadding?: boolean;
@@ -8,7 +8,7 @@ interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
 const Container = ({ children, noPadding, ...props }: ContainerProps) => (
   <div
     {...props}
-    className={`container-fluid ${noPadding ? "" : "lg:px-container"}`}
+    className={`container-fluid ${noPadding ? '' : 'lg:px-container'}`}
   >
     {children}
   </div>

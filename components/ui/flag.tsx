@@ -1,4 +1,4 @@
-import Props from "../../utils/defaultProps";
+import Props from '../../utils/defaultProps';
 
 interface FlagProps extends Props {
   ariaLabel: string;

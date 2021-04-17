@@ -1,11 +1,11 @@
-import { addPostCategory } from "../actions/postActions";
-import { addStaticPage } from "../actions/staticPageActions";
-import { useForm } from "react-hook-form";
-import Container from "../components/ui/container";
-import Modal from "../components/ui/modal";
-import { Input } from "../components/ui/form";
-import { ListAltIcon } from "../components/ui/icons";
-import { Button } from "../components/ui/button";
+import { addPostCategory } from '../actions/postActions';
+import { addStaticPage } from '../actions/staticPageActions';
+import { useForm } from 'react-hook-form';
+import Container from '../components/ui/container';
+import Modal from '../components/ui/modal';
+import { Input } from '../components/ui/form';
+import { ListAltIcon } from '../components/ui/icons';
+import { Button } from '../components/ui/button';
 
 export interface AddCategoryProps {
   isOpen: boolean;

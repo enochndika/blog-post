@@ -1,7 +1,7 @@
-import Link from "next/link";
-import Row from "./ui/row";
-import { Image } from "./image";
-import { PostDetails } from "./postDetails";
+import Link from 'next/link';
+import Row from './ui/row';
+import { Image } from './image';
+import { PostDetails } from './postDetails';
 
 export const TrendPost = ({ post }: { post: any }) => (
   <Row className="mt-2">

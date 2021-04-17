@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { EditIcon, EyeIcon, TrashAltIcon } from "./ui/icons";
-import Props from "../utils/defaultProps";
+import Link from 'next/link';
+import { EditIcon, EyeIcon, TrashAltIcon } from './ui/icons';
+import Props from '../utils/defaultProps';
 
 export const TableProperty = ({ children }: Props) => {
   return (

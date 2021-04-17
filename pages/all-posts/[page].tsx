@@ -1,19 +1,19 @@
-import DefaultLayout from "../../components/layout/default";
-import api from "../../utils/axios";
-import { useRouter } from "next/router";
-import Head from "next/head";
-import Container from "../../components/ui/container";
-import { Post } from "../../components/posts";
-import Row from "../../components/ui/row";
-import { useTranslation } from "react-i18next";
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
-import dynamic from "next/dynamic";
-import { ComponentType } from "react";
-import PaginationProps from "../../components/pagination";
+import DefaultLayout from '../../components/layout/default';
+import api from '../../utils/axios';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
+import Container from '../../components/ui/container';
+import { Post } from '../../components/posts';
+import Row from '../../components/ui/row';
+import { useTranslation } from 'react-i18next';
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
+import dynamic from 'next/dynamic';
+import { ComponentType } from 'react';
+import PaginationProps from '../../components/pagination';
 
 const Pagination: ComponentType<PaginationProps> = dynamic(
-  () => import("../../components/pagination").then((mod) => mod.Pagination),
-  { ssr: false }
+  () => import('../../components/pagination').then((mod) => mod.Pagination),
+  { ssr: false },
 );
 
 export default function AllPosts({
@@ -68,21 +68,21 @@ export default function AllPosts({
 export const getStaticPaths: GetStaticPaths = async () => {
   const {
     data: { data: pages },
-  } = await api.get("/static-pages");
+  } = await api.get('/static-pages');
   const paths =
     pages &&
     pages.map((post) => ({
       params: { page: post.page },
     }));
 
-  return { paths, fallback: "blocking" };
+  return { paths, fallback: 'blocking' };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { page } = params;
   const {
     data: { data: staticPages },
-  } = await api.get("/static-pages");
+  } = await api.get('/static-pages');
   const { data } = await api.get(`/posts?page=${page}`);
   const currentPage = data.currentPage;
   const pageCount = data.totalPages;

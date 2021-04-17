@@ -1,25 +1,25 @@
-import AdminLayout from "../../components/layout/Admin";
-import DataTable from "../../components/skeleton/table";
-import Container from "../../components/ui/container";
-import { ComponentType, useMemo, useState } from "react";
-import { TableProperty } from "../../components/tableProperty";
-import { formatNumericDate } from "../../utils/formats";
-import { useRouter } from "next/router";
-import { deletePostCategory } from "../../actions/postActions";
-import { PlusIcon } from "../../components/ui/icons";
-import { useFetchStaticPages } from "../../actions/staticPageActions";
-import dynamic from "next/dynamic";
-import { TableProps } from "../../components/table";
-import { AddCategoryProps } from "../../helpers/addCategory";
+import AdminLayout from '../../components/layout/Admin';
+import DataTable from '../../components/skeleton/table';
+import Container from '../../components/ui/container';
+import { ComponentType, useMemo, useState } from 'react';
+import { TableProperty } from '../../components/tableProperty';
+import { formatNumericDate } from '../../utils/formats';
+import { useRouter } from 'next/router';
+import { deletePostCategory } from '../../actions/postActions';
+import { PlusIcon } from '../../components/ui/icons';
+import { useFetchStaticPages } from '../../actions/staticPageActions';
+import dynamic from 'next/dynamic';
+import { TableProps } from '../../components/table';
+import { AddCategoryProps } from '../../helpers/addCategory';
 
 const Table: ComponentType<TableProps> = dynamic(
-  () => import("../../components/table").then((mod) => mod.Table),
-  { ssr: false }
+  () => import('../../components/table').then((mod) => mod.Table),
+  { ssr: false },
 );
 
 const AddCategory: ComponentType<AddCategoryProps> = dynamic(
-  () => import("../../helpers/addCategory").then((mod) => mod.AddCategory),
-  { ssr: false }
+  () => import('../../helpers/addCategory').then((mod) => mod.AddCategory),
+  { ssr: false },
 );
 
 export default function AdminStaticPage() {
@@ -35,27 +35,27 @@ export default function AdminStaticPage() {
   const columns = useMemo(
     () => [
       {
-        Header: "Categories",
+        Header: 'Categories',
         columns: [
           {
-            Header: "Id",
-            accessor: "id",
+            Header: 'Id',
+            accessor: 'id',
           },
           {
-            Header: "Page",
-            accessor: "page",
+            Header: 'Page',
+            accessor: 'page',
           },
           {
-            Header: "Date",
+            Header: 'Date',
             accessor: (row) => formatNumericDate(row.createdAt, locale),
           },
           {
-            Header: "Actions",
+            Header: 'Actions',
             accessor: (row) => (
               <TableProperty>
                 <TableProperty.Delete
                   onClick={async () => {
-                    if (window.confirm("Are you sur?")) {
+                    if (window.confirm('Are you sur?')) {
                       await deletePostCategory(row.id, mutate);
                     }
                   }}
@@ -66,7 +66,7 @@ export default function AdminStaticPage() {
         ],
       },
     ],
-    []
+    [],
   );
 
   if (!pages) {

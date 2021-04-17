@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { useKeenSlider } from "keen-slider/react";
-import "keen-slider/keen-slider.min.css";
-import { SponsoredBlog } from "./sponsorisedBlog";
-import s from "./slider.module.css";
+import { useState } from 'react';
+import { useKeenSlider } from 'keen-slider/react';
+import 'keen-slider/keen-slider.min.css';
+import { SponsoredBlog } from './sponsorisedBlog';
+import s from './slider.module.css';
 
 export interface SliderProps {
   data: Array<any>;
@@ -53,7 +53,7 @@ export const Slider = ({ data }: SliderProps) => {
                 onClick={() => {
                   slider.moveToSlideRelative(idx);
                 }}
-                className={dot + (currentSlide === idx ? active : "")}
+                className={dot + (currentSlide === idx ? active : '')}
               />
             );
           })}
@@ -64,7 +64,7 @@ export const Slider = ({ data }: SliderProps) => {
 };
 
 function ArrowLeft(props) {
-  const disabled = props.disabled ? s.arrowDisabled : "";
+  const disabled = props.disabled ? s.arrowDisabled : '';
   return (
     <svg
       onClick={props.onClick}
@@ -78,7 +78,7 @@ function ArrowLeft(props) {
 }
 
 function ArrowRight(props) {
-  const disabled = props.disabled ? s.arrowDisabled : "";
+  const disabled = props.disabled ? s.arrowDisabled : '';
   return (
     <svg
       onClick={props.onClick}

@@ -1,32 +1,32 @@
-import jwt from "jwt-decode";
+import jwt from 'jwt-decode';
 
 export const formatDate = (value, locale: string) => {
   const options = {
-    month: "long",
-    day: "numeric",
+    month: 'long',
+    day: 'numeric',
   };
   const date = new Date(value);
-  return date.toLocaleDateString(locale === "fr" ? "fr-FR" : "en-US", options);
+  return date.toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', options);
 };
 
 export const formatFullDate = (value, locale) => {
   const options = {
-    month: "numeric",
-    day: "numeric",
-    year: "numeric",
+    month: 'numeric',
+    day: 'numeric',
+    year: 'numeric',
   };
   const date = new Date(value);
-  return date.toLocaleDateString(locale === "fr" ? "fr-FR" : "en-US", options);
+  return date.toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', options);
 };
 
 export const formatNumericDate = (value, locale) => {
   const options = {
-    month: "numeric",
-    day: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
+    month: 'numeric',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
   };
   const date = new Date(value);
   return date.toLocaleDateString(locale, options);

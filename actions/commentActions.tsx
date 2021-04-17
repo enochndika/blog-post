@@ -1,8 +1,8 @@
-import api from "../utils/axios";
-import { toastError, toastSuccess } from "../utils/toast";
-import cogoToast from "cogo-toast";
-import { useSWRInfinite } from "swr";
-import { fetcher } from "./fetcher";
+import api from '../utils/axios';
+import { toastError, toastSuccess } from '../utils/toast';
+import cogoToast from 'cogo-toast';
+import { useSWRInfinite } from 'swr';
+import { fetcher } from './fetcher';
 
 const LIMIT = 6;
 
@@ -10,14 +10,14 @@ export const useFetchComments = (post: number) => {
   const { data, error, size, mutate, setSize } = useSWRInfinite(
     (index) =>
       post ? `/comments/${post}?page=${index + 1}&limit=${LIMIT}` : null,
-    fetcher
+    fetcher,
   );
 
   const comments = data ? [].concat(...data) : [];
   const isLoadingInitialData = !data && !error;
   const isLoadingMore =
     isLoadingInitialData ||
-    (size > 0 && data && typeof data[size - 1] === "undefined");
+    (size > 0 && data && typeof data[size - 1] === 'undefined');
   const isEmpty = data?.[0]?.length === 0;
   const isReachingEnd =
     isEmpty || (data && data[data.length - 1]?.length < LIMIT);
@@ -35,7 +35,7 @@ export const useFetchComments = (post: number) => {
 export const addComment = async (
   postId: number,
   values,
-  errorMessage?: string
+  errorMessage?: string,
 ) => {
   try {
     await api.post(`/comments/${postId}`, values);
@@ -47,7 +47,7 @@ export const addComment = async (
 export const updateComment = async (
   userId: number,
   values,
-  errorMessage?: string
+  errorMessage?: string,
 ) => {
   try {
     await api.put(`/comments/${values.id}/${userId}`, {
@@ -61,7 +61,7 @@ export const updateComment = async (
 export const deleteComment = async (
   id: number,
   userId: number,
-  errorMessage?: string
+  errorMessage?: string,
 ) => {
   try {
     await api.delete(`/comments/user/${id}/${userId}`);
@@ -73,9 +73,9 @@ export const deleteComment = async (
 export const deleteCommentByAdmin = async (id: number) => {
   try {
     await api.delete(`/comments/admin/${id}`);
-    toastSuccess("Commentaire supprimé");
+    toastSuccess('Commentaire supprimé');
   } catch (e) {
-    toastError("Une erreur est survenue");
+    toastError('Une erreur est survenue');
   }
 };
 
@@ -84,7 +84,7 @@ export const reportComment = async (
   userId: number,
   subject: string,
   successMessage?: string,
-  errorMessage?: string
+  errorMessage?: string,
 ) => {
   try {
     await api.post(`/report-comments/${commentId}/${userId}`, subject);
@@ -98,7 +98,7 @@ export const deleteReportComment = async (id: number, mutate: () => void) => {
   try {
     await api.delete(`/report-comments/${id}`);
     await mutate();
-    toastSuccess("Signalement supprimé");
+    toastSuccess('Signalement supprimé');
   } catch (e) {
     toastError(e.response.data.message);
   }

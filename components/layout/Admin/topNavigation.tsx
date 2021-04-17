@@ -1,11 +1,11 @@
-import { useRouter } from "next/router";
-import Navbar from "../../ui/navbar";
-import { ThemeChanger } from "../../../helpers/themeProvider";
-import { useTranslation } from "react-i18next";
-import { HomeIcon, PowerOffIcon } from "../../ui/icons";
-import Link from "next/link";
-import { logout } from "../../../actions/userActions";
-import { FC } from "react";
+import { useRouter } from 'next/router';
+import Navbar from '../../ui/navbar';
+import { ThemeChanger } from '@/helpers/themeProvider';
+import { useTranslation } from 'react-i18next';
+import { HomeIcon, PowerOffIcon } from '../../ui/icons';
+import Link from 'next/link';
+import { logout } from '@/actions/userActions';
+import { FC } from 'react';
 
 const ActiveRoute = ({ router, path, content }) => (
   <>{router.asPath === path && <span>{content}</span>}</>
@@ -76,8 +76,8 @@ export const TopNavigation: FC = () => {
             <Navbar.Link>
               <div className="h-8 w-8 rounded-full bg-gray-700 px-2 py-2 ">
                 <ThemeChanger
-                  darkTheme={t("Layout.header.item.theme.dark")}
-                  lightTheme={t("Layout.header.item.theme.light")}
+                  darkTheme={t('Layout.header.item.theme.dark')}
+                  lightTheme={t('Layout.header.item.theme.light')}
                   notText={true}
                   iconClass="h-full w-full"
                 />

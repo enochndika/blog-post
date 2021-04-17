@@ -1,10 +1,10 @@
-import { loggedUser } from "../auth/useUser";
-import cogoToast from "cogo-toast";
-import { addChildComment } from "../actions/childCommentActions";
-import { useTranslation } from "react-i18next";
-import { useForm } from "react-hook-form";
-import { Button } from "../components/ui/button";
-import { FormError } from "../components/formError";
+import { loggedUser } from '../auth/useUser';
+import cogoToast from 'cogo-toast';
+import { addChildComment } from '../actions/childCommentActions';
+import { useTranslation } from 'react-i18next';
+import { useForm } from 'react-hook-form';
+import { Button } from '../components/ui/button';
+import { FormError } from '../components/formError';
 
 interface AddChildCommentProps {
   comment: number;
@@ -23,12 +23,12 @@ export const AddChildComment = ({ comment, mutate }: AddChildCommentProps) => {
       commentId: comment,
     };
     if (!user) {
-      cogoToast.info(t("Helpers.addChildComment.replyNotAuth"), {
-        position: "top-right",
+      cogoToast.info(t('Helpers.addChildComment.replyNotAuth'), {
+        position: 'top-right',
       });
       reset();
     }
-    await addChildComment(data, "");
+    await addChildComment(data, '');
     await mutate();
     await reset();
   };
@@ -38,10 +38,10 @@ export const AddChildComment = ({ comment, mutate }: AddChildCommentProps) => {
       <div>
         <textarea
           rows={1}
-          placeholder={t("Helpers.addChildComment.label")}
+          placeholder={t('Helpers.addChildComment.label')}
           name="content"
           ref={register({
-            required: t("Helpers.addChildComment.textAreaRequired").toString(),
+            required: t('Helpers.addChildComment.textAreaRequired').toString(),
           })}
           className="w-full placeholder-gray-500 dark:bg-darker block border-b mb-3 border-gray-300 focus:border-blue-500 focus:outline-none"
           disabled={formState.isSubmitting}
@@ -57,7 +57,7 @@ export const AddChildComment = ({ comment, mutate }: AddChildCommentProps) => {
         type="submit"
         disabled={formState.isSubmitting}
       >
-        {t("Helpers.addChildComment.submitBtn")}
+        {t('Helpers.addChildComment.submitBtn')}
       </Button>
     </form>
   );

@@ -1,6 +1,6 @@
-import Link from "next/link";
-import Props from "../../utils/defaultProps";
-import { AnchorHTMLAttributes } from "react";
+import Link from 'next/link';
+import Props from '../../utils/defaultProps';
+import { AnchorHTMLAttributes } from 'react';
 
 interface NavbarProps extends Props {
   className?: string;

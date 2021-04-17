@@ -5,9 +5,9 @@ import {
   useEffect,
   useRef,
   useState,
-} from "react";
-import { useRouter } from "next/router";
-import Props from "../../utils/defaultProps";
+} from 'react';
+import { useRouter } from 'next/router';
+import Props from '../../utils/defaultProps';
 
 interface DropdownToggleProps extends Props {
   className?: string;
@@ -37,23 +37,23 @@ const useToggle = () => {
         setShow(false);
       }
     };
-    window.addEventListener("click", handleOutsideClick);
-    router.events.on("routeChangeComplete", handleOutsideClick);
+    window.addEventListener('click', handleOutsideClick);
+    router.events.on('routeChangeComplete', handleOutsideClick);
     return () => {
-      window.removeEventListener("click", handleOutsideClick);
-      router.events.off("routeChangeComplete", handleOutsideClick);
+      window.removeEventListener('click', handleOutsideClick);
+      router.events.off('routeChangeComplete', handleOutsideClick);
     };
   }, [show, ref]);
 
   useEffect(() => {
     const handleEscape = (event) => {
       if (!show) return;
-      if (event.key === "Escape") {
+      if (event.key === 'Escape') {
         setShow(false);
       }
     };
-    document.addEventListener("keyup", handleEscape);
-    return () => document.removeEventListener("keyup", handleEscape);
+    document.addEventListener('keyup', handleEscape);
+    return () => document.removeEventListener('keyup', handleEscape);
   }, [show]);
 
   return {
@@ -65,10 +65,10 @@ const useToggle = () => {
 
 const styles = {
   left: {
-    transform: "translate3d(-140px, 0px, 0px)",
+    transform: 'translate3d(-140px, 0px, 0px)',
   },
   bottom: {
-    transform: "translate3d(0px, 3px, 0px)",
+    transform: 'translate3d(0px, 3px, 0px)',
   },
 };
 

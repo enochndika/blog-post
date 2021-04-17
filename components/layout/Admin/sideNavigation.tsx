@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import Image from "next/image";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 import {
   ArtStationIcon,
   BlogIcon,
@@ -10,15 +10,15 @@ import {
   HeartIcon,
   ListAltIcon,
   UsersIcon,
-} from "../../ui/icons";
-import Props from "../../../utils/defaultProps";
+} from '../../ui/icons';
+import Props from '../../../utils/defaultProps';
 
 interface ItemProps extends Props {
   href?: string;
 }
 const Item = ({ children, href }: ItemProps) => {
   const { asPath } = useRouter();
-  const active = asPath === href ? "text-blue-500" : "";
+  const active = asPath === href ? 'text-blue-500' : '';
 
   return (
     <div className="flex ml-8 mb-4">

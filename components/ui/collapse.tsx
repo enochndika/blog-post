@@ -1,6 +1,6 @@
-import { useState, useRef } from "react";
-import { AngleDownIcon, AngleUpIcon } from "./icons";
-import Props from "../../utils/defaultProps";
+import { useState, useRef } from 'react';
+import { AngleDownIcon, AngleUpIcon } from './icons';
+import Props from '../../utils/defaultProps';
 
 interface CollapseProps extends Props {
   icon?: boolean;

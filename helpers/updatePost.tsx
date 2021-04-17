@@ -1,27 +1,27 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
-import { convertFromRaw, EditorState } from "draft-js";
-import { useEffect } from "react";
-import { stateToHTML } from "draft-js-export-html";
-import { useTranslation } from "react-i18next";
-import { Editor } from "react-draft-wysiwyg";
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { convertFromRaw, EditorState } from 'draft-js';
+import { useEffect } from 'react';
+import { stateToHTML } from 'draft-js-export-html';
+import { useTranslation } from 'react-i18next';
+import { Editor } from 'react-draft-wysiwyg';
 import {
   addPicture,
   updatePost,
   useFetchCategories,
-} from "../actions/postActions";
-import { Tab, Tabs } from "../components/ui/tab";
-import { Button } from "../components/ui/button";
-import { FormError } from "../components/formError";
-import { Option } from "../components/option";
-import Row from "../components/ui/row";
-import { Input } from "../components/ui/form";
-import "../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { useForm } from "react-hook-form";
-import Container from "../components/ui/container";
-import { BookOpenIcon, PenIcon, TextHeightIcon } from "../components/ui/icons";
-import { Image } from "../components/image";
-import { loggedUser } from "../auth/useUser";
+} from '../actions/postActions';
+import { Tab, Tabs } from '../components/ui/tab';
+import { Button } from '../components/ui/button';
+import { FormError } from '../components/formError';
+import { Option } from '../components/option';
+import Row from '../components/ui/row';
+import { Input } from '../components/ui/form';
+import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { useForm } from 'react-hook-form';
+import Container from '../components/ui/container';
+import { BookOpenIcon, PenIcon, TextHeightIcon } from '../components/ui/icons';
+import { Image } from '../components/image';
+import { loggedUser } from '../auth/useUser';
 
 export interface UpdatePostProps {
   post: any;
@@ -45,11 +45,11 @@ export const UpdatePost = ({ post }: UpdatePostProps) => {
 
   useEffect(() => {
     if (post) {
-      setValue("title", post.title);
-      setValue("description", post.description);
-      setValue("read_time", post.read_time);
-      setValue("picture", post.image);
-      setValue("postsCategoryId", post.postsCategoryId);
+      setValue('title', post.title);
+      setValue('description', post.description);
+      setValue('read_time', post.read_time);
+      setValue('picture', post.image);
+      setValue('postsCategoryId', post.postsCategoryId);
       const contentState = convertFromRaw(post?.content);
       const editorState = EditorState.createWithContent(contentState);
       setContent(editorState);
@@ -62,7 +62,7 @@ export const UpdatePost = ({ post }: UpdatePostProps) => {
         __html: stateToHTML(content.getCurrentContent()),
       };
     } catch (exp) {
-      return { __html: "Error" };
+      return { __html: 'Error' };
     }
   };
   const onSubmit = async (values) => {
@@ -70,10 +70,10 @@ export const UpdatePost = ({ post }: UpdatePostProps) => {
       values,
       user?.id,
       content,
-      t("Actions.posts.updateMessage"),
-      t("Actions.error")
+      t('Actions.posts.updateMessage'),
+      t('Actions.error'),
     );
-    await router.push("/[username]/posts", `/${user?.username}/posts`);
+    await router.push('/[username]/posts', `/${user?.username}/posts`);
   };
 
   return (
@@ -81,14 +81,14 @@ export const UpdatePost = ({ post }: UpdatePostProps) => {
       <Container>
         <div className="mt-16">
           <Tabs>
-            <Tab title={t("Pages.username.posts.update.createPill")}>
+            <Tab title={t('Pages.username.posts.update.createPill')}>
               <form onSubmit={handleSubmit(onSubmit)} className="mt-16">
                 <Row>
                   <div className="col-12">
                     <input type="hidden" ref={register()} name="id" />
                     <Input
                       name="title"
-                      label={t("Pages.post.create.form.title")}
+                      label={t('Pages.post.create.form.title')}
                       ref={register()}
                     >
                       <PenIcon className="h-4 text-gray-700" />
@@ -101,7 +101,7 @@ export const UpdatePost = ({ post }: UpdatePostProps) => {
                     <Input
                       name="description"
                       type="textarea"
-                      label={t("Pages.post.create.form.description")}
+                      label={t('Pages.post.create.form.description')}
                       ref={register()}
                     >
                       <TextHeightIcon className="h-4 text-gray-700" />
@@ -115,7 +115,7 @@ export const UpdatePost = ({ post }: UpdatePostProps) => {
                       type="number"
                       name="read_time"
                       defaultValue={0}
-                      label={t("Pages.post.create.form.readTime")}
+                      label={t('Pages.post.create.form.readTime')}
                       ref={register()}
                     >
                       <BookOpenIcon className="h-4 text-gray-700" />
@@ -132,7 +132,7 @@ export const UpdatePost = ({ post }: UpdatePostProps) => {
                         ref={register()}
                       >
                         <option defaultValue="selected">
-                          {t("Pages.post.create.form.selectOption")}
+                          {t('Pages.post.create.form.selectOption')}
                         </option>
                         <Option data={categories} />
                       </select>
@@ -143,7 +143,7 @@ export const UpdatePost = ({ post }: UpdatePostProps) => {
                   </div>
                   <div className="col-12 md:col-3  mt-6 mb-8">
                     <div className="text-gray-600 font-medium dark:text-white mb-2">
-                      {t("Pages.username.posts.update.img")}
+                      {t('Pages.username.posts.update.img')}
                     </div>
                     <Image
                       src={post?.image}
@@ -158,7 +158,7 @@ export const UpdatePost = ({ post }: UpdatePostProps) => {
                         wrapperClassName="border-2 border-blue-400"
                         editorClassName="editor-class"
                         toolbarClassName="toolbar-class"
-                        editorStyle={{ height: "400px", padding: "10px" }}
+                        editorStyle={{ height: '400px', padding: '10px' }}
                         toolbar={{
                           inline: { inDropdown: true },
                           list: { inDropdown: true },
@@ -170,7 +170,7 @@ export const UpdatePost = ({ post }: UpdatePostProps) => {
                             alt: {
                               present: true,
                               mandatory: false,
-                              defaultSize: "100%",
+                              defaultSize: '100%',
                             },
                           },
                         }}
@@ -188,12 +188,12 @@ export const UpdatePost = ({ post }: UpdatePostProps) => {
                     color="dark"
                     disabled={formState.isSubmitting}
                   >
-                    {t("Pages.username.posts.update.form.submitBtn")}
+                    {t('Pages.username.posts.update.form.submitBtn')}
                   </Button>
                 </div>
               </form>
             </Tab>
-            <Tab title={t("Pages.post.create.previewPill")}>
+            <Tab title={t('Pages.post.create.previewPill')}>
               <div
                 dangerouslySetInnerHTML={convertDescriptionFromJSONToHTML()}
                 className="mt-5"

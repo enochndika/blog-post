@@ -1,8 +1,8 @@
-import Link from "next/link";
-import Row from "./ui/row";
-import { Image } from "./image";
-import { PostDetails } from "./postDetails";
-import { ReactNode } from "react";
+import Link from 'next/link';
+import Row from './ui/row';
+import { Image } from './image';
+import { PostDetails } from './postDetails';
+import { ReactNode } from 'react';
 
 export interface PostsProps {
   post: Array<any>;

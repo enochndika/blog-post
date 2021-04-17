@@ -1,16 +1,16 @@
-import cookie from "js-cookie";
+import cookie from 'js-cookie';
 
 export const setCookie = (key: string, value: string) => {
-  if (typeof window !== "undefined") {
+  if (typeof window !== 'undefined') {
     cookie.set(key, value, {
       expires: 2,
-      path: "/",
+      path: '/',
     });
   }
 };
 
 export const removeCookie = (key: string) => {
-  if (typeof window !== "undefined") {
+  if (typeof window !== 'undefined') {
     cookie.remove(key);
   }
 };

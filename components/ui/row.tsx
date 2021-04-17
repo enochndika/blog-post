@@ -1,5 +1,5 @@
-import { ForwardedRef, forwardRef, HTMLAttributes } from "react";
-import Props from "../../utils/defaultProps";
+import { ForwardedRef, forwardRef, HTMLAttributes } from 'react';
+import Props from '../../utils/defaultProps';
 
 interface RowProps extends Props {
   props?: HTMLAttributes<HTMLDivElement>;
@@ -13,7 +13,7 @@ const Row = forwardRef(
     <div className={`${className} row`} {...props} ref={ref}>
       {children}
     </div>
-  )
+  ),
 );
 
 export default Row;

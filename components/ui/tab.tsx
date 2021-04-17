@@ -1,5 +1,5 @@
-import React, { ReactElement, useState } from "react";
-import Props from "../../utils/defaultProps";
+import React, { ReactElement, useState } from 'react';
+import Props from '../../utils/defaultProps';
 
 interface TabProps extends Props {
   selected?: boolean;
@@ -12,7 +12,7 @@ export const Tabs = ({ children }: Props) => {
   const newChildren = childrenArray.map((child) =>
     React.cloneElement(child as ReactElement, {
       selected: child.key === current,
-    })
+    }),
   );
 
   return (
@@ -24,8 +24,8 @@ export const Tabs = ({ children }: Props) => {
           key={child.key}
           className={
             current === child.key
-              ? "text-gray-700  border-b-2 border-indigo-700 dark:text-white -mb-2 px-4 text-lg py-4 md:py-1 inline-block"
-              : "-mb-2 px-4 text-lg dark:text-white py-4 md:py-1 inline-block border-b"
+              ? 'text-gray-700  border-b-2 border-indigo-700 dark:text-white -mb-2 px-4 text-lg py-4 md:py-1 inline-block'
+              : '-mb-2 px-4 text-lg dark:text-white py-4 md:py-1 inline-block border-b'
           }
         >
           {child.props.title}

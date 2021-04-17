@@ -1,6 +1,6 @@
-import { useTheme } from "next-themes";
-import { useMounted } from "../utils/mounted";
-import { MoonIcon, SunIcon } from "../components/ui/icons";
+import { useTheme } from 'next-themes';
+import { useMounted } from '../utils/mounted';
+import { MoonIcon, SunIcon } from '../components/ui/icons';
 
 interface ThemeProviderProps {
   iconClass?: string;
@@ -26,22 +26,22 @@ export const ThemeChanger = ({
   const isMounted = useMounted();
 
   const setDarkTheme = () => {
-    setTheme("dark");
+    setTheme('dark');
     close ? close() : null;
   };
   const setLightTheme = () => {
-    setTheme("light");
+    setTheme('light');
     close ? close() : null;
   };
   return (
     <div>
-      {isMounted && theme === "light" && (
+      {isMounted && theme === 'light' && (
         <div onClick={setDarkTheme} className="flex">
           <MoonIcon className={iconClass} />
           {!notText && darkTheme}
         </div>
       )}
-      {isMounted && theme === "dark" && (
+      {isMounted && theme === 'dark' && (
         <div onClick={setLightTheme} className="flex">
           <SunIcon className={`${iconClass} text-yellow`} />
           {!notText && lightTheme}

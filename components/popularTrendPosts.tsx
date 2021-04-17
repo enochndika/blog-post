@@ -1,10 +1,10 @@
-import { formatDate } from "../utils/formats";
-import Link from "next/link";
-import { useTranslation } from "react-i18next";
-import { useRouter } from "next/router";
-import Row from "./ui/row";
-import { StarIcon } from "./ui/icons";
-import { PostProps } from "../utils/defaultProps";
+import { formatDate } from '@/utils/formats';
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/router';
+import Row from './ui/row';
+import { StarIcon } from './ui/icons';
+import { PostProps } from '@/utils/defaultProps';
 
 export const PopularTrendPosts = ({ post, number }: PostProps) => {
   const { t } = useTranslation();
@@ -31,7 +31,7 @@ export const PopularTrendPosts = ({ post, number }: PostProps) => {
               {post.user?.fullName}
             </span>
             <span className="text-gray-400 mr-1">
-              {t("Components.default.category")}
+              {t('Components.default.category')}
             </span>
             <span className="text-gray-900 dark:text-white mr-1">
               {post.posts_category?.name}
@@ -43,7 +43,7 @@ export const PopularTrendPosts = ({ post, number }: PostProps) => {
             </span>
             <span>&#9632;</span>
             <span className="flex flex-wrap ml-2">
-              {post.read_time} {t("Components.default.estimatedRead")}
+              {post.read_time} {t('Components.default.estimatedRead')}
               <StarIcon className="h-3.5 md:h-2.5 lg:h-3 ml-1" space={3} />
             </span>
           </div>

@@ -1,6 +1,6 @@
-import ReactPaginate from "react-paginate";
-import { FC } from "react";
-import { useTranslation } from "react-i18next";
+import ReactPaginate from 'react-paginate';
+import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default interface PaginationProps {
   onPageChange: (page: string) => void;
@@ -32,16 +32,16 @@ export const Pagination: FC<PaginationProps> = ({
         pageCount={pageCount}
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
-        previousLabel={t("Pages.all-posts.previousLabel")}
-        nextLabel={t("Pages.all-posts.nextLabel")}
+        previousLabel={t('Pages.all-posts.previousLabel')}
+        nextLabel={t('Pages.all-posts.nextLabel')}
         breakClassName={`${className.default} ${className.break}`}
         containerClassName={className.container}
         pageClassName={`${className.default} ${className.page}`}
-        pageLinkClassName={"focus:outline-none"}
+        pageLinkClassName={'focus:outline-none'}
         previousClassName={`${className.default} ${className.previous}`}
-        previousLinkClassName={"focus:outline-none"}
+        previousLinkClassName={'focus:outline-none'}
         nextClassName={`${className.default} ${className.next}`}
-        nextLinkClassName={"focus:outline-none"}
+        nextLinkClassName={'focus:outline-none'}
         activeClassName={className.active}
       />
     </div>

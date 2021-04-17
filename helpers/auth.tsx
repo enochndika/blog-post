@@ -1,22 +1,22 @@
-import { signin, signup } from "../actions/userActions";
-import { FormError } from "../components/formError";
-import { useTranslation } from "react-i18next";
-import { useRouter } from "next/router";
-import { toastSuccess } from "../utils/toast";
-import { useForm } from "react-hook-form";
-import Container from "../components/ui/container";
-import Row from "../components/ui/row";
+import { signin, signup } from '../actions/userActions';
+import { FormError } from '../components/formError';
+import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/router';
+import { toastSuccess } from '../utils/toast';
+import { useForm } from 'react-hook-form';
+import Container from '../components/ui/container';
+import Row from '../components/ui/row';
 import {
   CircleNotchIcon,
   LockIcon,
   MaleIcon,
   UserMdIcon,
-} from "../components/ui/icons";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { userLoginSchema, userRegisterSchema } from "../validators/user";
-import { Input } from "../components/ui/form";
-import { Button } from "../components/ui/button";
-import { Card } from "../components/ui/card";
+} from '../components/ui/icons';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { userLoginSchema, userRegisterSchema } from '../validators/user';
+import { Input } from '../components/ui/form';
+import { Button } from '../components/ui/button';
+import { Card } from '../components/ui/card';
 
 export interface AuthProps {
   login: boolean;
@@ -32,16 +32,16 @@ export const Auth = ({ login }) => {
 
   const onSubmit = async (values) => {
     if (login) {
-      const data = await signin(values, t("Actions.userActions.signin.error"));
+      const data = await signin(values, t('Actions.userActions.signin.error'));
       if (data) {
-        toastSuccess(t("Actions.userActions.signin.success"));
-        await router.push("/");
+        toastSuccess(t('Actions.userActions.signin.success'));
+        await router.push('/');
       }
     } else {
-      const data = await signup(values, t("Actions.userActions.signup.error"));
+      const data = await signup(values, t('Actions.userActions.signup.error'));
       if (data) {
-        toastSuccess(t("Actions.userActions.signup.success"));
-        await router.push("/");
+        toastSuccess(t('Actions.userActions.signup.success'));
+        await router.push('/');
       }
     }
   };
@@ -58,11 +58,11 @@ export const Auth = ({ login }) => {
               >
                 <div className="text-3xl font-bold text-center mb-16">
                   {login
-                    ? t("Helpers.auth.title.login")
-                    : t("Helpers.auth.title.register")}
+                    ? t('Helpers.auth.title.login')
+                    : t('Helpers.auth.title.register')}
                 </div>
                 <Input
-                  label={t("Helpers.auth.form.username")}
+                  label={t('Helpers.auth.form.username')}
                   type="text"
                   name="username"
                   ref={register()}
@@ -72,7 +72,7 @@ export const Auth = ({ login }) => {
                 {username && <FormError message={username.message} />}
                 <Input
                   type="password"
-                  label={t("Helpers.auth.form.password")}
+                  label={t('Helpers.auth.form.password')}
                   name="password"
                   ref={register()}
                 >
@@ -82,7 +82,7 @@ export const Auth = ({ login }) => {
                 {!login && (
                   <>
                     <Input
-                      label={t("Helpers.auth.form.fullName")}
+                      label={t('Helpers.auth.form.fullName')}
                       type="text"
                       name="fullName"
                       ref={register()}
@@ -104,8 +104,8 @@ export const Auth = ({ login }) => {
                       <CircleNotchIcon size={18} className="mr-1" />
                     )}
                     {login
-                      ? t("Helpers.auth.form.submit.login")
-                      : t("Helpers.auth.form.submit.register")}
+                      ? t('Helpers.auth.form.submit.login')
+                      : t('Helpers.auth.form.submit.register')}
                   </Button>
                 </div>
               </form>

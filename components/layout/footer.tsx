@@ -1,5 +1,5 @@
-import Container from "../ui/container";
-import { FC } from "react";
+import Container from '../ui/container';
+import { FC } from 'react';
 
 export const Footer: FC = () => (
   <footer className="bg-darker text-white relative bottom-0 text-sm">

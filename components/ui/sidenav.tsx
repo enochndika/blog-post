@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import Props from "../../utils/defaultProps";
+import { useEffect, useRef } from 'react';
+import Props from '../../utils/defaultProps';
 
 interface SidenavProps extends Props {
   isOpen: boolean;
@@ -17,7 +17,7 @@ export const Sidenav = ({ isOpen, setIsOpen, children }: SidenavProps) => {
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      if (event.key === "Escape") {
+      if (event.key === 'Escape') {
         setIsOpen(false);
       }
       if (!ref.current?.contains(event.target)) {
@@ -25,8 +25,8 @@ export const Sidenav = ({ isOpen, setIsOpen, children }: SidenavProps) => {
         setIsOpen(false);
       }
     };
-    window.addEventListener("mousedown", handleOutsideClick);
-    return () => window.removeEventListener("mousedown", handleOutsideClick);
+    window.addEventListener('mousedown', handleOutsideClick);
+    return () => window.removeEventListener('mousedown', handleOutsideClick);
   }, [isOpen, ref]);
 
   return (

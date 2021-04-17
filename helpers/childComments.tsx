@@ -1,26 +1,26 @@
-import { useSWRInfinite } from "swr";
-import api from "../utils/axios";
-import { useState } from "react";
-import { loggedUser } from "../auth/useUser";
-import cogoToast from "cogo-toast";
-import { useDeleteChildComment } from "../actions/childCommentActions";
-import { useTranslation } from "react-i18next";
-import { formatNumericDate } from "../utils/formats";
-import { useRouter } from "next/router";
-import { Collapse } from "../components/ui/collapse";
-import { Button } from "../components/ui/button";
-import Row from "../components/ui/row";
+import { useSWRInfinite } from 'swr';
+import api from '../utils/axios';
+import { useState } from 'react';
+import { loggedUser } from '../auth/useUser';
+import cogoToast from 'cogo-toast';
+import { useDeleteChildComment } from '../actions/childCommentActions';
+import { useTranslation } from 'react-i18next';
+import { formatNumericDate } from '../utils/formats';
+import { useRouter } from 'next/router';
+import { Collapse } from '../components/ui/collapse';
+import { Button } from '../components/ui/button';
+import Row from '../components/ui/row';
 import {
   CommentsIcon,
   EllipsisVIcon,
   FlagIcon,
   ReplyIcon,
   UserCircleIcon,
-} from "../components/ui/icons";
-import Dropdown from "../components/ui/dropdown";
-import { AddChildComment } from "./addChildComment";
-import { ReportModal } from "./reportModal";
-import { UpdateComment } from "./updateComment";
+} from '../components/ui/icons';
+import Dropdown from '../components/ui/dropdown';
+import { AddChildComment } from './addChildComment';
+import { ReportModal } from './reportModal';
+import { UpdateComment } from './updateComment';
 
 const fetcher = (url) => api.get(url).then((res) => res.data.data);
 const LIMIT = 6;
@@ -36,7 +36,7 @@ export const ChildComments = ({ comment }) => {
 
   const { data, error, size, setSize, mutate } = useSWRInfinite(
     (index) => `/child-comments/${comment}?page=${index + 1}&limit=${LIMIT}`,
-    fetcher
+    fetcher,
   );
 
   const onSelectedCommentRow = (index) => {
@@ -48,8 +48,8 @@ export const ChildComments = ({ comment }) => {
 
   const onSelectedComment = (id) => {
     if (!user) {
-      cogoToast.info(t("Helpers.comments.selectCommentNotAuth"), {
-        position: "top-right",
+      cogoToast.info(t('Helpers.comments.selectCommentNotAuth'), {
+        position: 'top-right',
       });
     }
     if (user) {
@@ -66,7 +66,7 @@ export const ChildComments = ({ comment }) => {
   const isLoadingInitialData = !data && !error;
   const isLoadingMore =
     isLoadingInitialData ||
-    (size > 0 && data && typeof data[size - 1] === "undefined");
+    (size > 0 && data && typeof data[size - 1] === 'undefined');
   const isEmpty = data?.[0]?.length === 0;
   const isReachingEnd =
     isEmpty || (data && data[data.length - 1]?.length < LIMIT);
@@ -76,7 +76,7 @@ export const ChildComments = ({ comment }) => {
       <Collapse>
         <div className="flex text-xs font-bold mt-4 cursor-pointer">
           <ReplyIcon className="h-2.5 pr-1 mt-0.5" />
-          {t("Helpers.childComments.collapseTitle")}
+          {t('Helpers.childComments.collapseTitle')}
         </div>
         <AddChildComment comment={comment} mutate={mutate} />
       </Collapse>
@@ -85,7 +85,7 @@ export const ChildComments = ({ comment }) => {
           {comments && comments.length > 0 && (
             <div className="flex mr-2 font-weight-bolder">
               <CommentsIcon className="h-3 pr-2" />
-              {t("Helpers.childComments.title")}
+              {t('Helpers.childComments.title')}
             </div>
           )}
         </div>
@@ -120,9 +120,9 @@ export const ChildComments = ({ comment }) => {
                         </span>
                         <span>
                           <small className="font-medium">
-                            {router?.locale === "fr"
-                              ? formatNumericDate(comment.createdAt, "fr-FR")
-                              : formatNumericDate(comment.createdAt, "en-US")}
+                            {router?.locale === 'fr'
+                              ? formatNumericDate(comment.createdAt, 'fr-FR')
+                              : formatNumericDate(comment.createdAt, 'en-US')}
                           </small>
                         </span>
                       </div>
@@ -138,19 +138,19 @@ export const ChildComments = ({ comment }) => {
                                   onClick={async () => {
                                     await useDeleteChildComment(
                                       comment.id,
-                                      user && user.id
+                                      user && user.id,
                                     );
                                     await mutate();
                                   }}
                                 >
-                                  {t("Helpers.comments.dropdown.delete")}
+                                  {t('Helpers.comments.dropdown.delete')}
                                 </Dropdown.Item>
                                 <Dropdown.Item
                                   onClick={() => {
                                     onSelectedCommentRow(index);
                                   }}
                                 >
-                                  {t("Helpers.comments.dropdown.update")}
+                                  {t('Helpers.comments.dropdown.update')}
                                 </Dropdown.Item>
                               </>
                             ) : (
@@ -161,7 +161,7 @@ export const ChildComments = ({ comment }) => {
                               >
                                 <div className="flex">
                                   <FlagIcon className="mr-2 h-4" />
-                                  {t("Helpers.comments.dropdown.report")}
+                                  {t('Helpers.comments.dropdown.report')}
                                 </div>
                               </Dropdown.Item>
                             )}
@@ -200,10 +200,10 @@ export const ChildComments = ({ comment }) => {
                 size="sm"
               >
                 {isLoadingMore
-                  ? t("Helpers.comments.pagination.loading")
+                  ? t('Helpers.comments.pagination.loading')
                   : isReachingEnd
-                  ? "Fin de commentaires"
-                  : t("Helpers.comments.pagination.loadMore")}
+                  ? 'Fin de commentaires'
+                  : t('Helpers.comments.pagination.loadMore')}
               </Button>
             )}
           </div>

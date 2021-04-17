@@ -3,7 +3,7 @@ import {
   forwardRef,
   ButtonHTMLAttributes,
   ReactNode,
-} from "react";
+} from 'react';
 
 interface BtnPropsWithChildren {}
 
@@ -13,10 +13,10 @@ export interface BtnProps
   block?: boolean;
   children: ReactNode;
   className?: string;
-  color?: "primary" | "danger" | "dark";
+  color?: 'primary' | 'danger' | 'dark';
   disabled?: boolean;
   rounded?: boolean;
-  size?: "sm" | "md" | "lg";
+  size?: 'sm' | 'md' | 'lg';
 }
 
 type ButtonRef = ForwardedRef<HTMLButtonElement>;
@@ -28,28 +28,28 @@ const colors = {
 };
 
 const sizes = {
-  sm: "px-6 py-1.5 text-sm ",
-  md: "px-6 py-2",
-  lg: "px-6 py-3 text-lg ",
+  sm: 'px-6 py-1.5 text-sm ',
+  md: 'px-6 py-2',
+  lg: 'px-6 py-3 text-lg ',
 };
 
 export const Button = forwardRef(
   (
     { color, className, size, disabled, children, ...props }: BtnProps,
-    ref: ButtonRef
+    ref: ButtonRef,
   ) => (
     <button
       {...props}
       ref={ref}
       className={`${colors[color]} ${sizes[size]} ${className} ${
         disabled
-          ? "opacity-60 cursor-not-allowed"
-          : "transition ease-in duration-200"
+          ? 'opacity-60 cursor-not-allowed'
+          : 'transition ease-in duration-200'
       } text-white focus:outline-none shadow rounded font-normal `}
     >
       {children}
     </button>
-  )
+  ),
 );
 
 /* The classname of const button is so long, that's why I split them into four parts*/

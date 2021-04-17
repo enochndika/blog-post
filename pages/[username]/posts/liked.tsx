@@ -1,11 +1,11 @@
-import Head from "next/head";
-import { useTranslation } from "react-i18next";
-import dynamic from "next/dynamic";
-import UserLayout from "../../../components/layout/user";
+import Head from 'next/head';
+import { useTranslation } from 'react-i18next';
+import dynamic from 'next/dynamic';
+import UserLayout from '../../../components/layout/user';
 
 const LikedPost = dynamic(
-  () => import("../../../helpers/likedPost").then((mod) => mod.LikedPosts),
-  { ssr: false }
+  () => import('../../../helpers/likedPost').then((mod) => mod.LikedPosts),
+  { ssr: false },
 );
 
 export default function LikedPostsPage() {
@@ -13,7 +13,7 @@ export default function LikedPostsPage() {
   return (
     <>
       <Head>
-        <title>{t("Pages.username.posts.liked.title")}</title>
+        <title>{t('Pages.username.posts.liked.title')}</title>
       </Head>
       <LikedPost />
     </>

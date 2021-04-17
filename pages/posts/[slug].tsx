@@ -1,47 +1,47 @@
-import { ComponentType, Fragment, useState } from "react";
-import DefaultLayout from "../../components/layout/default";
-import api from "../../utils/axios";
-import { checkLikeExist, getTotalLikes } from "../../utils/formats";
-import { loggedUser } from "../../auth/useUser";
+import { ComponentType, Fragment, useState } from 'react';
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
+import cogoToast from 'cogo-toast';
+import Head from 'next/head';
+import { useTranslation } from 'react-i18next';
+import dynamic from 'next/dynamic';
+import { stateToHTML } from 'draft-js-export-html';
+import { convertFromRaw } from 'draft-js';
+import { useRouter } from 'next/router';
+import DefaultLayout from '@/components/layout/default';
+import api from '@/utils/axios';
+import { checkLikeExist, getTotalLikes } from '@/utils/formats';
+import { loggedUser } from '@/auth/useUser';
 import {
   likePost,
   unlikePost,
   useFetchPost,
   useFetchPostLikes,
   useFetchPostRelated,
-} from "../../actions/postActions";
-import cogoToast from "cogo-toast";
-import Head from "next/head";
-import { useTranslation } from "react-i18next";
-import Container from "../../components/ui/container";
-import Row from "../../components/ui/row";
-import { EllipsisVIcon, FlagIcon, HeartIcon } from "../../components/ui/icons";
-import Dropdown from "../../components/ui/dropdown";
-import { Separator } from "../../components/separator";
-import { Image } from "../../components/image";
-import { PostDetails } from "../../components/postDetails";
-import { button } from "../../components/ui/button";
-import dynamic from "next/dynamic";
-import { stateToHTML } from "draft-js-export-html";
-import { convertFromRaw } from "draft-js";
-import { useRouter } from "next/router";
-import { PostsProps } from "../../components/posts";
-import { ReportModalProps } from "../../helpers/reportModal";
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+} from '@/actions/postActions';
+import Container from '@/components/ui/container';
+import Row from '@/components/ui/row';
+import { EllipsisVIcon, FlagIcon, HeartIcon } from '@/components/ui/icons';
+import Dropdown from '@/components/ui/dropdown';
+import { Separator } from '@/components/separator';
+import { Image } from '@/components/image';
+import { PostDetails } from '@/components/postDetails';
+import { button } from '@/components/ui/button';
+import { PostsProps } from '@/components/posts';
+import { ReportModalProps } from '@/helpers/reportModal';
 
 const PostComments: ComponentType<any> = dynamic(
-  () => import("../../helpers/comments").then((mod) => mod.PostComments),
-  { ssr: false }
+  () => import('@/helpers/comments').then((mod) => mod.PostComments),
+  { ssr: false },
 );
 
 const Post: ComponentType<PostsProps> = dynamic(
-  () => import("../../components/posts").then((mod) => mod.Post),
-  { ssr: false }
+  () => import('@/components/posts').then((mod) => mod.Post),
+  { ssr: false },
 );
 
 const ReportModal: ComponentType<ReportModalProps> = dynamic(
-  () => import("../../helpers/reportModal").then((mod) => mod.ReportModal),
-  { ssr: false }
+  () => import('@/helpers/reportModal').then((mod) => mod.ReportModal),
+  { ssr: false },
 );
 
 export default function PostSlugPage({
@@ -71,7 +71,7 @@ export default function PostSlugPage({
       await mutateLike();
     }
     if (!user) {
-      cogoToast.info(t("Pages.post.slug.likePostNotAuth"));
+      cogoToast.info(t('Pages.post.slug.likePostNotAuth'));
     }
   };
 
@@ -81,7 +81,7 @@ export default function PostSlugPage({
       await mutateLike();
     }
     if (!user) {
-      cogoToast.info(t("Pages.post.slug.dislikePostNotAuth"));
+      cogoToast.info(t('Pages.post.slug.dislikePostNotAuth'));
     }
   };
 
@@ -90,7 +90,7 @@ export default function PostSlugPage({
       setReportModal(true);
     }
     if (!user) {
-      cogoToast.info(t("Pages.post.slug.reportPostNotAuth"));
+      cogoToast.info(t('Pages.post.slug.reportPostNotAuth'));
     }
   };
 
@@ -109,8 +109,7 @@ export default function PostSlugPage({
               isOpen={reportModal}
               post={true}
             />
-            <Separator desktop={true} />
-            <Row className="justify-center mt-16">
+            <Row className="justify-center mt-20">
               <div className="col-12 xl:col-7">
                 <h1 className="text-4xl text-gray-700 font-medium mb-9 dark:text-white">
                   {clientPost.title}
@@ -169,7 +168,7 @@ export default function PostSlugPage({
                             <Dropdown.Item onClick={checkUserOnOpenModal}>
                               <span className="flex justify-center -px-8">
                                 <FlagIcon className="h-4 mr-2" />
-                                {t("Pages.post.slug.report")}
+                                {t('Pages.post.slug.report')}
                               </span>
                             </Dropdown.Item>
                           </Dropdown.Menu>
@@ -188,7 +187,7 @@ export default function PostSlugPage({
                 {post.local && <div className="mt-7">{clientPost.local}</div>}
                 <div
                   dangerouslySetInnerHTML={convertFromJSONToHTML(
-                    clientPost.content
+                    clientPost.content,
                   )}
                 />
                 {data && <PostComments post={clientPost.id} />}
@@ -197,7 +196,7 @@ export default function PostSlugPage({
             <Row>
               <div className="col-12">
                 <div className="text-3xl font-bold mt-20 mb-8 dark:text-white text-gray-700">
-                  {t("Pages.post.slug.morePost")}
+                  {t('Pages.post.slug.morePost')}
                 </div>
                 <Separator desktop={true} />
                 <Post
@@ -224,7 +223,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     params: { slug: post.slug },
   }));
 
-  return { paths, fallback: "blocking" };
+  return { paths, fallback: 'blocking' };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {

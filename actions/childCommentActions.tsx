@@ -1,6 +1,6 @@
-import api from "../utils/axios";
-import { toastError, toastSuccess } from "../utils/toast";
-import cogoToast from "cogo-toast";
+import api from '../utils/axios';
+import { toastError, toastSuccess } from '../utils/toast';
+import cogoToast from 'cogo-toast';
 
 export const addChildComment = async (
   values: {
@@ -8,7 +8,7 @@ export const addChildComment = async (
     userId: number;
     commentId: number;
   },
-  errorMessage?: string
+  errorMessage?: string,
 ) => {
   try {
     await api.post(`/child-comments/${values.commentId}`, {
@@ -26,7 +26,7 @@ export const updateChildComment = async (
     content: string;
     id: number;
   },
-  errorMessage?: string
+  errorMessage?: string,
 ) => {
   try {
     await api.put(`/child-comments/${values.id}`, {
@@ -39,7 +39,7 @@ export const updateChildComment = async (
 export const useDeleteChildComment = async (
   id: number,
   userId: number,
-  errorMessage?: string
+  errorMessage?: string,
 ) => {
   try {
     await api.delete(`/child-comments/user/${id}/${userId}`);
@@ -51,9 +51,9 @@ export const useDeleteChildComment = async (
 export const useDeleteChildCommentByAdmin = async (id: number) => {
   try {
     await api.delete(`/child-comments/admin/${id}`);
-    toastSuccess("Commentaire supprimé");
+    toastSuccess('Commentaire supprimé');
   } catch (e) {
-    toastError("Une erreur est survenue");
+    toastError('Une erreur est survenue');
   }
 };
 
@@ -62,12 +62,12 @@ export const useReportChildComment = async (
   userId: number,
   subject: string,
   successMessage?: string,
-  errorMessage?: string
+  errorMessage?: string,
 ) => {
   try {
     await api.post(
       `/report-child-comments/${childCommentId}/${userId}`,
-      subject
+      subject,
     );
     cogoToast.info(successMessage);
   } catch (e) {
@@ -77,12 +77,12 @@ export const useReportChildComment = async (
 
 export const useDeleteReportChildComment = async (
   id: number,
-  mutate: () => void
+  mutate: () => void,
 ) => {
   try {
     await api.delete(`/report-child-comments/${id}`);
     await mutate();
-    toastSuccess("Signalement supprimé");
+    toastSuccess('Signalement supprimé');
   } catch (e) {
     toastError(e.response.data.message);
   }

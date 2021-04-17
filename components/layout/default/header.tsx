@@ -1,15 +1,15 @@
-import { ThemeChanger } from "../../../helpers/themeProvider";
-import Link from "next/link";
-import { loggedUser } from "../../../auth/useUser";
-import { useRouter } from "next/router";
-import cogoToast from "cogo-toast";
-import { useTranslation } from "react-i18next";
-import { Language } from "../../../helpers/changeLanguage";
-import Navbar from "../../ui/navbar";
-import { AngleDownIcon, PlusIcon, UserCircleIcon } from "../../ui/icons";
-import Dropdown from "../../ui/dropdown";
-import { HeaderSearch } from "../../../helpers/headerSearch";
-import { logout } from "../../../actions/userActions";
+import { ThemeChanger } from '@/helpers/themeProvider';
+import Link from 'next/link';
+import { loggedUser } from '@/auth/useUser';
+import { useRouter } from 'next/router';
+import cogoToast from 'cogo-toast';
+import { useTranslation } from 'react-i18next';
+import { Language } from '@/helpers/changeLanguage';
+import Navbar from '../../ui/navbar';
+import { AngleDownIcon, PlusIcon, UserCircleIcon } from '../../ui/icons';
+import Dropdown from '../../ui/dropdown';
+import { HeaderSearch } from '@/helpers/headerSearch';
+import { logout } from '@/actions/userActions';
 
 export const Header = () => {
   const router = useRouter();
@@ -17,10 +17,10 @@ export const Header = () => {
   const { user } = loggedUser();
 
   const redirectNotAuth = () => {
-    router.push("/signin");
+    router.push('/signin');
     setTimeout(
-      () => cogoToast.info(t("Layout.header.item.post.notLoggedMessage")),
-      100
+      () => cogoToast.info(t('Layout.header.item.post.notLoggedMessage')),
+      100,
     );
   };
   return (
@@ -36,8 +36,8 @@ export const Header = () => {
             <Navbar.Item>
               <Navbar.Link>
                 <ThemeChanger
-                  darkTheme={t("Layout.header.item.theme.dark")}
-                  lightTheme={t("Layout.header.item.theme.light")}
+                  darkTheme={t('Layout.header.item.theme.dark')}
+                  lightTheme={t('Layout.header.item.theme.light')}
                   iconClass="h-4 mr-1 mt-1"
                 />
               </Navbar.Link>
@@ -51,7 +51,7 @@ export const Header = () => {
                   <Navbar.Link>
                     <div className="flex" onClick={redirectNotAuth}>
                       <PlusIcon size={18} space={2} className="mr-1" />
-                      {t("Layout.header.item.post.index")}
+                      {t('Layout.header.item.post.index')}
                     </div>
                   </Navbar.Link>
                 </Navbar.Item>
@@ -64,12 +64,12 @@ export const Header = () => {
                     <Dropdown.Menu>
                       <Dropdown.Item>
                         <Link href="/signin">
-                          <a>{t("Layout.header.item.login")}</a>
+                          <a>{t('Layout.header.item.login')}</a>
                         </Link>
                       </Dropdown.Item>
                       <Dropdown.Item>
                         <Link href="/register">
-                          <a>{t("Layout.header.item.register")}</a>
+                          <a>{t('Layout.header.item.register')}</a>
                         </Link>
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -83,11 +83,11 @@ export const Header = () => {
                   <span
                     className="flex"
                     onClick={() => {
-                      router.push("/posts/create");
+                      router.push('/posts/create');
                     }}
                   >
                     <PlusIcon size={20} className="mr-2" />
-                    {t("Layout.header.item.post.index")}
+                    {t('Layout.header.item.post.index')}
                   </span>
                 </Navbar.Link>
                 <Navbar.Link>
@@ -117,22 +117,22 @@ export const Header = () => {
                       </Dropdown.Item>
                       <Dropdown.Item>
                         <Link href={`/${user?.username}/posts`}>
-                          <a>{t("Layout.header.item.dropdown.posts")}</a>
+                          <a>{t('Layout.header.item.dropdown.posts')}</a>
                         </Link>
                       </Dropdown.Item>
                       <Dropdown.Item>
                         <Link href={`/${user?.username}/posts/liked`}>
-                          <a>{t("Layout.header.item.dropdown.likes")}</a>
+                          <a>{t('Layout.header.item.dropdown.likes')}</a>
                         </Link>
                       </Dropdown.Item>
                       <Dropdown.Item>
                         <Link href="/">
                           <a onClick={logout}>
-                            {t("Layout.header.item.logout")}
+                            {t('Layout.header.item.logout')}
                           </a>
                         </Link>
                       </Dropdown.Item>
-                      {user && user.role === "king" && (
+                      {user && user.role === 'king' && (
                         <Dropdown.Item>
                           <Link href="/admin/users">
                             <a>Dashboard</a>
@@ -146,7 +146,7 @@ export const Header = () => {
             )}
             <Navbar.Item>
               <Navbar.Link>
-                <HeaderSearch placeholder={t("Layout.header.item.search")} />
+                <HeaderSearch placeholder={t('Layout.header.item.search')} />
               </Navbar.Link>
             </Navbar.Item>
           </Navbar.Nav>

@@ -1,9 +1,9 @@
-import { updateComment } from "../actions/commentActions";
-import { loggedUser } from "../auth/useUser";
-import { updateChildComment } from "../actions/childCommentActions";
-import { useTranslation } from "react-i18next";
-import { useForm } from "react-hook-form";
-import { Button } from "../components/ui/button";
+import { updateComment } from '../actions/commentActions';
+import { loggedUser } from '../auth/useUser';
+import { updateChildComment } from '../actions/childCommentActions';
+import { useTranslation } from 'react-i18next';
+import { useForm } from 'react-hook-form';
+import { Button } from '../components/ui/button';
 
 interface UpdateCommentProps {
   content: string;
@@ -34,7 +34,7 @@ export const UpdateComment = ({
       await updateChildComment(user?.id, data);
       onSuccess();
     } else {
-      await updateComment(user?.id, values, t("Actions.error"));
+      await updateComment(user?.id, values, t('Actions.error'));
       onSuccess();
     }
   };
@@ -55,7 +55,7 @@ export const UpdateComment = ({
             className="font-medium pr-2 cursor-pointer"
             role="button"
           >
-            {t("Helpers.updateComment.cancelBtn")}
+            {t('Helpers.updateComment.cancelBtn')}
           </span>
           <Button
             type="submit"
@@ -64,7 +64,7 @@ export const UpdateComment = ({
             className="text-capitalize"
             color="dark"
           >
-            {t("Helpers.updateComment.confirmBtn")}
+            {t('Helpers.updateComment.confirmBtn')}
           </Button>
         </div>
       </form>
