@@ -47,6 +47,7 @@ export default function Slider({ data }: SliderProps) {
           {[...Array(slider.details().size).keys()].map((idx) => {
             return (
               <button
+                aria-label={`button ${idx}`}
                 key={idx}
                 onClick={() => {
                   slider.moveToSlideRelative(idx);
