@@ -151,7 +151,7 @@ export default function UpdatePost({ post }: UpdatePostProps) {
                       {t('Pages.username.posts.update.img')}
                     </div>
                     <Image
-                      src={post?.image}
+                      src={post?.image[0]}
                       alt={post?.title}
                       className="w-full"
                       height={900}
