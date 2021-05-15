@@ -140,7 +140,7 @@ export default function Table({ columns, data, children }: TableProps) {
   );
 
   return (
-    <div className="mt-16">
+    <div className="mt-20">
       <div className="block md:flex justify-end mb-8">
         <div className="mb-6 md:mr-auto">
           <GlobalFilter
@@ -218,7 +218,7 @@ export default function Table({ columns, data, children }: TableProps) {
                 <tr
                   key={i}
                   {...row.getRowProps()}
-                  className="md:hover:bg-gray-100 md:dark:hover:bg-gray-600"
+                  className="md:hover:bg-gray-100 md:dark:hover:bg-gray-900"
                 >
                   {row.cells.map((cell, i) => {
                     return (

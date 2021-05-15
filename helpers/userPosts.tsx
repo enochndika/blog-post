@@ -42,8 +42,8 @@ export default function UserPosts() {
             Header: t('Pages.username.posts.index.table.image'),
             accessor: (row) => (
               <Image
-                width={100}
-                height={100}
+                width={50}
+                height={50}
                 src={row.image[0]}
                 className="h-12 w-12 rounded-full"
                 alt="Post"
