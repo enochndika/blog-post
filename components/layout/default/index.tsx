@@ -1,15 +1,12 @@
-import { Header } from './header';
 import { useState } from 'react';
-import { Footer } from '../footer';
-import { SidenavContainer } from '../sidenavContainer';
-import Props from '../../../utils/defaultProps';
+
+import Header from '../header';
+import Footer from '../footer';
+import SidenavContainer from '../sidenavContainer';
+import Props from '@/utils/defaultProps';
 
 const DefaultLayout = ({ children }: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const toggle = () => {
-    setIsOpen(true);
-  };
 
   return (
     <>

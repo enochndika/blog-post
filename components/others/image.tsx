@@ -1,16 +1,26 @@
 import style from './image.module.css';
-import { HTMLAttributes } from 'react';
+import NextImage from 'next/image';
 
 export interface ImageProps {
   className?: string;
   alt: any;
   src: string;
-  props?: HTMLAttributes<HTMLImageElement>;
+  width: number;
+  height: number;
 }
 
-export const Image = ({ className, src, alt, ...props }: ImageProps) => (
+const Image = ({
+  className,
+  src,
+  width,
+  height,
+  alt,
+  ...props
+}: ImageProps) => (
   <div className={style.imgContainer}>
-    <img
+    <NextImage
+      width={width}
+      height={height}
       src={src}
       alt={alt}
       {...props}
@@ -18,3 +28,5 @@ export const Image = ({ className, src, alt, ...props }: ImageProps) => (
     />
   </div>
 );
+
+export default Image;

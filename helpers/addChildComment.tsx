@@ -1,19 +1,23 @@
-import { loggedUser } from '../auth/useUser';
 import cogoToast from 'cogo-toast';
-import { addChildComment } from '../actions/childCommentActions';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
-import { Button } from '../components/ui/button';
-import { FormError } from '../components/formError';
+
+import { addChildComment } from '@/actions/childCommentActions';
+import { FormError } from '@/components/others/formError';
+import { Button } from '@/components/ui/button';
+import { useFetchUserProfile } from '@/actions/userActions';
 
 interface AddChildCommentProps {
   comment: number;
   mutate: () => void;
 }
 
-export const AddChildComment = ({ comment, mutate }: AddChildCommentProps) => {
+export default function AddChildComment({
+  comment,
+  mutate,
+}: AddChildCommentProps) {
   const { t } = useTranslation();
-  const { user } = loggedUser();
+  const { user } = useFetchUserProfile();
   const { register, formState, handleSubmit, errors, reset } = useForm();
 
   const onSubmit = async (values) => {
@@ -61,4 +65,4 @@ export const AddChildComment = ({ comment, mutate }: AddChildCommentProps) => {
       </Button>
     </form>
   );
-};
+}

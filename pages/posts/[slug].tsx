@@ -1,16 +1,27 @@
 import { ComponentType, Fragment, useState } from 'react';
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
-import cogoToast from 'cogo-toast';
 import Head from 'next/head';
-import { useTranslation } from 'react-i18next';
 import dynamic from 'next/dynamic';
-import { stateToHTML } from 'draft-js-export-html';
-import { convertFromRaw } from 'draft-js';
+import cogoToast from 'cogo-toast';
 import { useRouter } from 'next/router';
+import { convertFromRaw } from 'draft-js';
+import { useTranslation } from 'react-i18next';
+import { stateToHTML } from 'draft-js-export-html';
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
+
+import Dropdown from '@/components/ui/dropdown';
+import Separator from '@/components/others/separator';
 import DefaultLayout from '@/components/layout/default';
 import api from '@/utils/axios';
 import { checkLikeExist, getTotalLikes } from '@/utils/formats';
-import { loggedUser } from '@/auth/useUser';
+import Container from '@/components/ui/container';
+import Row from '@/components/ui/row';
+import { EllipsisVIcon, FlagIcon, HeartIcon } from '@/components/ui/icons';
+import Image from '@/components/others/image';
+import PostDetails from '@/components/others/postDetails';
+import { button } from '@/components/ui/button';
+import { PostsProps } from '@/components/others/posts';
+import { ReportModalProps } from '@/helpers/reportModal';
+
 import {
   likePost,
   unlikePost,
@@ -18,29 +29,20 @@ import {
   useFetchPostLikes,
   useFetchPostRelated,
 } from '@/actions/postActions';
-import Container from '@/components/ui/container';
-import Row from '@/components/ui/row';
-import { EllipsisVIcon, FlagIcon, HeartIcon } from '@/components/ui/icons';
-import Dropdown from '@/components/ui/dropdown';
-import { Separator } from '@/components/separator';
-import { Image } from '@/components/image';
-import { PostDetails } from '@/components/postDetails';
-import { button } from '@/components/ui/button';
-import { PostsProps } from '@/components/posts';
-import { ReportModalProps } from '@/helpers/reportModal';
+import { useFetchUserProfile } from '@/actions/userActions';
 
 const PostComments: ComponentType<any> = dynamic(
-  () => import('@/helpers/comments').then((mod) => mod.PostComments),
+  () => import('@/helpers/comments'),
   { ssr: false },
 );
 
 const Post: ComponentType<PostsProps> = dynamic(
-  () => import('@/components/posts').then((mod) => mod.Post),
+  () => import('@/components/others/posts'),
   { ssr: false },
 );
 
 const ReportModal: ComponentType<ReportModalProps> = dynamic(
-  () => import('@/helpers/reportModal').then((mod) => mod.ReportModal),
+  () => import('@/helpers/reportModal'),
   { ssr: false },
 );
 
@@ -53,7 +55,7 @@ export default function PostSlugPage({
   const { data: clientPost } = useFetchPost(post, slug);
   const { likes, mutate: mutateLike } = useFetchPostLikes(clientPost?.id);
   const { data } = useFetchPostRelated(clientPost);
-  const { user } = loggedUser();
+  const { user } = useFetchUserProfile();
 
   const convertFromJSONToHTML = (text) => {
     try {
@@ -179,7 +181,9 @@ export default function PostSlugPage({
                 </Row>
                 {post.local && (
                   <Image
-                    src={clientPost.image}
+                    width={1500}
+                    height={900}
+                    src={clientPost.image[0]}
                     className="d-block w-full"
                     alt={clientPost.title}
                   />

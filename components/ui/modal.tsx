@@ -1,6 +1,7 @@
 import Portal from '@reach/portal';
 import { useEffect, useRef } from 'react';
-import Props from '../../utils/defaultProps';
+import Props from '@/utils/defaultProps';
+import style from './modal.module.css';
 
 interface ModalProps extends Props {
   isOpen: boolean;
@@ -16,6 +17,7 @@ interface ModalBody extends Props {
 const Modal = ({ children, isOpen, toggle, backdrop, padding }: ModalProps) => {
   const ref = useRef<HTMLDivElement>();
 
+  // close modal when you click outside the dialog
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (backdrop && !ref.current?.contains(event.target)) {
@@ -27,23 +29,53 @@ const Modal = ({ children, isOpen, toggle, backdrop, padding }: ModalProps) => {
     return () => window.removeEventListener('click', handleOutsideClick);
   }, [isOpen, ref]);
 
+  // close modal when you click on "ESC" key
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (!isOpen) return;
+      if (event.key === 'Escape') {
+        toggle(false);
+      }
+    };
+    document.addEventListener('keyup', handleEscape);
+    return () => document.removeEventListener('keyup', handleEscape);
+  }, [isOpen]);
+
+  // Put focus on modal dialogue, hide scrollbar and prevent body from moving when modal is open
+  useEffect(() => {
+    if (!isOpen) return;
+
+    ref.current?.focus();
+    const html = document.documentElement;
+    const overflow = html.style.overflow;
+
+    const paddingRight = html.style.paddingRight;
+    const scrollbarWidth = window.innerWidth - html.clientWidth;
+
+    html.style.overflow = 'hidden';
+    html.style.paddingRight = `${scrollbarWidth}px`;
+
+    return () => {
+      html.style.overflow = overflow;
+      html.style.paddingRight = paddingRight;
+    };
+  }, [isOpen]);
+
   return (
     <Portal>
       {isOpen && (
         <div className="container">
-          <div className="fixed top-0 left-0 z-40 w-screen h-screen bg-black opacity-50" />
-          <div className="fixed top-0 left-0 z-40 w-full h-full m-0">
+          <div className={style.backdrop} />
+          <div className={style.container}>
             <div
-              className={`${positions.default} ${
+              className={`${style.orientation} ${
                 padding ? padding : ' md:pt-12'
               }`}
               ref={backdrop ? ref : null}
               role="dialogue"
               aria-modal={true}
             >
-              <div
-                className={`${animations.default} relative flex flex-col bg-white dark:bg-gray-800 pointer-events-auto`}
-              >
+              <div className={`${style.content} dark:bg-gray-800`}>
                 {children}
               </div>
             </div>
@@ -55,27 +87,17 @@ const Modal = ({ children, isOpen, toggle, backdrop, padding }: ModalProps) => {
 };
 
 Modal.Header = ({ children }: Props) => (
-  <div className="items-start justify-between p-4 border-b border-gray-300">
-    <h4 className="text-2xl md:text-3xl font-light">{children}</h4>
+  <div className={style.header}>
+    <h4 className={style.headerTitle}>{children}</h4>
   </div>
 );
 
 Modal.Body = ({ children, className }: ModalBody) => (
-  <div className={`${className} flex-shrink flex-grow p-4`}>{children}</div>
+  <div className={`${className} ${style.body}`}>{children}</div>
 );
 
 Modal.Footer = ({ children }: Props) => (
-  <div className="flex flex-wrap items-center justify-end p-3 border-t border-gray-300">
-    {children}
-  </div>
+  <div className={style.footer}>{children}</div>
 );
-
-const positions = {
-  default: 'mt-96 mx-8 md:m-auto md:w-4/12 ',
-};
-
-const animations = {
-  default: 'animate-modal-top',
-};
 
 export default Modal;

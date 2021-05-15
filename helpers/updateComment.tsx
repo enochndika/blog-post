@@ -1,9 +1,10 @@
-import { updateComment } from '../actions/commentActions';
-import { loggedUser } from '../auth/useUser';
-import { updateChildComment } from '../actions/childCommentActions';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
-import { Button } from '../components/ui/button';
+
+import { updateComment } from '@/actions/commentActions';
+import { updateChildComment } from '@/actions/childCommentActions';
+import { Button } from '@/components/ui/button';
+import { useFetchUserProfile } from '@/actions/userActions';
 
 interface UpdateCommentProps {
   content: string;
@@ -12,13 +13,13 @@ interface UpdateCommentProps {
   onSuccess: () => void;
   child: boolean;
 }
-export const UpdateComment = ({
+export default function UpdateComment({
   content,
   id,
   onAbort,
   onSuccess,
   child,
-}: UpdateCommentProps) => {
+}: UpdateCommentProps) {
   const { register, handleSubmit, formState } = useForm({
     defaultValues: {
       id,
@@ -26,7 +27,7 @@ export const UpdateComment = ({
     },
   });
   const { t } = useTranslation();
-  const { user } = loggedUser();
+  const { user } = useFetchUserProfile();
 
   const onSubmit = async (values) => {
     const data = { id: values.id, content: values.content };
@@ -70,4 +71,4 @@ export const UpdateComment = ({
       </form>
     </div>
   );
-};
+}

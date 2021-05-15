@@ -5,33 +5,37 @@ import { useEffect } from 'react';
 import { stateToHTML } from 'draft-js-export-html';
 import { useTranslation } from 'react-i18next';
 import { Editor } from 'react-draft-wysiwyg';
+import { useForm } from 'react-hook-form';
+import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
+import { Tab, Tabs } from '@/components/ui/tab';
+import { Button } from '@/components/ui/button';
+import { FormError } from '@/components/others/formError';
+import Option from '@/components/others/option';
+import Row from '@/components/ui/row';
+import { Input } from '@/components/ui/form';
+import Container from '@/components/ui/container';
+import { BookOpenIcon, PenIcon, TextHeightIcon } from '@/components/ui/icons';
+import Image from '@/components/others/image';
+
 import {
   addPicture,
   updatePost,
   useFetchCategories,
-} from '../actions/postActions';
-import { Tab, Tabs } from '../components/ui/tab';
-import { Button } from '../components/ui/button';
-import { FormError } from '../components/formError';
-import { Option } from '../components/option';
-import Row from '../components/ui/row';
-import { Input } from '../components/ui/form';
-import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { useForm } from 'react-hook-form';
-import Container from '../components/ui/container';
-import { BookOpenIcon, PenIcon, TextHeightIcon } from '../components/ui/icons';
-import { Image } from '../components/image';
-import { loggedUser } from '../auth/useUser';
+} from '@/actions/postActions';
+import { useFetchUserProfile } from '@/actions/userActions';
 
 export interface UpdatePostProps {
   post: any;
 }
-export const UpdatePost = ({ post }: UpdatePostProps) => {
+
+export default function UpdatePost({ post }: UpdatePostProps) {
   const { t } = useTranslation();
   const router = useRouter();
-  const { user } = loggedUser();
+  const { user } = useFetchUserProfile();
   const { categories } = useFetchCategories();
   const [content, setContent] = useState(EditorState.createEmpty());
+
   const { register, formState, errors, setValue, handleSubmit } = useForm({
     defaultValues: {
       id: post?.id,
@@ -65,6 +69,7 @@ export const UpdatePost = ({ post }: UpdatePostProps) => {
       return { __html: 'Error' };
     }
   };
+
   const onSubmit = async (values) => {
     await updatePost(
       values,
@@ -149,6 +154,8 @@ export const UpdatePost = ({ post }: UpdatePostProps) => {
                       src={post?.image}
                       alt={post?.title}
                       className="w-full"
+                      height={900}
+                      width={1500}
                     />
                   </div>
                   <div className="col-12">
@@ -204,4 +211,4 @@ export const UpdatePost = ({ post }: UpdatePostProps) => {
       </Container>
     </>
   );
-};
+}

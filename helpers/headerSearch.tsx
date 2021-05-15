@@ -10,7 +10,15 @@ type FormValues = {
   title: string;
 };
 
-export const HeaderSearch = ({ placeholder, close }: HeaderSearchProps) => {
+const style = {
+  focus: `focus:outline-none focus:border-b-2 focus:border-blue-700 w-full pl-3 my-2 pb-1`,
+  default: `text-black bg-white dark:text-gray-300 dark:bg-darker  border-gray-300 dark:border-b-0 border-b block`,
+};
+
+export default function HeaderSearch({
+  placeholder,
+  close,
+}: HeaderSearchProps) {
   const { register, handleSubmit } = useForm<FormValues>();
   const router = useRouter();
 
@@ -27,8 +35,6 @@ export const HeaderSearch = ({ placeholder, close }: HeaderSearchProps) => {
     }
   };
 
-  const focusClass = `focus:outline-none focus:border-b-2 focus:border-blue-700`;
-  const className = `text-black bg-white dark:text-gray-300 dark:bg-darker  border-gray-300 dark:border-b-0 border-b block`;
   return (
     <form
       className="inline-block lg:w-36 xl:w-full"
@@ -37,7 +43,7 @@ export const HeaderSearch = ({ placeholder, close }: HeaderSearchProps) => {
     >
       <div className="my-0">
         <input
-          className={`${className} ${focusClass} w-full pl-3 my-2 pb-1`}
+          className={`${style.default} ${style.focus}`}
           type="text"
           name="title"
           ref={register}
@@ -47,4 +53,4 @@ export const HeaderSearch = ({ placeholder, close }: HeaderSearchProps) => {
       </div>
     </form>
   );
-};
+}

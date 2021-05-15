@@ -1,12 +1,12 @@
 import { useState, useRef } from 'react';
 import { AngleDownIcon, AngleUpIcon } from './icons';
-import Props from '../../utils/defaultProps';
+import Props from '@/utils/defaultProps';
 
 interface CollapseProps extends Props {
   icon?: boolean;
 }
 
-export const Collapse = ({ children, icon }: CollapseProps) => {
+export default function Collapse({ children, icon }: CollapseProps) {
   const toggler = children[0];
   const main = children[1];
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -16,8 +16,9 @@ export const Collapse = ({ children, icon }: CollapseProps) => {
   const toggle = () => {
     setIsOpen((prevState) => !prevState);
   };
+
   return (
-    <div>
+    <>
       <div onClick={toggle}>
         {isOpen ? (
           <div className="flex">
@@ -38,6 +39,6 @@ export const Collapse = ({ children, icon }: CollapseProps) => {
       >
         {main}
       </div>
-    </div>
+    </>
   );
-};
+}

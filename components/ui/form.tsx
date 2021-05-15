@@ -1,4 +1,4 @@
-import {
+import React, {
   ForwardedRef,
   forwardRef,
   ReactNode,
@@ -10,13 +10,14 @@ interface FormProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label: string;
   children: ReactNode;
+  errorMessage?: string;
 }
 
 type InputRef = ForwardedRef<HTMLInputElement>;
 
 export const Input = forwardRef(
   (
-    { className, children, name, label, ...props }: FormProps,
+    { className, children, name, label, errorMessage, ...props }: FormProps,
     ref: InputRef,
   ) => {
     return (
@@ -38,6 +39,17 @@ export const Input = forwardRef(
             className={`${className} text-base dark:text-black relative w-full border border-gray-300 rounded-md  focus:border-blue-500 focus:outline-none py-2 pr-2 pl-12`}
           />
         </div>
+        {errorMessage && (
+          <div>
+            <span
+              role="alert"
+              className={`${className} text-red-500 -mt-3 font-medium mb-6 inline-block`}
+              style={{ fontSize: 13 }}
+            >
+              {errorMessage}
+            </span>
+          </div>
+        )}
       </div>
     );
   },

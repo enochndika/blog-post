@@ -1,10 +1,15 @@
 import React, { ReactElement, useState } from 'react';
-import Props from '../../utils/defaultProps';
+import Props from '@/utils/defaultProps';
 
 interface TabProps extends Props {
   selected?: boolean;
   title: string;
 }
+
+const style = {
+  selected: `text-gray-700  border-b-2 border-indigo-700 dark:text-white -mb-2 px-4 text-lg py-4 md:py-1 inline-block`,
+  notSelected: `-mb-2 px-4 text-lg dark:text-white py-4 md:py-1 inline-block border-b`,
+};
 
 export const Tabs = ({ children }: Props) => {
   const childrenArray: Array<any> = React.Children.toArray(children);
@@ -18,18 +23,13 @@ export const Tabs = ({ children }: Props) => {
   return (
     <nav>
       {childrenArray.map((child) => (
-        <div
-          role="button"
+        <a
           onClick={() => setCurrent(child.key)}
           key={child.key}
-          className={
-            current === child.key
-              ? 'text-gray-700  border-b-2 border-indigo-700 dark:text-white -mb-2 px-4 text-lg py-4 md:py-1 inline-block'
-              : '-mb-2 px-4 text-lg dark:text-white py-4 md:py-1 inline-block border-b'
-          }
+          className={current === child.key ? style.selected : style.notSelected}
         >
           {child.props.title}
-        </div>
+        </a>
       ))}
       <section>{newChildren}</section>
     </nav>

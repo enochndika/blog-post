@@ -1,13 +1,14 @@
-import { reportType } from '../utils/reportText';
-import { useReportChildComment } from '../actions/childCommentActions';
-import { reportComment } from '../actions/commentActions';
-import { reportPost } from '../actions/postActions';
 import { useTranslation } from 'react-i18next';
-import Container from '../components/ui/container';
-import Modal from '../components/ui/modal';
-import { Button } from '../components/ui/button';
 import { useForm } from 'react-hook-form';
-import { FormError } from '../components/formError';
+
+import { Button } from '@/components/ui/button';
+import { reportType } from '@/utils/reportText';
+import { useReportChildComment } from '@/actions/childCommentActions';
+import { reportComment } from '@/actions/commentActions';
+import { reportPost } from '@/actions/postActions';
+import Container from '@/components/ui/container';
+import Modal from '@/components/ui/modal';
+import { FormError } from '@/components/others/formError';
 
 export interface ReportModalProps {
   isOpen: boolean;
@@ -18,7 +19,7 @@ export interface ReportModalProps {
   post?: boolean;
   comment?: boolean;
 }
-export const ReportModal = ({
+export default function ReportModal({
   isOpen,
   toggle,
   id,
@@ -26,11 +27,12 @@ export const ReportModal = ({
   child,
   post,
   comment,
-}: ReportModalProps) => {
+}: ReportModalProps) {
   const { t } = useTranslation();
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = async (values) => {
+    //if it's report for child comment
     if (child) {
       await useReportChildComment(
         id,
@@ -41,6 +43,8 @@ export const ReportModal = ({
       );
       toggle();
     }
+
+    //if it's report for blog post
     if (post) {
       await reportPost(
         id,
@@ -51,6 +55,8 @@ export const ReportModal = ({
       );
       toggle();
     }
+
+    //if it's report for comment
     if (comment) {
       await reportComment(
         id,
@@ -67,10 +73,8 @@ export const ReportModal = ({
     <Container>
       <Modal isOpen={isOpen} toggle={toggle} backdrop={true}>
         <form onSubmit={handleSubmit(onSubmit)}>
+          <Modal.Header>{t('Helpers.reportModal.title')}</Modal.Header>
           <Modal.Body className="text-gray-700 dark:text-white">
-            <div className="mb-5 text-2xl font-medium">
-              {t('Helpers.reportModal.title')}
-            </div>
             {errors.subject && <FormError message={errors.subject.message} />}
             <div>
               <label>
@@ -156,4 +160,4 @@ export const ReportModal = ({
       </Modal>
     </Container>
   );
-};
+}

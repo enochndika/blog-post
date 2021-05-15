@@ -1,7 +1,7 @@
 import Container from '../ui/container';
 import { FC } from 'react';
 
-export const Footer: FC = () => (
+const Footer: FC = () => (
   <footer className="bg-darker text-white relative bottom-0 text-sm">
     <div className="bg-black text-center py-4">
       <Container noPadding={true}>
@@ -11,3 +11,5 @@ export const Footer: FC = () => (
     </div>
   </footer>
 );
+
+export default Footer;

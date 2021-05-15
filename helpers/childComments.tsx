@@ -1,26 +1,30 @@
-import { useSWRInfinite } from 'swr';
-import api from '../utils/axios';
-import { useState } from 'react';
-import { loggedUser } from '../auth/useUser';
 import cogoToast from 'cogo-toast';
-import { useDeleteChildComment } from '../actions/childCommentActions';
-import { useTranslation } from 'react-i18next';
-import { formatNumericDate } from '../utils/formats';
+import { useSWRInfinite } from 'swr';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Collapse } from '../components/ui/collapse';
-import { Button } from '../components/ui/button';
-import Row from '../components/ui/row';
+import { useTranslation } from 'react-i18next';
+
+import { useDeleteChildComment } from '@/actions/childCommentActions';
+import { formatNumericDate } from '@/utils/formats';
+import Collapse from '@/components/ui/collapse';
+
+import api from '@/utils/axios';
+import { Button } from '@/components/ui/button';
+import Row from '@/components/ui/row';
+
+import Dropdown from '@/components/ui/dropdown';
+import AddChildComment from './addChildComment';
+import ReportModal from './reportModal';
+import UpdateComment from './updateComment';
+
 import {
   CommentsIcon,
   EllipsisVIcon,
   FlagIcon,
   ReplyIcon,
   UserCircleIcon,
-} from '../components/ui/icons';
-import Dropdown from '../components/ui/dropdown';
-import { AddChildComment } from './addChildComment';
-import { ReportModal } from './reportModal';
-import { UpdateComment } from './updateComment';
+} from '@/components/ui/icons';
+import { useFetchUserProfile } from '@/actions/userActions';
 
 const fetcher = (url) => api.get(url).then((res) => res.data.data);
 const LIMIT = 6;
@@ -32,7 +36,7 @@ export const ChildComments = ({ comment }) => {
   const [reportModal, setReportModal] = useState(false);
   const [selectedCommentRow, setSelectedCommentRow] = useState(undefined);
   const [commentId, setCommentId] = useState(null);
-  const { user } = loggedUser();
+  const { user } = useFetchUserProfile();
 
   const { data, error, size, setSize, mutate } = useSWRInfinite(
     (index) => `/child-comments/${comment}?page=${index + 1}&limit=${LIMIT}`,

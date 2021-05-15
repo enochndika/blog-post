@@ -2,7 +2,7 @@ interface TogglerProps {
   toggle: () => void;
 }
 
-export const Toggler = ({ toggle }: TogglerProps) => (
+const Toggler = ({ toggle }: TogglerProps) => (
   <button
     className="float-right block pr-3 text-4xl focus:outline-none focus:shadow lg:hidden "
     onClick={toggle}
@@ -10,3 +10,5 @@ export const Toggler = ({ toggle }: TogglerProps) => (
     &#8801;
   </button>
 );
+
+export default Toggler;

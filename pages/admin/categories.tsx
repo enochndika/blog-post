@@ -1,25 +1,27 @@
-import AdminLayout from '../../components/layout/Admin';
-import useSWR from 'swr';
-import { fetcher } from '../../actions/fetcher';
-import DataTable from '../../components/skeleton/table';
-import Container from '../../components/ui/container';
 import { ComponentType, useMemo, useState } from 'react';
-import { TableProperty } from '../../components/tableProperty';
-import { formatNumericDate } from '../../utils/formats';
-import { useRouter } from 'next/router';
-import { deletePostCategory } from '../../actions/postActions';
-import { PlusIcon } from '../../components/ui/icons';
+import useSWR from 'swr';
 import dynamic from 'next/dynamic';
-import { AddCategoryProps } from '../../helpers/addCategory';
-import { TableProps } from '../../components/table';
+import { useRouter } from 'next/router';
+
+import AdminLayout from '@/components/layout/Admin';
+import { fetcher } from '@/actions/fetcher';
+import DataTable from '@/components/skeleton/table';
+import Container from '@/components/ui/container';
+
+import TableProperty from '@/components/others/tableProperty';
+import { formatNumericDate } from '@/utils/formats';
+import { deletePostCategory } from '@/actions/postActions';
+import { PlusIcon } from '@/components/ui/icons';
+import { AddCategoryProps } from '@/helpers/addCategory';
+import { TableProps } from '@/components/others/table';
 
 const Table: ComponentType<TableProps> = dynamic(
-  () => import('../../components/table').then((mod) => mod.Table),
+  () => import('@/components/others/table'),
   { ssr: false },
 );
 
 const AddCategory: ComponentType<AddCategoryProps> = dynamic(
-  () => import('../../helpers/addCategory').then((mod) => mod.AddCategory),
+  () => import('../../helpers/addCategory'),
   { ssr: false },
 );
 

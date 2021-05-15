@@ -5,6 +5,7 @@
       <Languages>
         <language minSize="13" name="Style Sheets" />
         <language minSize="169" name="JavaScript" />
+        <language minSize="51" name="TypeScript" />
       </Languages>
     </inspection_tool>
   </profile>

@@ -6,6 +6,16 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+th,
+td {
+  text-align: left;
+  padding: 16px;
+}
+
+
+button:focus {
+  outline: none;
+}
 
 @tailwind components;
 

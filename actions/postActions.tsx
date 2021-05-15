@@ -1,9 +1,10 @@
-import { toastError, toastSuccess } from '../utils/toast';
-import api from '../utils/axios';
-import useSWR from 'swr';
-import { fetcher, fetches } from './fetcher';
 import { convertToRaw } from 'draft-js';
 import cogoToast from 'cogo-toast';
+import useSWR from 'swr';
+
+import { toastError, toastSuccess } from '@/utils/toast';
+import api from '@/utils/axios';
+import { fetcher, fetches } from './fetcher';
 
 export const useFetchCategories = () => {
   const { data, error, mutate } = useSWR(`/post-categories`, fetcher);

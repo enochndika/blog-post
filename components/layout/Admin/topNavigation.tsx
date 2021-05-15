@@ -1,17 +1,32 @@
 import { useRouter } from 'next/router';
-import Navbar from '../../ui/navbar';
-import { ThemeChanger } from '@/helpers/themeProvider';
-import { useTranslation } from 'react-i18next';
-import { HomeIcon, PowerOffIcon } from '../../ui/icons';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
+
+import Navbar from '@/components/ui/navbar';
+import ThemeChanger from '@/helpers/themeProvider';
+import { HomeIcon, PowerOffIcon } from '@/components/ui/icons';
 import { logout } from '@/actions/userActions';
-import { FC } from 'react';
 
 const ActiveRoute = ({ router, path, content }) => (
   <>{router.asPath === path && <span>{content}</span>}</>
 );
 
-export const TopNavigation: FC = () => {
+const data = [
+  { content: 'Utilisateurs', path: '/admin/users' },
+  { content: 'Posts', path: '/admin/posts' },
+  { content: 'Commentaires', path: '/admin/comments' },
+  { content: 'Commentaires enfants', path: '/admin/subcomments' },
+  { content: 'Likes', path: '/admin/likes' },
+  { content: 'Signalement des commentaires', path: '/admin/report/comments' },
+  { content: 'Signalement des posts', path: '/admin/report/posts' },
+  { content: 'Post Categories', path: '/admin/categories' },
+  {
+    content: 'Signalement des commentaires enfants',
+    path: '/admin/report/subcomments',
+  },
+];
+
+export default function TopNavigation() {
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -19,48 +34,14 @@ export const TopNavigation: FC = () => {
     <div className="container-fluid fixed top-0 w-full z-20 text-white bg-black">
       <Navbar className="py-4 px-4">
         <div className="text-2xl font-medium ml-8">
-          <ActiveRoute
-            content="Utilisateurs"
-            router={router}
-            path="/admin/users"
-          />
-          <ActiveRoute content="Posts" router={router} path="/admin/posts" />
-          <ActiveRoute
-            content="Commentaires"
-            router={router}
-            path="/admin/comments"
-          />
-          <ActiveRoute
-            content="Commentaires enfants"
-            router={router}
-            path="/admin/subcomments"
-          />
-          <ActiveRoute content="Likes" router={router} path="/admin/likes" />
-          <ActiveRoute
-            content="Signalement des commentaires"
-            router={router}
-            path="/admin/report/comments"
-          />
-          <ActiveRoute
-            content="Signalement des commentaires enfants"
-            router={router}
-            path="/admin/report/subcomments"
-          />
-          <ActiveRoute
-            content="Signalement des posts"
-            router={router}
-            path="/admin/report/posts"
-          />
-          <ActiveRoute
-            content="Post Categories"
-            router={router}
-            path="/admin/categories"
-          />
-          <ActiveRoute
-            content="Static Pages"
-            router={router}
-            path="/admin/static-pages"
-          />
+          {data.map((item) => (
+            <ActiveRoute
+              content={item.content}
+              router={router}
+              path={item.path}
+              key={item.path}
+            />
+          ))}
         </div>
         <Navbar.Nav>
           <Navbar.Item>
@@ -96,4 +77,4 @@ export const TopNavigation: FC = () => {
       </Navbar>
     </div>
   );
-};
+}

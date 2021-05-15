@@ -1,5 +1,5 @@
-import { formatDate } from '../utils/formats';
-import { StarIcon } from './ui/icons';
+import { formatDate } from '@/utils/formats';
+import { StarIcon } from '../ui/icons';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
 
@@ -9,12 +9,13 @@ export interface PostDetailsProps {
   date: Date;
   readTime: number;
 }
-export const PostDetails = ({
+
+export default function PostDetails({
   author,
   category,
   date,
   readTime,
-}: PostDetailsProps) => {
+}: PostDetailsProps) {
   const { t } = useTranslation();
   const { locale } = useRouter();
   return (
@@ -34,4 +35,4 @@ export const PostDetails = ({
       </div>
     </div>
   );
-};
+}

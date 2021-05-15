@@ -1,11 +1,10 @@
-import React, { FC } from 'react';
 import ContentLoader from 'react-content-loader';
-import { useMounted } from '../../utils/mounted';
 import { useTheme } from 'next-themes';
+import useMounted from '@/utils/mounted';
 import Container from '../ui/container';
 import Row from '../ui/row';
 
-const Reddit: FC = () => {
+export default function RedditSkeleton() {
   const isMounted = useMounted();
   return (
     <>
@@ -29,9 +28,9 @@ const Reddit: FC = () => {
       )}
     </>
   );
-};
+}
 
-const FadingLoaderCard1 = () => {
+function FadingLoaderCard1() {
   const isMounted = useMounted();
   const { theme } = useTheme();
   return (
@@ -46,9 +45,9 @@ const FadingLoaderCard1 = () => {
       <rect x="20" y="10" rx="0" ry="0" width="40" height="40" />
     </ContentLoader>
   );
-};
+}
 
-const FadingLoaderCard2 = () => {
+function FadingLoaderCard2() {
   const isMounted = useMounted();
   const { theme } = useTheme();
   return (
@@ -63,6 +62,4 @@ const FadingLoaderCard2 = () => {
       <rect x="20" y="10" rx="0" ry="0" width="40" height="40" />
     </ContentLoader>
   );
-};
-
-export default Reddit;
+}

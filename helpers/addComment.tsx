@@ -1,19 +1,20 @@
-import { addComment } from '../actions/commentActions';
-import { loggedUser } from '../auth/useUser';
 import cogoToast from 'cogo-toast';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
-import { Button } from '../components/ui/button';
-import { FormError } from '../components/formError';
+
+import { Button } from '@/components/ui/button';
+import { FormError } from '@/components/others/formError';
+import { addComment } from '@/actions/commentActions';
+import { useFetchUserProfile } from '@/actions/userActions';
 
 interface AddCommentProps {
   post: number;
   mutate: () => void;
 }
 
-export const AddComment = ({ post, mutate }: AddCommentProps) => {
+export default function AddComment({ post, mutate }: AddCommentProps) {
   const { t } = useTranslation();
-  const { user } = loggedUser();
+  const { user } = useFetchUserProfile();
   const { register, formState, handleSubmit, errors, reset } = useForm();
 
   const onSubmit = async (values) => {
@@ -59,4 +60,4 @@ export const AddComment = ({ post, mutate }: AddCommentProps) => {
       </Button>
     </form>
   );
-};
+}

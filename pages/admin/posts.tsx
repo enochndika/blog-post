@@ -1,19 +1,20 @@
-import AdminLayout from '../../components/layout/Admin';
 import useSWR from 'swr';
-import { fetcher } from '../../actions/fetcher';
-import DataTable from '../../components/skeleton/table';
-import Container from '../../components/ui/container';
-import { ComponentType, useMemo } from 'react';
-import { TableProperty } from '../../components/tableProperty';
-import { formatNumericDate } from '../../utils/formats';
 import { useRouter } from 'next/router';
-import { Image } from '../../components/image';
-import { deletePostByAdmin } from '../../actions/postActions';
+import { ComponentType, useMemo } from 'react';
 import dynamic from 'next/dynamic';
-import { TableProps } from '../../components/table';
+
+import AdminLayout from '@/components/layout/Admin';
+import { fetcher } from '@/actions/fetcher';
+import DataTable from '@/components/skeleton/table';
+import Container from '@/components/ui/container';
+import TableProperty from '@/components/others/tableProperty';
+import { formatNumericDate } from '@/utils/formats';
+import Image from '@/components/others/image';
+import { deletePostByAdmin } from '@/actions/postActions';
+import { TableProps } from '@/components/others/table';
 
 const Table: ComponentType<TableProps> = dynamic(
-  () => import('../../components/table').then((mod) => mod.Table),
+  () => import('@/components/others/table'),
   { ssr: false },
 );
 
@@ -42,9 +43,11 @@ export default function AdminPostPage() {
             Header: 'Image',
             accessor: (row) => (
               <Image
-                src={row.image}
+                src={row.image[0]}
                 className="h-12 w-12 rounded-full"
                 alt="Post"
+                height={100}
+                width={100}
               />
             ),
           },

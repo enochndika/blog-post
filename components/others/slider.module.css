@@ -5,6 +5,14 @@
   display: none;
 }
 
+.dot {
+  @apply h-2.5 w-2.5 bg-gray-400 mx-1.5 p-1.5 rounded-full focus:outline-none cursor-pointer;
+}
+
+.active {
+  @apply bg-blue-900 h-2.5 w-2.5 mx-1.5 p-1.5 rounded-full focus:outline-none cursor-pointer;
+}
+
 @media (min-width: 768px) {
   .arrow,
   .arrowDisabled,

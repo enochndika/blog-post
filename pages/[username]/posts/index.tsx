@@ -1,29 +1,31 @@
-import { loggedUser } from '../../../auth/useUser';
-import { useRouter } from 'next/router';
-import { formatFullDate, sliceText } from '../../../utils/formats';
-import { ComponentType, useMemo } from 'react';
-import { deletePost, useFetchPostsByUser } from '../../../actions/postActions';
 import Head from 'next/head';
 import { useTranslation } from 'react-i18next';
-import Container from '../../../components/ui/container';
-import { Image } from '../../../components/image';
-import { TableProperty } from '../../../components/tableProperty';
+import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import UserLayout from '../../../components/layout/user';
-import { TableProps } from '../../../components/table';
+import { ComponentType, useMemo } from 'react';
 
-const DataTable = dynamic(() => import('../../../components/skeleton/table'), {
+import { formatFullDate, sliceText } from '@/utils/formats';
+import { deletePost, useFetchPostsByUser } from '@/actions/postActions';
+import Container from '@/components/ui/container';
+import Image from '@/components/others/image';
+import TableProperty from '@/components/others/tableProperty';
+import UserLayout from '@/components/layout/user';
+import { TableProps } from '@/components/others/table';
+import Row from '@/components/ui/row';
+import { useFetchUserProfile } from '@/actions/userActions';
+
+const DataTable = dynamic(() => import('@/components/skeleton/table'), {
   ssr: false,
 });
 
 const Table: ComponentType<TableProps> = dynamic(
-  () => import('../../../components/table').then((mod) => mod.Table),
+  () => import('@/components/others/table'),
   { ssr: false },
 );
 
 export default function PostsPage() {
   const { t } = useTranslation();
-  const { user } = loggedUser();
+  const { user } = useFetchUserProfile();
   const router = useRouter();
   const { locale } = router;
   const { posts, mutate } = useFetchPostsByUser(user?.id);
@@ -51,6 +53,8 @@ export default function PostsPage() {
             Header: t('Pages.username.posts.index.table.image'),
             accessor: (row) => (
               <Image
+                width={100}
+                height={100}
                 src={row.image}
                 className="h-12 w-12 rounded-full"
                 alt="Post"
@@ -93,11 +97,19 @@ export default function PostsPage() {
         {user?.id === posts[0]?.userId ? (
           <Table columns={columns} data={posts} />
         ) : (
-          <div className="text-center mt-5">
-            <h3 className="grey-text ">
-              {t('Pages.username.posts.index.postNotFound')}
-            </h3>
-          </div>
+          <Row className="justify-center mt-20">
+            <div className="col-12 md:col-6">
+              <h3 className="text-3xl text-gray-700 font-medium my-20 dark:text-white text-center">
+                {t('Pages.username.posts.index.postNotFound')}
+              </h3>
+              <Image
+                src="/lottie.gif"
+                height={1000}
+                width={1000}
+                alt="lottie"
+              />
+            </div>
+          </Row>
         )}
       </Container>
     </>

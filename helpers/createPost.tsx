@@ -1,36 +1,38 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { EditorState } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 import { useTranslation } from 'react-i18next';
 import { Editor } from 'react-draft-wysiwyg';
-import { addPicture, addPost, useFetchCategories } from '@/actions/postActions';
-import { loggedUser } from '@/auth/useUser';
-import { postCreateSchema } from '@/validators/posts';
-import Modal from '../components/ui/modal';
-import { Tab, Tabs } from '@/components/ui/tab';
-import { Button } from '@/components/ui/button';
-import { FormError } from '@/components/formError';
-import { Option } from '@/components/option';
-import Row from '../components/ui/row';
-import { UploadFile } from '@/components/uploadForm';
-import { Input } from '@/components/ui/form';
-import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { EditorState } from 'draft-js';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Container from '../components/ui/container';
+import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
+import { addPicture, addPost, useFetchCategories } from '@/actions/postActions';
+import { postCreateSchema } from '@/validators/posts';
+import Modal from '@/components/ui/modal';
+import { Tab, Tabs } from '@/components/ui/tab';
+import { Button } from '@/components/ui/button';
+import { FormError } from '@/components/others/formError';
+import Option from '@/components/others/option';
+import Row from '@/components/ui/row';
+import UploadFile from '@/components/others/uploadForm';
+import { Input } from '@/components/ui/form';
+import Container from '@/components/ui/container';
+
 import {
   BookOpenIcon,
   PenIcon,
   SpinnerIcon,
   TextHeightIcon,
 } from '@/components/ui/icons';
+import { useFetchUserProfile } from '@/actions/userActions';
 
-export const CreatePost = () => {
+export default function CreatePost() {
   const [content, setContent] = useState(EditorState.createEmpty());
   const { t } = useTranslation();
   const router = useRouter();
-  const { user } = loggedUser();
+  const { user } = useFetchUserProfile();
   const { categories } = useFetchCategories();
   const { register, formState, errors, control, handleSubmit } = useForm({
     resolver: yupResolver(postCreateSchema),
@@ -52,7 +54,7 @@ export const CreatePost = () => {
 
   return (
     <Container>
-      <div className="mt-16">
+      <div className="mt-20">
         <Modal isOpen={formState.isSubmitting} backdrop={false} padding="pt-56">
           <Modal.Body className="bg-darker text-white dark:bg-white dark:text-gray-900">
             <div className="flex justify-center">
@@ -187,4 +189,4 @@ export const CreatePost = () => {
       </div>
     </Container>
   );
-};
+}

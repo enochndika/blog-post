@@ -1,15 +1,17 @@
 import { ComponentType, Fragment, useState } from 'react';
-import { Separator } from '../../separator';
-import { Footer } from '../footer';
 import dynamic from 'next/dynamic';
-import { useMounted } from '../../../utils/mounted';
-import { Header } from '../default/header';
-import { useAuthenticated } from '../../../auth/useUser';
-import Props from '../../../utils/defaultProps';
+
+import Separator from '@/components/others/separator';
+import useMounted from '@/utils/mounted';
+import useAuthenticated from '@/utils/isAuthenticated';
+import Props from '@/utils/defaultProps';
+
+import Footer from '../footer';
+import Header from '../header';
 import { SidenavContainerProps } from '../sidenavContainer';
 
 const SidenavContainer: ComponentType<SidenavContainerProps> = dynamic(
-  () => import('../sidenavContainer').then((mod) => mod.SidenavContainer),
+  () => import('../sidenavContainer'),
   {
     ssr: false,
   },
@@ -19,10 +21,6 @@ const UserLayout = ({ children }: Props) => {
   const isMounted = useMounted();
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated } = useAuthenticated();
-
-  const toggle = () => {
-    setIsOpen(true);
-  };
 
   return (
     <Fragment>

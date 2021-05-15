@@ -1,7 +1,26 @@
-import api from '../utils/axios';
-import { removeCookie, setCookie } from '../auth/cookies';
-import { toastError, toastSuccess } from '../utils/toast';
 import Router from 'next/router';
+
+import api from '../utils/axios';
+import { getCookieFromBrowser, removeCookie, setCookie } from '@/utils/cookies';
+import { toastError, toastSuccess } from '@/utils/toast';
+import { decodeToken } from '@/utils/formats';
+import useSWR from 'swr';
+import { fetches } from '@/actions/fetcher';
+
+export function useFetchUserProfile() {
+  const token = getCookieFromBrowser('blog-jwt-token');
+  const username = decodeToken(token);
+  const { data, error, mutate } = useSWR(
+    username ? `/users/${username}` : null,
+    fetches,
+  );
+  return {
+    user: data,
+    isLoading: !error && !data,
+    isError: error,
+    mutate,
+  };
+}
 
 export const signin = async (
   data: {

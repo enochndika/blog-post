@@ -1,6 +1,6 @@
 import { CSSProperties, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import Row from './ui/row';
+import Row from '../ui/row';
 
 const dragText: CSSProperties = {
   width: '100%',
@@ -25,7 +25,7 @@ const thumb: CSSProperties = {
   boxSizing: 'border-box',
 };
 
-export const UploadFile = ({ onChange, children }) => {
+export default function UploadFile({ onChange, children }) {
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
@@ -74,4 +74,4 @@ export const UploadFile = ({ onChange, children }) => {
       </div>
     </Row>
   );
-};
+}

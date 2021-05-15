@@ -2,11 +2,11 @@ import { formatDate } from '@/utils/formats';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
-import Row from './ui/row';
-import { StarIcon } from './ui/icons';
+import Row from '../ui/row';
+import { StarIcon } from '../ui/icons';
 import { PostProps } from '@/utils/defaultProps';
 
-export const PopularTrendPosts = ({ post, number }: PostProps) => {
+export default function PopularTrendPosts({ post, number }: PostProps) {
   const { t } = useTranslation();
   const router = useRouter();
   return (
@@ -30,7 +30,7 @@ export const PopularTrendPosts = ({ post, number }: PostProps) => {
             <span className="text-gray-900 dark:text-white mr-1">
               {post.user?.fullName}
             </span>
-            <span className="text-gray-400 mr-1">
+            <span className="text-gray-600 dark:text-gray-300 mr-1">
               {t('Components.default.category')}
             </span>
             <span className="text-gray-900 dark:text-white mr-1">
@@ -38,7 +38,7 @@ export const PopularTrendPosts = ({ post, number }: PostProps) => {
             </span>
           </div>
           <div className="flex flex-wrap">
-            <span className="text-gray-400 mr-1">
+            <span className="text-gray-600 dark:text-gray-300 mr-1">
               {formatDate(post.createdAt, router?.locale)}
             </span>
             <span>&#9632;</span>
@@ -51,4 +51,4 @@ export const PopularTrendPosts = ({ post, number }: PostProps) => {
       </div>
     </Row>
   );
-};
+}

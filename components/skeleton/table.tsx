@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import ContentLoader from 'react-content-loader';
-import { useMounted } from '../../utils/mounted';
 import { useTheme } from 'next-themes';
+import ContentLoader from 'react-content-loader';
+import useMounted from '@/utils/mounted';
 import Container from '../ui/container';
 
 const DataTable: FC = () => {

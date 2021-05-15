@@ -16,13 +16,7 @@ interface IconProps {
   className?: string;
 }
 
-export const Icon = ({
-  space,
-  children,
-  className,
-  size,
-  viewBox,
-}: ParentProps) => (
+const Icon = ({ space, children, className, size, viewBox }: ParentProps) => (
   <div style={{ transform: `translateY(${space}px)` }}>
     <svg
       height={size}
@@ -330,18 +324,6 @@ export const CommentDotsIcon = ({ size, className, space }: IconProps) => (
     viewBox="0 0 512 512"
   >
     <path d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5c-2.2 2.3-2.8 5.7-1.5 8.7S4.8 480 8 480c66.3 0 116-31.8 140.6-51.4 32.7 12.3 69 19.4 107.4 19.4 141.4 0 256-93.1 256-208S397.4 32 256 32zM128 272c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128 0c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128 0c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z" />
-  </Icon>
-);
-
-export const ArtStationIcon = ({ size, className, space }: IconProps) => (
-  <Icon
-    space={space}
-    size={size}
-    fill="currentColor"
-    className={className}
-    viewBox="0 0 512 512"
-  >
-    <path d="M2 377.4l43 74.3A51.35 51.35 0 0 0 90.9 480h285.4l-59.2-102.6zM501.8 350L335.6 59.3A51.38 51.38 0 0 0 290.2 32h-88.4l257.3 447.6 40.7-70.5c1.9-3.2 21-29.7 2-59.1zM275 304.5l-115.5-200L44 304.5z" />
   </Icon>
 );
 

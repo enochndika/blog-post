@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import ContentLoader from 'react-content-loader';
-import { useMounted } from '../../utils/mounted';
+import useMounted from '@/utils/mounted';
 
 const ProfileShow: FC = (props) => {
   const isMounted = useMounted();

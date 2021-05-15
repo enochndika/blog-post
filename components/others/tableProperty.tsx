@@ -1,12 +1,12 @@
 import Link from 'next/link';
-import { EditIcon, EyeIcon, TrashAltIcon } from './ui/icons';
-import Props from '../utils/defaultProps';
+import { EditIcon, EyeIcon, TrashAltIcon } from '../ui/icons';
+import Props from '@/utils/defaultProps';
 
-export const TableProperty = ({ children }: Props) => {
+export default function TableProperty({ children }: Props) {
   return (
     <div className="flex text-gray-800 dark:text-gray-200">{children}</div>
   );
-};
+}
 
 TableProperty.Edit = ({ href }: { href: string }) => (
   <div>

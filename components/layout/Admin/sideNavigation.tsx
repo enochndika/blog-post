@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+
 import {
-  ArtStationIcon,
   BlogIcon,
   CommentDotsIcon,
   CommentsIcon,
@@ -11,7 +11,7 @@ import {
   ListAltIcon,
   UsersIcon,
 } from '../../ui/icons';
-import Props from '../../../utils/defaultProps';
+import Props from '@/utils/defaultProps';
 
 interface ItemProps extends Props {
   href?: string;
@@ -31,7 +31,7 @@ const Item = ({ children, href }: ItemProps) => {
   );
 };
 
-export const SideNavigation = ({ className }: { className?: string }) => (
+const SideNavigation = ({ className }: { className?: string }) => (
   <div
     className={`bg-darker text-white h-screen overflow-x-scroll ${className}`}
   >
@@ -74,9 +74,8 @@ export const SideNavigation = ({ className }: { className?: string }) => (
       <Item href="/admin/report/subcomments">
         <FlagIcon className="h-5 pr-3" /> Report Subcomments
       </Item>
-      <Item href="/admin/static-pages">
-        <ArtStationIcon className="h-5 pr-3" /> Pagination
-      </Item>
     </div>
   </div>
 );
+
+export default SideNavigation;

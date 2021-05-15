@@ -1,29 +1,35 @@
-import { signin, signup } from '../actions/userActions';
-import { FormError } from '../components/formError';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
-import { toastSuccess } from '../utils/toast';
-import { useForm } from 'react-hook-form';
-import Container from '../components/ui/container';
-import Row from '../components/ui/row';
+
+import { signin, signup } from '@/actions/userActions';
+import { toastSuccess } from '@/utils/toast';
+import { userLoginSchema, userRegisterSchema } from '@/validators/user';
+import Card from '@/components/ui/card';
+import Container from '@/components/ui/container';
+
+import Row from '@/components/ui/row';
+import { Input } from '@/components/ui/form';
+import { Button } from '@/components/ui/button';
+
 import {
   CircleNotchIcon,
   LockIcon,
   MaleIcon,
   UserMdIcon,
-} from '../components/ui/icons';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { userLoginSchema, userRegisterSchema } from '../validators/user';
-import { Input } from '../components/ui/form';
-import { Button } from '../components/ui/button';
-import { Card } from '../components/ui/card';
+} from '@/components/ui/icons';
+import { getCookieFromBrowser } from '@/utils/cookies';
+import { useEffect } from 'react';
 
 export interface AuthProps {
   login: boolean;
 }
-export const Auth = ({ login }) => {
+
+export default function Auth({ login }) {
   const { t } = useTranslation();
   const router = useRouter();
+  const token = getCookieFromBrowser('blog-jwt-token');
 
   const { register, handleSubmit, errors, formState } = useForm({
     resolver: yupResolver(login ? userLoginSchema() : userRegisterSchema()),
@@ -46,9 +52,15 @@ export const Auth = ({ login }) => {
     }
   };
 
+  useEffect(() => {
+    if (token) {
+      router.push('/');
+    }
+  }, [token, router]);
+
   return (
     <Container>
-      <Row className="justify-center my-20 ">
+      <Row className="justify-center my-20">
         <div className="col-12 md:col-4 ">
           <Card>
             <Card.Body className="p-8">
@@ -66,19 +78,19 @@ export const Auth = ({ login }) => {
                   type="text"
                   name="username"
                   ref={register()}
+                  errorMessage={username?.message}
                 >
                   <UserMdIcon size={20} className="dark:text-gray-600" />
                 </Input>
-                {username && <FormError message={username.message} />}
                 <Input
                   type="password"
                   label={t('Helpers.auth.form.password')}
                   name="password"
                   ref={register()}
+                  errorMessage={password?.message}
                 >
                   <LockIcon size={20} className="dark:text-gray-600" />
                 </Input>
-                {password && <FormError message={password.message} />}
                 {!login && (
                   <>
                     <Input
@@ -86,26 +98,27 @@ export const Auth = ({ login }) => {
                       type="text"
                       name="fullName"
                       ref={register()}
+                      errorMessage={fullName?.message}
                     >
                       <MaleIcon size={20} className="dark:text-gray-600" />
                     </Input>
-                    {fullName && <FormError message={fullName.message} />}
                   </>
                 )}
                 <div className="flex justify-center mt-4">
                   <Button
                     color="dark"
                     type="submit"
-                    className="flex"
                     disabled={formState.isSubmitting}
                     size="sm"
                   >
-                    {formState.isSubmitting && (
-                      <CircleNotchIcon size={18} className="mr-1" />
-                    )}
-                    {login
-                      ? t('Helpers.auth.form.submit.login')
-                      : t('Helpers.auth.form.submit.register')}
+                    <span className="flex">
+                      {formState.isSubmitting && (
+                        <CircleNotchIcon size={18} className="mr-1" />
+                      )}
+                      {login
+                        ? t('Helpers.auth.form.submit.login')
+                        : t('Helpers.auth.form.submit.register')}
+                    </span>
                   </Button>
                 </div>
               </form>
@@ -115,4 +128,4 @@ export const Auth = ({ login }) => {
       </Row>
     </Container>
   );
-};
+}

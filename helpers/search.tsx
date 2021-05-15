@@ -1,19 +1,20 @@
 import { useRouter } from 'next/router';
 import { ComponentType, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Reddit from '../components/skeleton/card';
-import Row from '../components/ui/row';
-import api from '../utils/axios';
-import { Post } from '../components/posts';
-import PaginationProps from '../components/pagination';
 import dynamic from 'next/dynamic';
 
+import Row from '@/components/ui/row';
+import api from '@/utils/axios';
+import Post from '@/components/others/posts';
+import RedditSkeleton from '@/components/skeleton/reddit';
+import { PaginationProps } from '@/components/others/pagination';
+
 const Pagination: ComponentType<PaginationProps> = dynamic(
-  () => import('../components/pagination').then((mod) => mod.Pagination),
+  () => import('@/components/others/pagination'),
   { ssr: false },
 );
 
-export const Search = () => {
+export default function Search() {
   const { t } = useTranslation();
   const [data, setData] = useState<any>([]);
   const router = useRouter();
@@ -47,7 +48,7 @@ export const Search = () => {
   return (
     <>
       <h1 className="text-3xl text-gray-700 font-medium my-20 dark:text-white text-center">
-        {!data.data && <Reddit />}
+        {!data.data && <RedditSkeleton />}
         {data.data && data.data.length > 0
           ? t('Pages.post.search.h1') + ' ' + title
           : t('Pages.post.search.notFound')}
@@ -71,4 +72,4 @@ export const Search = () => {
       )}
     </>
   );
-};
+}

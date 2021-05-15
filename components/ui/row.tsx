@@ -1,5 +1,5 @@
 import { ForwardedRef, forwardRef, HTMLAttributes } from 'react';
-import Props from '../../utils/defaultProps';
+import Props from '@/utils/defaultProps';
 
 interface RowProps extends Props {
   props?: HTMLAttributes<HTMLDivElement>;

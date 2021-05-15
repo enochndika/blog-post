@@ -1,7 +1,8 @@
-import api from '../utils/axios';
-import { toastError, toastSuccess } from '../utils/toast';
 import cogoToast from 'cogo-toast';
 import { useSWRInfinite } from 'swr';
+
+import api from '@/utils/axios';
+import { toastError, toastSuccess } from '@/utils/toast';
 import { fetcher } from './fetcher';
 
 const LIMIT = 6;

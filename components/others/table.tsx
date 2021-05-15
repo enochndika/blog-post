@@ -12,8 +12,14 @@ import {
   AngleDoubleRightIcon,
   AngleLeftIcon,
   AngleRightIcon,
-} from './ui/icons';
+} from '../ui/icons';
 import * as matchSorter from 'match-sorter';
+
+const style = {
+  search: `ml-1 text-base bg-white border-gray-300 dark:text-black border rounded-md  focus:outline-none py-1 px-2`,
+  goTo: `ml-1 text-base bg-white border-gray-300 dark:text-black border rounded-md  focus:outline-none py-1 px-2`,
+  select: `text-base md:text-sm bg-white border-gray-300 dark:text-black border rounded-md focus:outline-none py-2 px-2`,
+};
 
 const sorter: any = matchSorter;
 function GlobalFilter({
@@ -37,7 +43,7 @@ function GlobalFilter({
           onChange(e.target.value);
         }}
         placeholder={`${count} records...`}
-        className="ml-1 text-base bg-white border-gray-300 dark:text-black border rounded-md  focus:outline-none py-1 px-2"
+        className={style.search}
       />
     </span>
   );
@@ -74,7 +80,7 @@ export interface TableProps {
   children?: ReactNode;
   data: any;
 }
-export const Table = ({ columns, data, children }: TableProps) => {
+export default function Table({ columns, data, children }: TableProps) {
   const filterTypes = React.useMemo(
     () => ({
       // Add a new fuzzyTextFilterFn filter type.
@@ -148,7 +154,7 @@ export const Table = ({ columns, data, children }: TableProps) => {
           Go to page :
           <input
             type="number"
-            className="ml-1 text-base bg-white border-gray-300 dark:text-black border rounded-md  focus:outline-none py-1 px-2"
+            className={style.goTo}
             defaultValue={pageIndex + 1}
             onChange={(e) => {
               const page = e.target.value ? Number(e.target.value) - 1 : 0;
@@ -159,7 +165,7 @@ export const Table = ({ columns, data, children }: TableProps) => {
         </div>
         <div>
           <select
-            className="text-base md:text-sm bg-white border-gray-300 dark:text-black border rounded-md focus:outline-none py-2 px-2"
+            className={style.select}
             value={pageSize}
             onChange={(e) => {
               setPageSize(Number(e.target.value));
@@ -269,4 +275,4 @@ export const Table = ({ columns, data, children }: TableProps) => {
       </div>
     </div>
   );
-};
+}

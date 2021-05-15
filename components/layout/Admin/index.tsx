@@ -1,15 +1,17 @@
-import { TopNavigation } from './topNavigation';
-import { SideNavigation } from './sideNavigation';
-import { loggedUser } from '../../../auth/useUser';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { getCookieFromBrowser } from '../../../auth/cookies';
+
+import TopNavigation from './topNavigation';
+import SideNavigation from './sideNavigation';
 import style from './index.module.css';
-import Props from '../../../utils/defaultProps';
+
+import { getCookieFromBrowser } from '@/utils/cookies';
+import Props from '@/utils/defaultProps';
+import { useFetchUserProfile } from '@/actions/userActions';
 
 const AdminLayout = ({ children }: Props) => {
   const router = useRouter();
-  const { user } = loggedUser();
+  const { user } = useFetchUserProfile();
   const token = getCookieFromBrowser('blog-jwt-token');
 
   useEffect(() => {

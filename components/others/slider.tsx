@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
-import { SponsoredBlog } from './sponsorisedBlog';
+import SponsoredBlog from './sponsorisedBlog';
 import s from './slider.module.css';
 
 export interface SliderProps {
   data: Array<any>;
 }
-export const Slider = ({ data }: SliderProps) => {
+
+export default function Slider({ data }: SliderProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [sliderRef, slider] = useKeenSlider<any>({
     initial: 0,
@@ -15,9 +16,6 @@ export const Slider = ({ data }: SliderProps) => {
       setCurrentSlide(s.details().relativeSlide);
     },
   });
-
-  const dot = `h-2.5 w-2.5 bg-gray-400 mx-1.5 p-1.5 rounded-full focus:outline-none cursor-pointer`;
-  const active = `${dot} bg-blue-900 `;
 
   return (
     <div className="relative mt-28">
@@ -53,7 +51,7 @@ export const Slider = ({ data }: SliderProps) => {
                 onClick={() => {
                   slider.moveToSlideRelative(idx);
                 }}
-                className={dot + (currentSlide === idx ? active : '')}
+                className={currentSlide === idx ? s.active : s.dot}
               />
             );
           })}
@@ -61,7 +59,7 @@ export const Slider = ({ data }: SliderProps) => {
       )}
     </div>
   );
-};
+}
 
 function ArrowLeft(props) {
   const disabled = props.disabled ? s.arrowDisabled : '';

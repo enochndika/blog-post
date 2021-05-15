@@ -1,26 +1,29 @@
-import { deleteComment, useFetchComments } from '../actions/commentActions';
-import { ChildComments } from './childComments';
 import { useState } from 'react';
-import { loggedUser } from '../auth/useUser';
 import cogoToast from 'cogo-toast';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
-import { formatNumericDate } from '../utils/formats';
+
+import { deleteComment, useFetchComments } from '@/actions/commentActions';
+import { ChildComments } from './childComments';
+import { formatNumericDate } from '@/utils/formats';
+
 import {
   AngleDownIcon,
   AngleUpIcon,
   EllipsisVIcon,
   FlagIcon,
   UserCircleIcon,
-} from '../components/ui/icons';
-import Row from '../components/ui/row';
-import Dropdown from '../components/ui/dropdown';
-import { Button } from '../components/ui/button';
-import { AddComment } from './addComment';
-import { ReportModal } from './reportModal';
-import { UpdateComment } from './updateComment';
+} from '@/components/ui/icons';
 
-export const PostComments = ({ post }) => {
+import { Button } from '@/components/ui/button';
+import Row from '@/components/ui/row';
+import Dropdown from '@/components/ui/dropdown';
+import AddComment from './addComment';
+import ReportModal from './reportModal';
+import UpdateComment from './updateComment';
+import { useFetchUserProfile } from '@/actions/userActions';
+
+export default function Comments({ post }) {
   const { t } = useTranslation();
   const [openUpdateComment, setOpenUpdateComment] = useState(false);
   const [reportModal, setReportModal] = useState(false);
@@ -37,7 +40,7 @@ export const PostComments = ({ post }) => {
     size,
   } = useFetchComments(post);
   const router = useRouter();
-  const { user } = loggedUser();
+  const { user } = useFetchUserProfile();
 
   const onSelectedCommentRow = (index) => {
     if (user) {
@@ -201,4 +204,4 @@ export const PostComments = ({ post }) => {
       )}
     </div>
   );
-};
+}

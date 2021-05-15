@@ -1,15 +1,15 @@
 import { useEffect, useRef } from 'react';
-import Props from '../../utils/defaultProps';
+import Props from '@/utils/defaultProps';
 
 interface SidenavProps extends Props {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
 
-const status = {
-  className: `block h-screen fixed z-40 top-0 right-0 bg-white dark:text-white dark:bg-darker text-gray-600 lg:hidden`,
-  active: `w-8/12 md:w-6/12 transition-all ease duration-200 overflow-x-hidden`,
-  inactive: `w-0 transition-all ease duration-200 overflow-x-hidden`,
+const style = {
+  default: `block h-screen fixed z-40 top-0 right-0 bg-white dark:text-white dark:bg-darker text-gray-600 lg:hidden`,
+  open: `w-8/12 md:w-6/12 transition-all ease duration-200 overflow-x-hidden`,
+  close: `w-0 transition-all ease duration-200 overflow-x-hidden`,
 };
 
 export const Sidenav = ({ isOpen, setIsOpen, children }: SidenavProps) => {
@@ -32,11 +32,7 @@ export const Sidenav = ({ isOpen, setIsOpen, children }: SidenavProps) => {
   return (
     <aside
       ref={ref}
-      className={
-        isOpen
-          ? `${status.className} ${status.active}`
-          : `${status.className} ${status.inactive}`
-      }
+      className={`${style.default} ${isOpen ? style.open : style.close}`}
     >
       <div className="mt-8">{children}</div>
     </aside>

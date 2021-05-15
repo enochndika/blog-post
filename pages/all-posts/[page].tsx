@@ -1,27 +1,24 @@
-import DefaultLayout from '../../components/layout/default';
-import api from '../../utils/axios';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import Container from '../../components/ui/container';
-import { Post } from '../../components/posts';
-import Row from '../../components/ui/row';
-import { useTranslation } from 'react-i18next';
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 import dynamic from 'next/dynamic';
 import { ComponentType } from 'react';
-import PaginationProps from '../../components/pagination';
+
+import api from '@/utils/axios';
+import Row from '@/components/ui/row';
+import DefaultLayout from '@/components/layout/default';
+import Container from '@/components/ui/container';
+import Post from '@/components/others/posts';
+import { PaginationProps } from '@/components/others/pagination';
 
 const Pagination: ComponentType<PaginationProps> = dynamic(
-  () => import('../../components/pagination').then((mod) => mod.Pagination),
+  () => import('@/components/others/pagination'),
   { ssr: false },
 );
 
 export default function AllPosts({
   posts,
-  currentPage,
-  pages,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { t } = useTranslation();
   const router = useRouter();
 
   const paginationHandler = (page) => {
@@ -51,14 +48,14 @@ export default function AllPosts({
               mainColClass="col-12"
               firstColClass="col-12 md:col-3 mb-3 md:mb-12"
               secondColClass="col-12 md:col-8 mb-12 md:mb-0"
-              post={posts}
+              post={posts?.data}
             />
           </div>
         </Row>
         <Pagination
           onPageChange={paginationHandler}
-          initialPage={currentPage - 1}
-          pageCount={pages}
+          initialPage={posts?.currentPage - 1}
+          pageCount={posts?.totalPages}
         />
       </Container>
     </>
@@ -66,13 +63,12 @@ export default function AllPosts({
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const {
-    data: { data: pages },
-  } = await api.get('/static-pages');
+  const { data: posts } = await api.get('/posts?limit=500000');
+
   const paths =
-    pages &&
-    pages.map((post) => ({
-      params: { page: post.page },
+    posts.data &&
+    posts.data.map((post) => ({
+      params: { page: JSON.stringify(post.id) },
     }));
 
   return { paths, fallback: 'blocking' };
@@ -80,18 +76,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { page } = params;
-  const {
-    data: { data: staticPages },
-  } = await api.get('/static-pages');
   const { data } = await api.get(`/posts?page=${page}`);
-  const currentPage = data.currentPage;
-  const pageCount = data.totalPages;
-  const posts = data.data;
-  const pages = staticPages ? staticPages.length : null;
 
   return {
-    props: { posts, pageCount, currentPage, pages },
-    revalidate: 5,
+    props: { posts: data },
+    revalidate: 30,
   };
 };
 

@@ -1,16 +1,19 @@
-import style from './sponsorisedBlog.module.css';
-import { Image } from './image';
-import Row from './ui/row';
-import { PostDetails } from './postDetails';
 import Link from 'next/link';
 
-export const SponsoredBlog = ({ posts }: { posts: any }) => (
+import style from './sponsorisedBlog.module.css';
+import Image from './image';
+import Row from '../ui/row';
+import PostDetails from './postDetails';
+
+const SponsoredBlog = ({ posts }: { posts: any }) => (
   <Row>
     <div className={`${style.col} col-12 md:col-6 dark:bg-darker`}>
       <Link href={`/posts/${posts.slug}`}>
         <a>
           <Image
-            src={posts.image}
+            width={1500}
+            height={800}
+            src={posts.image[0]}
             className="w-full cursor-pointer h-full"
             alt={posts.title}
           />
@@ -33,3 +36,5 @@ export const SponsoredBlog = ({ posts }: { posts: any }) => (
     </div>
   </Row>
 );
+
+export default SponsoredBlog;

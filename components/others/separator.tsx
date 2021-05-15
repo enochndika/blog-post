@@ -1,7 +1,10 @@
 import { useTheme } from 'next-themes';
-import { useMounted } from '../utils/mounted';
+import useMounted from '@/utils/mounted';
 
-export const Separator = ({ desktop }: { desktop?: boolean }) => {
+type SeparatorProps = {
+  desktop?: boolean;
+};
+export default function Separator({ desktop }: SeparatorProps) {
   const style = {
     dark: {
       borderColor: '#616161',
@@ -12,7 +15,7 @@ export const Separator = ({ desktop }: { desktop?: boolean }) => {
   return (
     <hr
       className={desktop ? 'my-4 ' : 'block md:hidden my-5 '}
-      style={isMounted && theme === 'light' ? null : style.dark}
+      style={isMounted && theme !== 'light' ? style.dark : null}
     />
   );
-};
+}

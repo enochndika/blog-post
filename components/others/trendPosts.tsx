@@ -1,15 +1,18 @@
 import Link from 'next/link';
-import Row from './ui/row';
-import { Image } from './image';
-import { PostDetails } from './postDetails';
 
-export const TrendPost = ({ post }: { post: any }) => (
+import Row from '../ui/row';
+import Image from './image';
+import PostDetails from './postDetails';
+
+const TrendPost = ({ post }: { post: any }) => (
   <Row className="mt-2">
     <div className="col-12 lg:col-4 mb-6">
       <Link href={`/posts/${post.slug}`}>
         <a>
           <Image
-            src={post.image}
+            src={post.image[0]}
+            width={1500}
+            height={1000}
             className="block w-full cursor-pointer"
             alt={post.title}
           />
@@ -29,3 +32,5 @@ export const TrendPost = ({ post }: { post: any }) => (
     </div>
   </Row>
 );
+
+export default TrendPost;

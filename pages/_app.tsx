@@ -1,25 +1,18 @@
+import '@/styles/global.css';
 import { ThemeProvider } from 'next-themes';
-import NProgress from 'nprogress';
-import '../styles/tailwind.css';
-import 'nprogress/nprogress.css';
-import Head from 'next/head';
-import { getCookieFromBrowser } from '../auth/cookies';
 import { useEffect } from 'react';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { I18nextProvider } from 'react-i18next';
-import api from '../utils/axios';
-import '../i18n';
-import '../styles/style.css';
+import Head from 'next/head';
 import { useTranslation } from 'react-i18next';
 import { AppProps } from 'next/app';
-import Props from '../utils/defaultProps';
+
+import '../i18n';
+import { getCookieFromBrowser } from '@/utils/cookies';
+import api from '@/utils/axios';
+import Props from '@/utils/defaultProps';
 
 const Noop = ({ children }: Props) => children;
-Router.events.on('routeChangeStart', () => {
-  NProgress.start();
-});
-Router.events.on('routeChangeComplete', () => NProgress.done());
-Router.events.on('routeChangeError', () => NProgress.done());
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -37,6 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
       api.defaults.headers.Authorization = `Bearer ${token}`;
     }
   }, [token]);
+
   return (
     <>
       <Head>

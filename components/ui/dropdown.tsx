@@ -1,13 +1,7 @@
-import {
-  HTMLAttributes,
-  LiHTMLAttributes,
-  ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Props from '../../utils/defaultProps';
+import { HTMLAttributes, ReactNode, useEffect, useRef, useState } from 'react';
+import Props from '@/utils/defaultProps';
 
 interface DropdownToggleProps extends Props {
   className?: string;
@@ -17,11 +11,29 @@ interface DropdownMenuProps extends Props {
   left?: boolean;
 }
 
-interface DropdownItemProps extends LiHTMLAttributes<HTMLLIElement> {
+interface DropdownItemProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
+  href?: string;
+  locale?: string;
 }
 
-const useToggle = () => {
+const inlineStyle = {
+  left: {
+    transform: 'translate3d(-140px, 0px, 0px)',
+  },
+  bottom: {
+    transform: 'translate3d(0px, 3px, 0px)',
+  },
+};
+
+const style = {
+  menu: `absolute text-left top-0 left-0 block z-40 bg-white dark:bg-black float-left py-2 px-0 border border-gray-300 rounded-sm mt-0.5 mb-0 mx-0 bg-clip-padding`,
+  item: `block w-full cursor-pointer clear-both py-2 px-8 text-sm font-normal whitespace-nowrap border-0 hover:bg-gray-200 dark:hover:bg-gray-700`,
+};
+const Dropdown = ({ children }: Props) => {
+  const firstChild = children[0];
+  const secondChild = children[1];
+
   const [show, setShow] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -56,26 +68,6 @@ const useToggle = () => {
     return () => document.removeEventListener('keyup', handleEscape);
   }, [show]);
 
-  return {
-    show,
-    toggle,
-    ref,
-  };
-};
-
-const styles = {
-  left: {
-    transform: 'translate3d(-140px, 0px, 0px)',
-  },
-  bottom: {
-    transform: 'translate3d(0px, 3px, 0px)',
-  },
-};
-
-const Dropdown = ({ children }: Props) => {
-  const firstChild = children[0];
-  const secondChild = children[1];
-  const { ref, show, toggle } = useToggle();
   return (
     <div>
       <div onClick={toggle} className="cursor-pointer">
@@ -90,26 +82,36 @@ const Dropdown = ({ children }: Props) => {
   );
 };
 
-Dropdown.Toggle = ({ children, className }: DropdownToggleProps) => {
-  return <div className={`${className} font-normal`}>{children}</div>;
-};
-
-Dropdown.Menu = ({ children, left }: DropdownMenuProps) => (
-  <ul
-    style={left ? styles.left : styles.bottom}
-    className="block z-40 absolute top-0 left-0  bg-white dark:bg-black float-left py-2 px-0 text-left border border-gray-300 rounded-sm mt-0.5 mb-0 mx-0 bg-clip-padding"
-  >
-    {children}
-  </ul>
+Dropdown.Toggle = ({ children, className }: DropdownToggleProps) => (
+  <button className={`${className} font-normal`}>{children}</button>
 );
 
-Dropdown.Item = ({ children, ...props }: DropdownItemProps) => (
-  <li
-    {...props}
-    className="block w-full py-2 px-8 text-sm font-normal clear-both whitespace-nowrap border-0 hover:bg-gray-200 dark:hover:bg-gray-700  cursor-pointer"
+Dropdown.Menu = ({ children, left }: DropdownMenuProps) => (
+  <div
+    className={style.menu}
+    style={left ? inlineStyle.left : inlineStyle.bottom}
+    role="menu"
+    aria-orientation="vertical"
+    aria-labelledby="options-menu"
   >
     {children}
-  </li>
+  </div>
+);
+
+Dropdown.Item = ({ children, href, locale, ...props }: DropdownItemProps) => (
+  <>
+    {href ? (
+      <Link href={href} locale={locale} passHref={true}>
+        <div {...props} className={style.item}>
+          {children}
+        </div>
+      </Link>
+    ) : (
+      <div {...props} className={style.item}>
+        {children}
+      </div>
+    )}
+  </>
 );
 
 export default Dropdown;

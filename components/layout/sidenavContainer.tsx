@@ -1,30 +1,30 @@
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
-import { ThemeChanger } from '../../helpers/themeProvider';
-import { Collapse } from '../ui/collapse';
-import { loggedUser } from '../../auth/useUser';
 import cogoToast from 'cogo-toast';
-import { logout } from '../../actions/userActions';
-import { HeaderSearch } from '../../helpers/headerSearch';
+
+import { logout, useFetchUserProfile } from '@/actions/userActions';
+import HeaderSearch from '@/helpers/headerSearch';
+import ThemeChanger from '@/helpers/themeProvider';
+import Collapse from '../ui/collapse';
 import { HomeIcon, LanguageIcon, PlusIcon, UserCircleIcon } from '../ui/icons';
 import { Sidenav } from '../ui/sidenav';
 import { FranceFlag, UsaFlag } from '../ui/flag';
-import { Toggler } from '../ui/toggler';
+import Toggler from '../ui/toggler';
 
 export interface SidenavContainerProps {
   isOpen: boolean;
   setIsOpen: (isOpen?: boolean) => void;
 }
 
-export const SidenavContainer = ({
+export default function SidenavContainer({
   isOpen,
   setIsOpen,
-}: SidenavContainerProps) => {
+}: SidenavContainerProps) {
   const { t } = useTranslation();
   const router = useRouter();
   const { locale } = router;
-  const { user } = loggedUser();
+  const { user } = useFetchUserProfile();
 
   const closeNav = () => {
     setIsOpen(!isOpen);
@@ -210,4 +210,4 @@ export const SidenavContainer = ({
       </Sidenav>
     </>
   );
-};
+}

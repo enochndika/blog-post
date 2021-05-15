@@ -1,12 +1,14 @@
 import Head from 'next/head';
 import { useTranslation } from 'react-i18next';
 import dynamic from 'next/dynamic';
-import UserLayout from '../../../components/layout/user';
 
-const LikedPost = dynamic(
-  () => import('../../../helpers/likedPost').then((mod) => mod.LikedPosts),
-  { ssr: false },
-);
+import UserLayout from '@/components/layout/user';
+import RedditSkeleton from '@/components/skeleton/reddit';
+
+const LikedPost = dynamic(() => import('@/helpers/likedPost'), {
+  ssr: false,
+  loading: () => <RedditSkeleton />,
+});
 
 export default function LikedPostsPage() {
   const { t } = useTranslation();
