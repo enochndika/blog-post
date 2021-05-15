@@ -44,7 +44,7 @@ export default function UserPosts() {
               <Image
                 width={100}
                 height={100}
-                src={row.image}
+                src={row.image[0]}
                 className="h-12 w-12 rounded-full"
                 alt="Post"
               />

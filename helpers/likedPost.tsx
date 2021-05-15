@@ -13,7 +13,7 @@ const RedditSkeleton = dynamic(() => import('@/components/skeleton/reddit'), {
   ssr: false,
 });
 
-const DynamicPost: ComponentType<PostsProps> = dynamic(
+const Post: ComponentType<PostsProps> = dynamic(
   () => import('@/components/others/posts'),
   { ssr: false },
 );
@@ -43,12 +43,13 @@ export default function LikedPosts() {
           {t('Pages.username.posts.liked.h1')}
         </h1>
       )}
-      <DynamicPost
+      <Post
         post={likes}
         firstColClass="col-12 md:col-4"
         secondColClass="col-12 md:col-8"
         mainColClass="col-12 md:col-6 mb-12"
       />
+      <div className="md:pb-16" />
     </Container>
   );
 }
