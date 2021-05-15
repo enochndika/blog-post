@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { HTMLAttributes, ReactNode, useEffect, useRef, useState } from 'react';
 import Props from '@/utils/defaultProps';
+import { useRouter } from 'next/router';
 
 interface DropdownToggleProps extends Props {
   className?: string;
@@ -33,6 +34,7 @@ const style = {
 const useToggle = () => {
   const [show, setShow] = useState(false);
   const ref = useRef(null);
+  const router = useRouter();
   const toggle = () => {
     setShow(!show);
   };
@@ -47,6 +49,17 @@ const useToggle = () => {
     window.addEventListener('click', handleOutsideClick);
     return () => window.removeEventListener('click', handleOutsideClick);
   }, [show, ref]);
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setShow(false);
+    };
+    router.events.on('routeChangeStart', handleRouteChange);
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange);
+    };
+  });
   // close dropdown when you click on "ESC" key
   useEffect(() => {
     const handleEscape = (event) => {
