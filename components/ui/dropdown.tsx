@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { HTMLAttributes, ReactNode, useEffect, useRef, useState } from 'react';
 import Props from '@/utils/defaultProps';
 
@@ -30,18 +29,14 @@ const style = {
   menu: `absolute text-left top-0 left-0 block z-40 bg-white dark:bg-black float-left py-2 px-0 border border-gray-300 rounded-sm mt-0.5 mb-0 mx-0 bg-clip-padding`,
   item: `block w-full cursor-pointer clear-both py-2 px-8 text-sm font-normal whitespace-nowrap border-0 hover:bg-gray-200 dark:hover:bg-gray-700`,
 };
-const Dropdown = ({ children }: Props) => {
-  const firstChild = children[0];
-  const secondChild = children[1];
 
-  const [show, setShow] = useState<boolean>(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const router = useRouter();
-
+const useToggle = () => {
+  const [show, setShow] = useState(false);
+  const ref = useRef(null);
   const toggle = () => {
-    setShow((prevState) => !prevState);
+    setShow(!show);
   };
-
+  // close dropdown when you click outside
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (!ref.current?.contains(event.target)) {
@@ -50,13 +45,9 @@ const Dropdown = ({ children }: Props) => {
       }
     };
     window.addEventListener('click', handleOutsideClick);
-    router.events.on('routeChangeComplete', handleOutsideClick);
-    return () => {
-      window.removeEventListener('click', handleOutsideClick);
-      router.events.off('routeChangeComplete', handleOutsideClick);
-    };
+    return () => window.removeEventListener('click', handleOutsideClick);
   }, [show, ref]);
-
+  // close dropdown when you click on "ESC" key
   useEffect(() => {
     const handleEscape = (event) => {
       if (!show) return;
@@ -67,6 +58,17 @@ const Dropdown = ({ children }: Props) => {
     document.addEventListener('keyup', handleEscape);
     return () => document.removeEventListener('keyup', handleEscape);
   }, [show]);
+  return {
+    show,
+    toggle,
+    ref,
+  };
+};
+
+const Dropdown = ({ children }: Props) => {
+  const { toggle, ref, show } = useToggle();
+  const firstChild = children[0];
+  const secondChild = children[1];
 
   return (
     <div>
@@ -98,20 +100,22 @@ Dropdown.Menu = ({ children, left }: DropdownMenuProps) => (
   </div>
 );
 
-Dropdown.Item = ({ children, href, locale, ...props }: DropdownItemProps) => (
-  <>
-    {href ? (
-      <Link href={href} locale={locale} passHref={true}>
+Dropdown.Item = ({ children, href, locale, ...props }: DropdownItemProps) => {
+  return (
+    <>
+      {href ? (
+        <Link href={href} locale={locale} passHref={true}>
+          <div {...props} className={style.item}>
+            {children}
+          </div>
+        </Link>
+      ) : (
         <div {...props} className={style.item}>
           {children}
         </div>
-      </Link>
-    ) : (
-      <div {...props} className={style.item}>
-        {children}
-      </div>
-    )}
-  </>
-);
+      )}
+    </>
+  );
+};
 
 export default Dropdown;
