@@ -188,7 +188,11 @@ export default function PostSlugPage({
                     alt={clientPost.title}
                   />
                 )}
-                {post.local && <div className="mt-7">{clientPost.local}</div>}
+                {post.local && (
+                  <div className="mt-7 whitespace-pre-wrap">
+                    {clientPost.local}
+                  </div>
+                )}
                 <div
                   dangerouslySetInnerHTML={convertFromJSONToHTML(
                     clientPost.content,
