@@ -68,7 +68,7 @@ export default function Auth({ login }) {
                 className="text-gray-600 dark:text-white"
                 onSubmit={handleSubmit(onSubmit)}
               >
-                <div className="text-3xl font-bold text-center mb-16">
+                <div className="text-2xl font-bold text-center mb-16">
                   {login
                     ? t('Helpers.auth.title.login')
                     : t('Helpers.auth.title.register')}

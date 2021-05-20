@@ -18,7 +18,7 @@ export default function PopularTrendPosts({ post, number }: PostProps) {
       </div>
       <div className="col-10  md:col-9 m-0 p-0 mb-4">
         <Link href={`/posts/${post.slug}`} passHref>
-          <div className="mb-2.5 text-gray-700 font-medium dark:text-white cursor-pointer">
+          <div className="mb-2.5 text-2xl md:text-base text-gray-700 font-medium dark:text-white cursor-pointer">
             {post.title.slice(0, 20)}
           </div>
         </Link>

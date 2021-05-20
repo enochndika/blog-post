@@ -68,8 +68,10 @@ export default function SidenavContainer({
             <Sidenav.Item>
               <Collapse icon={true}>
                 <div className="flex">
-                  <UserCircleIcon size={20} className="pr-1" />
-                  <span>Profile</span>
+                  <div>
+                    <UserCircleIcon size={20} className="pr-1" />
+                  </div>
+                  <div>Profile</div>
                 </div>
                 <div>
                   <div className="pl-10 pt-2">
@@ -159,21 +161,21 @@ export default function SidenavContainer({
                   )}
                 </div>
                 <div>
-                  <div className="pl-10 pt-2">
+                  <div className="pl-10 pt-2 pb-3">
                     <Link href={`/${user.username}/profile`}>
                       <a className="nav-link" onClick={closeNav}>
                         Profile
                       </a>
                     </Link>
                   </div>
-                  <div className="pl-10 pt-2">
+                  <div className="pl-10 pb-3">
                     <Link href={`/${user?.username}/posts`}>
                       <a className="nav-link" onClick={closeNav}>
                         {t('Layout.header.item.dropdown.posts')}
                       </a>
                     </Link>
                   </div>
-                  <div className="pl-10 pt-2">
+                  <div className="pl-10 pb-2">
                     <Link href={`/${user?.username}/posts/liked`}>
                       <a className="nav-link" onClick={closeNav}>
                         {t('Layout.header.item.dropdown.likes')}
@@ -181,7 +183,7 @@ export default function SidenavContainer({
                     </Link>
                   </div>
                   {user && user.role === 'king' && (
-                    <div className="pl-10 pt-2">
+                    <div className="pl-10 pt-1 pb-3">
                       <Link href="/admin/users">
                         <a className="nav-link" onClick={closeNav}>
                           Dashboard
@@ -189,7 +191,7 @@ export default function SidenavContainer({
                       </Link>
                     </div>
                   )}
-                  <div className="pl-10 pt-2">
+                  <div className="pl-10 pb-2">
                     <Link href="/">
                       <a onClick={signOut} className="nav-link">
                         {t('Layout.header.item.logout')}

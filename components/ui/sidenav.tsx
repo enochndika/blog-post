@@ -40,7 +40,5 @@ export const Sidenav = ({ isOpen, setIsOpen, children }: SidenavProps) => {
 };
 
 Sidenav.Item = ({ children }: Props) => (
-  <div className="flex justify-start cursor-pointer font-normal ml-8 mb-8">
-    {children}
-  </div>
+  <div className="cursor-pointer font-normal ml-8 mb-8">{children}</div>
 );

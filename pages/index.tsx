@@ -76,7 +76,7 @@ export default function Home({
                 />
               </a>
             </Link>
-            <div className="text-3xl text-gray-800 dark:text-white my-4">
+            <div className="text-2xl text-gray-800 dark:text-white my-4">
               {post.title}
             </div>
             <p className="mb-4 text-gray-600 dark:text-grayer text-small">

@@ -39,15 +39,15 @@ export default function AllPosts({
         <title>Liste de posts</title>
       </Head>
       <Container>
-        <h1 className="text-4xl text-gray-700 dark:text-white text-center my-20 font-medium">
+        <h1 className="text-3xl lg:text-4xl text-gray-700 dark:text-white text-center my-20 font-medium">
           Posts
         </h1>
         <Row className="justify-center">
           <div className="col-12 md:col-10">
             <Post
               mainColClass="col-12"
-              firstColClass="col-12 md:col-3 mb-3 md:mb-12"
-              secondColClass="col-12 md:col-8 mb-12 md:mb-0"
+              firstColClass="col-12 md:col-3 mb-3"
+              secondColClass="col-12 md:col-8 mb-16 md:mb-12"
               post={posts?.data}
             />
           </div>

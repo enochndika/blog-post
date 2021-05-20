@@ -19,8 +19,8 @@ const TrendPost = ({ post }: { post: any }) => (
         </a>
       </Link>
     </div>
-    <div className="col-12 lg:col-8 mb-5">
-      <div className="mb-2.5 text-gray-700 font-medium dark:text-white">
+    <div className="col-12 lg:col-8 mb-12 md:mb-5">
+      <div className="mb-2.5 text-2xl md:text-base text-gray-700 font-medium dark:text-white">
         {post.title}
       </div>
       <PostDetails

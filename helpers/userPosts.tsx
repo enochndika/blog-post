@@ -84,7 +84,7 @@ export default function UserPosts() {
       ) : (
         <Row className="justify-center mt-20">
           <div className="col-12 md:col-6">
-            <h3 className="text-3xl text-gray-700 font-medium my-20 dark:text-white text-center">
+            <h3 className="text-2xl lg:text-3xl text-gray-700 font-medium my-4 md:my-20 dark:text-white text-center">
               {t('Pages.username.posts.index.postNotFound')}
             </h3>
             <Image src="/lottie.gif" height={1000} width={1000} alt="lottie" />
