@@ -113,7 +113,7 @@ export default function PostSlugPage({
             />
             <Row className="justify-center mt-20">
               <div className="col-12 xl:col-7">
-                <h1 className="text-4xl text-gray-700 font-medium mb-9 dark:text-white">
+                <h1 className="text-2xl lg:text-3xl text-gray-700 font-medium mb-9 dark:text-white">
                   {clientPost.title}
                 </h1>
                 <Row className="mb-4">
