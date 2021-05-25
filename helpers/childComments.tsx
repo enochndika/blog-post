@@ -52,14 +52,12 @@ export const ChildComments = ({ comment }) => {
 
   const onSelectedComment = (id) => {
     if (!user) {
-      cogoToast.info(t('Helpers.comments.selectCommentNotAuth'), {
+      return cogoToast.info(t('Helpers.comments.selectCommentNotAuth'), {
         position: 'top-right',
       });
     }
-    if (user) {
-      setCommentId(id);
-      setReportModal(true);
-    }
+    setCommentId(id);
+    setReportModal(true);
   };
 
   const toggleReportModal = () => {
@@ -76,7 +74,7 @@ export const ChildComments = ({ comment }) => {
     isEmpty || (data && data[data.length - 1]?.length < LIMIT);
 
   return (
-    <div>
+    <>
       <Collapse>
         <div className="flex text-xs font-bold mt-4 cursor-pointer">
           <ReplyIcon className="h-2.5 pr-1 mt-0.5" />
@@ -213,6 +211,6 @@ export const ChildComments = ({ comment }) => {
           </div>
         </div>
       </Collapse>
-    </div>
+    </>
   );
 };

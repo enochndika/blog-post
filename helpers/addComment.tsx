@@ -23,7 +23,9 @@ export default function AddComment({ post, mutate }: AddCommentProps) {
         position: 'top-right',
       });
       reset();
+      return;
     }
+
     const data = { content: values.content, userId: user?.id };
     await addComment(post, data, t('Actions.error'));
     await mutate();

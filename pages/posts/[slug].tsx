@@ -18,6 +18,7 @@ import Row from '@/components/ui/row';
 import { EllipsisVIcon, FlagIcon, HeartIcon } from '@/components/ui/icons';
 import Image from '@/components/others/image';
 import PostDetails from '@/components/others/postDetails';
+import ConfettiButton from '@/components/others/confettiButton';
 import { button } from '@/components/ui/button';
 import { PostsProps } from '@/components/others/posts';
 import { ReportModalProps } from '@/helpers/reportModal';
@@ -30,6 +31,8 @@ import {
   useFetchPostRelated,
 } from '@/actions/postActions';
 import { useFetchUserProfile } from '@/actions/userActions';
+
+/* Using dynamic import to improve TTFB */
 
 const PostComments: ComponentType<any> = dynamic(
   () => import('@/helpers/comments'),
@@ -49,9 +52,11 @@ const ReportModal: ComponentType<ReportModalProps> = dynamic(
 export default function PostSlugPage({
   post,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const [reportModal, setReportModal] = useState(false);
+  const [active, setActive] = useState(false);
   const { t } = useTranslation();
   const { slug } = useRouter().query;
-  const [reportModal, setReportModal] = useState(false);
+
   const { data: clientPost } = useFetchPost(post, slug);
   const { likes, mutate: mutateLike } = useFetchPostLikes(clientPost?.id);
   const { data } = useFetchPostRelated(clientPost);
@@ -68,32 +73,27 @@ export default function PostSlugPage({
   };
 
   const onLikePost = async (postId) => {
-    if (user) {
-      await likePost(postId, user?.id);
-      await mutateLike();
-    }
     if (!user) {
-      cogoToast.info(t('Pages.post.slug.likePostNotAuth'));
+      return cogoToast.info(t('Pages.post.slug.likePostNotAuth'));
     }
+    await likePost(postId, user?.id);
+    await mutateLike();
+    setActive(true);
   };
 
   const onDislikePost = async (postId) => {
-    if (user) {
-      await unlikePost(postId, user?.id);
-      await mutateLike();
-    }
     if (!user) {
-      cogoToast.info(t('Pages.post.slug.dislikePostNotAuth'));
+      return cogoToast.info(t('Pages.post.slug.dislikePostNotAuth'));
     }
+    await unlikePost(postId, user?.id);
+    await mutateLike();
   };
 
   const checkUserOnOpenModal = () => {
-    if (user) {
-      setReportModal(true);
-    }
     if (!user) {
-      cogoToast.info(t('Pages.post.slug.reportPostNotAuth'));
+      return cogoToast.info(t('Pages.post.slug.reportPostNotAuth'));
     }
+    setReportModal(true);
   };
 
   return (
@@ -104,6 +104,7 @@ export default function PostSlugPage({
             <title>{post.title}</title>
           </Head>
           <Container>
+            <ConfettiButton active={active} setActive={setActive} />
             <ReportModal
               userId={user?.id}
               id={clientPost?.id}

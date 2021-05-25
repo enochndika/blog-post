@@ -14,10 +14,10 @@ interface NavbarBrandProps extends NavbarLinkProps {}
 
 const style = {
   navbar: `font-light relative flex items-center flex-row justify-start`,
-  brand: `inline-block text-3xl -ml-5 md:text-4xl font-normal whitespace-nowrap`,
+  brand: `inline-block text-3xl -ml-5 md:text-4xl font-normal whitespace-nowrap cursor-pointer`,
   collapse: `hidden lg:flex-grow lg:items-center lg:flex`,
   nav: `block pl-0 mb-0 ml-auto md:flex md:pl-0 md:mb-0`,
-  link: `px-6 -mb-1 font-normal block`,
+  link: `px-6 -mb-1 font-normal block cursor-pointer`,
 };
 
 const Navbar = ({ className, children }: NavbarProps) => (

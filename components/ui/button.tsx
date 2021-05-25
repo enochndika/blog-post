@@ -56,10 +56,8 @@ export const Button = forwardRef(
 
 /* The classname of const button is so long, that's why I split them into four parts*/
 const customBtnStyle = {
-  first: `py-1 mb-5 rounded px-5 border border-gray-400 border-solid transition ease-in duration-200`,
-  second: `focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 focus:ring-offset-gray-100`,
-  third: `font-medium dark:text-white mt-4 focus:outline-none focus:bg-gray-100 dark:focus:bg-transparent`,
-  fourth: `text-gray-700 leading-7 tracking-widest rounded flex dark:focus:ring-offset-gray-900`,
+  light: `py-1 mb-5 mt-4 font-medium rounded px-5 border border-gray-400 border-solid transition ease-in duration-200 text-gray-700 leading-7 tracking-widest rounded flex`,
+  dark: `dark:text-white mt-4 focus:outline-none dark:active:bg-gray-900 active:bg-gray-100`,
 };
 
-export const button = `${customBtnStyle.first} ${customBtnStyle.second} ${customBtnStyle.third} ${customBtnStyle.fourth}`;
+export const button = `${customBtnStyle.light} ${customBtnStyle.dark}`;

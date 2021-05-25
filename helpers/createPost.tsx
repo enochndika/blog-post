@@ -17,7 +17,7 @@ import { FormError } from '@/components/others/formError';
 import Option from '@/components/others/option';
 import Row from '@/components/ui/row';
 import UploadFile from '@/components/others/uploadForm';
-import { Input } from '@/components/ui/form';
+import { Input, Textarea } from '@/components/ui/form';
 import Container from '@/components/ui/container';
 
 import {
@@ -78,14 +78,15 @@ export default function CreatePost() {
                   {errors.title && <FormError message={errors.title.message} />}
                 </div>
                 <div className="col-12">
-                  <Input
+                  <Textarea
+                    rows={6}
                     name="description"
                     type="textarea"
                     label={t('Pages.post.create.form.description')}
                     ref={register()}
                   >
                     <TextHeightIcon className="h-4 text-gray-700" />
-                  </Input>
+                  </Textarea>
                   {errors.description && (
                     <FormError message={errors.description.message} />
                   )}

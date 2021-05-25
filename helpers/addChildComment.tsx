@@ -21,17 +21,20 @@ export default function AddChildComment({
   const { register, formState, handleSubmit, errors, reset } = useForm();
 
   const onSubmit = async (values) => {
-    const data = {
-      content: values.content,
-      userId: user && user.id,
-      commentId: comment,
-    };
     if (!user) {
       cogoToast.info(t('Helpers.addChildComment.replyNotAuth'), {
         position: 'top-right',
       });
       reset();
+      return;
     }
+
+    const data = {
+      content: values.content,
+      userId: user && user.id,
+      commentId: comment,
+    };
+
     await addChildComment(data, '');
     await mutate();
     await reset();

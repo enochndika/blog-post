@@ -51,12 +51,10 @@ export default function Comments({ post }) {
 
   const onSelectedComment = (id) => {
     if (!user) {
-      cogoToast.info(t('Helpers.comments.selectCommentNotAuth'));
+      return cogoToast.info(t('Helpers.comments.selectCommentNotAuth'));
     }
-    if (user) {
-      setCommentId(id);
-      setReportModal(!reportModal);
-    }
+    setCommentId(id);
+    setReportModal(!reportModal);
   };
 
   const toggleReportModal = () => {
