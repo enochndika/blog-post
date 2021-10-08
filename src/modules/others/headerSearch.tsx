@@ -12,7 +12,7 @@ type FormValues = {
 
 const style = {
   focus: `focus:outline-none focus:border-b-2 focus:border-blue-700 w-full pl-3 my-2 pb-1`,
-  default: `text-black bg-white dark:text-gray-300 dark:bg-darker  border-gray-300 dark:border-b-0 border-b block`,
+  default: `text-black bg-white dark:text-gray-300 dark:bg-darker border-gray-300 dark:border-b-1 border-b block`,
 };
 
 const HeaderSearch = ({ placeholder, close }: HeaderSearchProps) => {

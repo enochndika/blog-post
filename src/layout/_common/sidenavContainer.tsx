@@ -137,7 +137,7 @@ const SidenavContainer = () => {
               </Link>
             </Sidenav.Item>
             <Sidenav.Item>
-              <div className="flex">
+              <div className="flex mb-5">
                 {user.avatar ? (
                   <>
                     <img
@@ -145,20 +145,20 @@ const SidenavContainer = () => {
                       className="w-10 h-10 rounded-full"
                       alt={user?.username}
                     />
-                    <div className="ml-2">{user.username}</div>
+                    <Link href={`/${user.username}/profile`}>
+                      <a className="ml-4">@{user.username}</a>
+                    </Link>
                   </>
                 ) : (
-                  <UserCircleIcon className="h-6" />
+                  <>
+                    <UserCircleIcon className="h-6" />
+                    <Link href={`/${user.username}/profile`}>
+                      <a className="ml-4">@{user.username}</a>
+                    </Link>
+                  </>
                 )}
               </div>
               <div>
-                <div className="mb-5 pl-10">
-                  <Link href={`/${user.username}/profile`}>
-                    <a className="nav-link" onClick={closeNav}>
-                      Profile
-                    </a>
-                  </Link>
-                </div>
                 <div className="mb-5 pl-10">
                   <Link href={`/${user?.username}/posts`}>
                     <a className="nav-link" onClick={closeNav}>
@@ -174,7 +174,7 @@ const SidenavContainer = () => {
                   </Link>
                 </div>
                 {user && user.role === 'admin' && (
-                  <div className="pb-3 pl-10 pt-1">
+                  <div className="mb-5 pl-10 pt-1">
                     <Link href="/admin/users">
                       <a className="nav-link" onClick={closeNav}>
                         Dashboard
