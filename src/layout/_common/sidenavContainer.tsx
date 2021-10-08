@@ -184,12 +184,8 @@ const SidenavContainer = () => {
                     </Link>
                   </div>
                 )}
-                <div className="pb-2 pl-10">
-                  <Link href="/">
-                    <a onClick={signOut} className="nav-link">
-                      {t('Layout.header.item.logout')}
-                    </a>
-                  </Link>
+                <div className="pb-2 pl-10" onClick={signOut}>
+                  {t('Layout.header.item.logout')}
                 </div>
               </div>
             </Sidenav.Item>

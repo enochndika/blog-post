@@ -120,10 +120,8 @@ const Header = () => {
                       <Dropdown.Item href={`/${user?.username}/posts/liked`}>
                         {t('Layout.header.item.dropdown.likes')}
                       </Dropdown.Item>
-                      <Dropdown.Item href="/">
-                        <span onClick={onLogOut}>
-                          {t('Layout.header.item.logout')}
-                        </span>
+                      <Dropdown.Item onClick={onLogOut}>
+                        {t('Layout.header.item.logout')}
                       </Dropdown.Item>
                       {user && user.role === 'admin' && (
                         <Dropdown.Item href="/admin/users">
