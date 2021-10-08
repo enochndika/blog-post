@@ -6,7 +6,7 @@ import PowerOffIcon from '@/components/icons/others/powerOff';
 const TopNavigation = () => {
   const { toggle } = useToggle();
   return (
-    <header className="relative z-10 items-center w-full h-20 bg-dashboard">
+    <header className="relative z-10 items-center w-full h-16 bg-dashboard">
       <div className="relative flex flex-col justify-center mx-auto px-3 h-full">
         <div className="lg:max-w-68 relative flex items-center pl-1 w-full sm:ml-0 sm:pr-2">
           <div className="relative left-0 flex w-3/4">

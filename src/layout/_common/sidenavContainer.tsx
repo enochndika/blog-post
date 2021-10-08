@@ -69,14 +69,14 @@ const SidenavContainer = () => {
                 <div>Profile</div>
               </div>
               <div>
-                <div className="pl-10 pt-2">
+                <div className="mb-5 mt-5 pl-10">
                   <Link href="/signin">
                     <a className="block pb-3" onClick={closeNav}>
                       {t('Layout.header.item.login')}
                     </a>
                   </Link>
                   <Link href="/register">
-                    <a className="block" onClick={closeNav}>
+                    <a className="block mt-3" onClick={closeNav}>
                       {t('Layout.header.item.register')}
                     </a>
                   </Link>
@@ -90,12 +90,12 @@ const SidenavContainer = () => {
             <LanguageIcon size={22} className="pr-1" space={2} />
             <span>{t('Layout.header.item.language.index')}</span>
           </div>
-          <div className="pl-8">
+          <div className="pl-8 pt-3">
             <Link href={router.asPath} locale="fr">
               <a
                 className={
                   locale === 'fr'
-                    ? 'text-blue-700 font-bold block py-3'
+                    ? 'text-blue-700 font-bold block mb-3 py-3'
                     : 'block text-black dark:text-white block py-3'
                 }
               >
@@ -118,7 +118,7 @@ const SidenavContainer = () => {
           </div>
         </Sidenav.Item>
         <Sidenav.Item>
-          <div className="-mt-2">
+          <div className="mt-2">
             <ThemeChanger
               darkTheme={t('Layout.header.item.theme.dark')}
               lightTheme={t('Layout.header.item.theme.light')}
@@ -137,7 +137,7 @@ const SidenavContainer = () => {
               </Link>
             </Sidenav.Item>
             <Sidenav.Item>
-              <div className="flex mt-2">
+              <div className="flex">
                 {user.avatar ? (
                   <>
                     <img
@@ -152,28 +152,28 @@ const SidenavContainer = () => {
                 )}
               </div>
               <div>
-                <div className="pb-3 pl-10 pt-2">
+                <div className="mb-5 pl-10">
                   <Link href={`/${user.username}/profile`}>
                     <a className="nav-link" onClick={closeNav}>
                       Profile
                     </a>
                   </Link>
                 </div>
-                <div className="pb-3 pl-10">
+                <div className="mb-5 pl-10">
                   <Link href={`/${user?.username}/posts`}>
                     <a className="nav-link" onClick={closeNav}>
                       {t('Layout.header.item.dropdown.posts')}
                     </a>
                   </Link>
                 </div>
-                <div className="pb-2 pl-10">
+                <div className="mb-5 pl-10">
                   <Link href={`/${user?.username}/posts/liked`}>
                     <a className="nav-link" onClick={closeNav}>
                       {t('Layout.header.item.dropdown.likes')}
                     </a>
                   </Link>
                 </div>
-                {user && user.role === 'king' && (
+                {user && user.role === 'admin' && (
                   <div className="pb-3 pl-10 pt-1">
                     <Link href="/admin/users">
                       <a className="nav-link" onClick={closeNav}>

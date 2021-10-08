@@ -5,7 +5,7 @@ import { useToggle } from '../../_common/provider';
 
 const style = {
   mobilePosition: {
-    left: 'left-0',
+    right: 'right-0',
   },
   close: `hidden`,
   container: `pb-32 lg:pb-12`,
@@ -18,7 +18,7 @@ const SideNavigation = () => {
   return (
     <aside
       ref={ref}
-      className={`${style.default} ${style.mobilePosition.left} 
+      className={`${style.default} ${style.mobilePosition.right} 
         ${open ? style.open : style.close} ${css.scrollbar}`}
     >
       <div className={style.container}>
