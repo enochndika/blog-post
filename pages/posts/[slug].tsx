@@ -1,4 +1,3 @@
-import { ComponentType, Fragment, useState } from 'react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import cogoToast from 'cogo-toast';
@@ -6,22 +5,8 @@ import { useRouter } from 'next/router';
 import { convertFromRaw } from 'draft-js';
 import { useTranslation } from 'react-i18next';
 import { stateToHTML } from 'draft-js-export-html';
+import { ComponentType, Fragment, useState } from 'react';
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
-
-import Dropdown from '@/components/ui/dropdown';
-import Separator from '@/components/others/separator';
-import DefaultLayout from '@/components/layout/default';
-import api from '@/utils/axios';
-import { checkLikeExist, getTotalLikes } from '@/utils/formats';
-import Container from '@/components/ui/container';
-import Row from '@/components/ui/row';
-import { EllipsisVIcon, FlagIcon, HeartIcon } from '@/components/ui/icons';
-import Image from '@/components/others/image';
-import PostDetails from '@/components/others/postDetails';
-import ConfettiButton from '@/components/others/confettiButton';
-import { button } from '@/components/ui/button';
-import { PostsProps } from '@/components/others/posts';
-import { ReportModalProps } from '@/helpers/reportModal';
 
 import {
   likePost,
@@ -30,12 +15,29 @@ import {
   useFetchPostLikes,
   useFetchPostRelated,
 } from '@/actions/postActions';
+
+import api from '@/config/axios';
+import Row from '@/components/ui/row';
+import DefaultLayout from '@/layout/default';
+import Image from '@/components/others/image';
+import { button } from '@/components/ui/button';
+import Dropdown from '@/components/ui/dropdown';
+import { checkLikeExist } from '@/utils/formats';
+import Container from '@/components/ui/container';
+import FlagIcon from '@/components/icons/others/flag';
+import Separator from '@/components/others/separator';
+import HeartIcon from '@/components/icons/human/heart';
+import { PostsProps } from '@/components/others/posts';
+import PostDetails from '@/components/others/postDetails';
 import { useFetchUserProfile } from '@/actions/userActions';
+import EllipsisVIcon from '@/components/icons/others/ellipsisV';
+import ConfettiButton from '@/components/others/confettiButton';
+import { ReportModalProps } from '@/modules/others/reportModal';
 
 /* Using dynamic import to improve TTFB */
 
 const PostComments: ComponentType<any> = dynamic(
-  () => import('@/helpers/comments'),
+  () => import('@/modules/comments/comments'),
   { ssr: false },
 );
 
@@ -45,7 +47,7 @@ const Post: ComponentType<PostsProps> = dynamic(
 );
 
 const ReportModal: ComponentType<ReportModalProps> = dynamic(
-  () => import('@/helpers/reportModal'),
+  () => import('@/modules/others/reportModal'),
   { ssr: false },
 );
 
@@ -58,7 +60,11 @@ export default function PostSlugPage({
   const { slug } = useRouter().query;
 
   const { data: clientPost } = useFetchPost(post, slug);
-  const { likes, mutate: mutateLike } = useFetchPostLikes(clientPost?.id);
+  const {
+    likes,
+    mutate: mutateLike,
+    totalLikes,
+  } = useFetchPostLikes(clientPost?.id);
   const { data } = useFetchPostRelated(clientPost);
   const { user } = useFetchUserProfile();
 
@@ -114,7 +120,7 @@ export default function PostSlugPage({
             />
             <Row className="justify-center mt-20">
               <div className="col-12 xl:col-7">
-                <h1 className="text-2xl lg:text-3xl text-gray-700 font-medium mb-9 dark:text-white">
+                <h1 className="mb-9 text-gray-700 dark:text-white text-2xl font-medium lg:text-3xl">
                   {clientPost.title}
                 </h1>
                 <Row className="mb-4">
@@ -125,27 +131,25 @@ export default function PostSlugPage({
                       alt={clientPost.title}
                     />
                   </div>
-                  <div className="col-10 md:col-6 ">
+                  <div className="col-10 md:col-6">
                     <PostDetails
                       date={clientPost.createdAt}
                       readTime={clientPost.read_time}
-                      author={clientPost.user?.fullName}
-                      category={clientPost.posts_category?.name}
+                      author={clientPost.author?.fullName}
+                      category={clientPost.category?.name}
                     />
                   </div>
                   <div className="col-12">
-                    <div className="mt-3 mb-4">
-                      <div className="float-left ">
+                    <div className="mb-4 mt-3">
+                      <div className="float-left">
                         {checkLikeExist(likes && likes, user && user) ? (
                           <button
                             onClick={() => onDislikePost(clientPost?.id)}
                             className={button}
                             style={{ fontSize: 11 }}
                           >
-                            <HeartIcon className="h-4 mr-1 mt-1.5 text-info" />
-                            {likes && likes.length > 0
-                              ? getTotalLikes(likes)
-                              : 0}
+                            <HeartIcon className="mr-1 mt-1.5 h-4 text-info" />
+                            {totalLikes}
                             <span className="pl-1">like(s)</span>
                           </button>
                         ) : (
@@ -154,10 +158,8 @@ export default function PostSlugPage({
                             className={button}
                             style={{ fontSize: 11 }}
                           >
-                            <HeartIcon className="h-4 mr-1 mt-1.5 text-info" />
-                            {likes && likes.length > 0
-                              ? getTotalLikes(likes)
-                              : 0}
+                            <HeartIcon className="mr-1 mt-1.5 h-4 text-info" />
+                            {totalLikes}
                             <span className="pl-1">like(s)</span>
                           </button>
                         )}
@@ -165,12 +167,12 @@ export default function PostSlugPage({
                       <div className="float-right">
                         <Dropdown>
                           <Dropdown.Toggle className="flex">
-                            <EllipsisVIcon className="h-5 mr-1 mt-5" />
+                            <EllipsisVIcon className="mr-1 mt-5 h-5" />
                           </Dropdown.Toggle>
                           <Dropdown.Menu left={true}>
                             <Dropdown.Item onClick={checkUserOnOpenModal}>
-                              <span className="flex justify-center -px-8">
-                                <FlagIcon className="h-4 mr-2" />
+                              <span className="-px-8 flex justify-center">
+                                <FlagIcon className="mr-2 h-4" />
                                 {t('Pages.post.slug.report')}
                               </span>
                             </Dropdown.Item>
@@ -180,7 +182,7 @@ export default function PostSlugPage({
                     </div>
                   </div>
                 </Row>
-                {post.local && (
+                {post.fakeContent && (
                   <Image
                     width={1500}
                     height={900}
@@ -189,9 +191,9 @@ export default function PostSlugPage({
                     alt={clientPost.title}
                   />
                 )}
-                {post.local && (
+                {post.fakeContent && (
                   <div className="mt-7 whitespace-pre-wrap">
-                    {clientPost.local}
+                    {clientPost.fakeContent}
                   </div>
                 )}
                 <div
@@ -204,7 +206,7 @@ export default function PostSlugPage({
             </Row>
             <Row>
               <div className="col-12">
-                <div className="text-3xl font-bold mt-20 mb-8 dark:text-white text-gray-700">
+                <div className="mb-8 mt-20 text-gray-700 dark:text-white text-3xl font-bold">
                   {t('Pages.post.slug.morePost')}
                 </div>
                 <Separator desktop={true} />

@@ -1,14 +1,14 @@
-import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
-import { ComponentType, useMemo } from 'react';
 import useSWR from 'swr';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import { ComponentType, useMemo } from 'react';
 
-import AdminLayout from '@/components/layout/Admin';
 import { fetcher } from '@/actions/fetcher';
-import DataTable from '@/components/skeleton/table';
 import Container from '@/components/ui/container';
+import DataTable from '@/components/skeleton/table';
 import { formatNumericDate } from '@/utils/formats';
 import { TableProps } from '@/components/others/table';
+import DashboardLayout from '@/layout/dashboard/layout';
 
 const Table: ComponentType<TableProps> = dynamic(
   () => import('@/components/others/table'),
@@ -39,7 +39,7 @@ export default function AdminLikePage() {
         ],
       },
     ],
-    [],
+    [locale],
   );
 
   if (!likes) {
@@ -52,4 +52,4 @@ export default function AdminLikePage() {
   );
 }
 
-AdminLikePage.Layout = AdminLayout;
+AdminLikePage.Layout = DashboardLayout;

@@ -1,16 +1,16 @@
-import { ComponentType, useMemo } from 'react';
+import useSWR from 'swr';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import useSWR from 'swr';
+import { ComponentType, useMemo } from 'react';
 
-import AdminLayout from '@/components/layout/Admin';
 import { fetcher } from '@/actions/fetcher';
-import DataTable from '@/components/skeleton/table';
 import Container from '@/components/ui/container';
-import TableProperty from '@/components/others/tableProperty';
+import DataTable from '@/components/skeleton/table';
 import { formatNumericDate } from '@/utils/formats';
-import { useDeleteChildCommentByAdmin } from '@/actions/childCommentActions';
 import { TableProps } from '@/components/others/table';
+import DashboardLayout from '@/layout/dashboard/layout';
+import TableProperty from '@/components/others/tableProperty';
+import { deleteChildCommentByAdmin } from '@/actions/childCommentActions';
 
 const Table: ComponentType<TableProps> = dynamic(
   () => import('@/components/others/table'),
@@ -56,7 +56,7 @@ export default function AdminChildCommentsPage() {
                 <TableProperty.Delete
                   onClick={async () => {
                     if (window.confirm('Are you sur?')) {
-                      await useDeleteChildCommentByAdmin(row.id);
+                      await deleteChildCommentByAdmin(row.id);
                       await mutate();
                     }
                   }}
@@ -67,7 +67,7 @@ export default function AdminChildCommentsPage() {
         ],
       },
     ],
-    [],
+    [locale, mutate],
   );
 
   if (!childComments) {
@@ -80,4 +80,4 @@ export default function AdminChildCommentsPage() {
   );
 }
 
-AdminChildCommentsPage.Layout = AdminLayout;
+AdminChildCommentsPage.Layout = DashboardLayout;

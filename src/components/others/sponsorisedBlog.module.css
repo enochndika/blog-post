@@ -1,0 +1,15 @@
+.col {
+  height: auto;
+}
+
+@media (min-width: 768px) {
+  .col {
+    height: 350px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .col {
+    height: 300px;
+  }
+}

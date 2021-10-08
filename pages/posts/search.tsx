@@ -1,11 +1,13 @@
-import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 import { useTranslation } from 'react-i18next';
 
-import DefaultLayout from '@/components/layout/default';
+import DefaultLayout from '@/layout/default';
 import Container from '@/components/ui/container';
 
-const Search = dynamic(() => import('@/helpers/search'), { ssr: false });
+const Search = dynamic(() => import('@/modules/others/search'), {
+  ssr: false,
+});
 
 export default function SearchPage() {
   const { t } = useTranslation();

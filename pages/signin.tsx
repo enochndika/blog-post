@@ -1,16 +1,19 @@
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
-import { useTranslation } from 'react-i18next';
 import { ComponentType } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import DefaultLayout from '@/components/layout/default';
-import { AuthProps } from '@/helpers/auth';
+import DefaultLayout from '@/layout/default';
+import { AuthProps } from '@/modules/others/auth';
 import RedditSkeleton from '@/components/skeleton/reddit';
 
-const Auth: ComponentType<AuthProps> = dynamic(() => import('@/helpers/auth'), {
-  ssr: false,
-  loading: () => <RedditSkeleton />,
-});
+const Auth: ComponentType<AuthProps> = dynamic(
+  () => import('@/modules/others/auth'),
+  {
+    ssr: false,
+    loading: () => <RedditSkeleton />,
+  },
+);
 
 export default function Signin() {
   const { t } = useTranslation();

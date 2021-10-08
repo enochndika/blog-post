@@ -28,7 +28,7 @@ class MyDocument extends Document {
 
           <link rel="manifest" href="/site.webmanifest" />
         </Head>
-        <body className="dark:bg-darker dark:text-white">
+        <body className="dark:text-white dark:bg-darker">
           <Main />
           <NextScript />
         </body>

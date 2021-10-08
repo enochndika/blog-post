@@ -1,19 +1,18 @@
-import { ComponentType, useMemo, useState } from 'react';
 import useSWR from 'swr';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { ComponentType, useMemo, useState } from 'react';
 
-import AdminLayout from '@/components/layout/Admin';
 import { fetcher } from '@/actions/fetcher';
-import DataTable from '@/components/skeleton/table';
 import Container from '@/components/ui/container';
-
-import TableProperty from '@/components/others/tableProperty';
+import DataTable from '@/components/skeleton/table';
 import { formatNumericDate } from '@/utils/formats';
-import { deletePostCategory } from '@/actions/postActions';
-import { PlusIcon } from '@/components/ui/icons';
-import { AddCategoryProps } from '@/helpers/addCategory';
+import PlusIcon from '@/components/icons/others/plus';
 import { TableProps } from '@/components/others/table';
+import DashboardLayout from '@/layout/dashboard/layout';
+import { deletePostCategory } from '@/actions/postActions';
+import TableProperty from '@/components/others/tableProperty';
+import { AddCategoryProps } from '@/modules/others/addCategory';
 
 const Table: ComponentType<TableProps> = dynamic(
   () => import('@/components/others/table'),
@@ -21,7 +20,7 @@ const Table: ComponentType<TableProps> = dynamic(
 );
 
 const AddCategory: ComponentType<AddCategoryProps> = dynamic(
-  () => import('../../helpers/addCategory'),
+  () => import('@/modules/others/addCategory'),
   { ssr: false },
 );
 
@@ -72,7 +71,7 @@ export default function AdminPostCategoriesPage() {
         ],
       },
     ],
-    [],
+    [locale, mutate],
   );
 
   if (!categories) {
@@ -84,7 +83,7 @@ export default function AdminPostCategoriesPage() {
       <Table columns={columns} data={categories}>
         <div
           onClick={() => setOpenModal(true)}
-          className="mx-auto flex mt-1.5 cursor-pointer"
+          className="flex mt-1.5 mx-auto cursor-pointer"
         >
           <PlusIcon size={20} className="mr-2" /> Add
         </div>
@@ -93,4 +92,4 @@ export default function AdminPostCategoriesPage() {
   );
 }
 
-AdminPostCategoriesPage.Layout = AdminLayout;
+AdminPostCategoriesPage.Layout = DashboardLayout;

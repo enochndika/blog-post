@@ -1,17 +1,10 @@
 module.exports = {
+  mode: 'jit',
   darkMode: 'class',
   corePlugins: {
     container: false,
   },
-  future: {
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
-  },
-  purge: [
-    './components/**/*.{js,ts,jsx,tsx}',
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './helpers/**/*.{js,ts,jsx,tsx}',
-  ],
+  purge: ['./src/**/*.{js,ts,jsx,tsx}', './pages/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       outline: {
@@ -27,19 +20,17 @@ module.exports = {
         info: '#33b5e5',
       },
       backgroundColor: {
-        darker: '#111111',
         btn: '#212121',
+        darker: '#111111',
+        dashboard: '#25074d',
       },
       padding: {
         container: '5%',
       },
-    },
-  },
-  variants: {
-    extend: {
-      backgroundColor: ['active'],
-      borderWidth: ['focus'],
-      fontSize: ['focus'],
+      width: {
+        99: 'calc(100% - 17rem);', //get the width of the main content from lg:viewport by dividing
+        // (the total width by the width of the side navigation)
+      },
     },
   },
   plugins: [

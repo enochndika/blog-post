@@ -1,22 +1,24 @@
+import Head from 'next/head';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Button } from '@/components/ui/button';
 import Row from '@/components/ui/row';
+import UserLayout from '@/layout/user';
 import { Input } from '@/components/ui/form';
-import { updateUser, useFetchUserProfile } from '@/actions/userActions';
-import ProfileShow from '@/components/skeleton/profile';
+import { Button } from '@/components/ui/button';
 import Container from '@/components/ui/container';
-import { UserCircleIcon, UserMdIcon } from '@/components/ui/icons';
-import UserLayout from '@/components/layout/user';
+import ProfileShow from '@/components/skeleton/profile';
+import UserMdIcon from '@/components/icons/human/userMdIcon';
+import UserCircleIcon from '@/components/icons/human/userCircle';
+import { updateUser, useFetchUserProfile } from '@/actions/userActions';
 
 export default function Profile() {
-  const { user, mutate } = useFetchUserProfile();
   const router = useRouter();
   const { t } = useTranslation();
+  const { user, mutate } = useFetchUserProfile();
+
   const { register, formState, handleSubmit, setValue } = useForm({
     defaultValues: {
       fullName: user?.fullName,
@@ -27,7 +29,7 @@ export default function Profile() {
     if (user) {
       setValue('fullName', user.fullName);
     }
-  }, [user]);
+  }, [user, setValue]);
 
   const onSubmit = async (values) => {
     await updateUser(
@@ -39,6 +41,7 @@ export default function Profile() {
     await mutate();
     await router.push('/');
   };
+
   if (!user) {
     return <ProfileShow />;
   }
@@ -51,9 +54,9 @@ export default function Profile() {
       <Container>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="my-28 text-gray-700 dark:text-white h-full"
+          className="my-28 h-full text-gray-700 dark:text-white"
         >
-          <div className="mb-4 text-2xl text-center">
+          <div className="mb-4 text-center text-2xl">
             {t('Pages.username.profile.index.title')}
           </div>
           <Row className="justify-center">

@@ -11,6 +11,11 @@ module.exports = {
   },
   images: {
     deviceSizes: [320, 420, 768, 1024, 1200],
-    domains: ['res.cloudinary.com', 'cdn.pixabay.com', 'media.istockphoto.com'],
+    domains: [
+      'res.cloudinary.com',
+      'cdn.pixabay.com',
+      'media.istockphoto.com',
+      'images.unsplash.com',
+    ],
   },
 };

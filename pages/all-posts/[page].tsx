@@ -1,14 +1,14 @@
-import { useRouter } from 'next/router';
 import Head from 'next/head';
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 import dynamic from 'next/dynamic';
 import { ComponentType } from 'react';
+import { useRouter } from 'next/router';
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 
-import api from '@/utils/axios';
+import api from '@/config/axios';
 import Row from '@/components/ui/row';
-import DefaultLayout from '@/components/layout/default';
-import Container from '@/components/ui/container';
 import Post from '@/components/others/posts';
+import DefaultLayout from '@/layout/default';
+import Container from '@/components/ui/container';
 import { PaginationProps } from '@/components/others/pagination';
 
 const Pagination: ComponentType<PaginationProps> = dynamic(
@@ -39,7 +39,7 @@ export default function AllPosts({
         <title>Liste de posts</title>
       </Head>
       <Container>
-        <h1 className="text-3xl lg:text-4xl text-gray-700 dark:text-white text-center my-20 font-medium">
+        <h1 className="my-20 text-center text-gray-700 dark:text-white text-3xl font-medium lg:text-4xl">
           Posts
         </h1>
         <Row className="justify-center">

@@ -1,16 +1,16 @@
-import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
-import { ComponentType, useMemo } from 'react';
 import useSWR from 'swr';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import { ComponentType, useMemo } from 'react';
 
-import AdminLayout from '@/components/layout/Admin';
-import { formatNumericDate } from '@/utils/formats';
 import { fetcher } from '@/actions/fetcher';
-import DataTable from '@/components/skeleton/table';
-import { useDeleteReportChildComment } from '@/actions/childCommentActions';
 import Container from '@/components/ui/container';
-import TableProperty from '@/components/others/tableProperty';
+import DataTable from '@/components/skeleton/table';
+import { formatNumericDate } from '@/utils/formats';
 import { TableProps } from '@/components/others/table';
+import DashboardLayout from '@/layout/dashboard/layout';
+import TableProperty from '@/components/others/tableProperty';
+import { deleteReportChildComment } from '@/actions/childCommentActions';
 
 const Table: ComponentType<TableProps> = dynamic(
   () => import('@/components/others/table'),
@@ -56,7 +56,7 @@ export default function AdminReportChildCommentsPage() {
                 <TableProperty.Delete
                   onClick={async () => {
                     if (window.confirm('Are you sur?')) {
-                      await useDeleteReportChildComment(row.id, mutate);
+                      await deleteReportChildComment(row.id, mutate);
                     }
                   }}
                 />
@@ -66,7 +66,7 @@ export default function AdminReportChildCommentsPage() {
         ],
       },
     ],
-    [],
+    [locale, mutate],
   );
 
   if (!comments) {
@@ -79,4 +79,4 @@ export default function AdminReportChildCommentsPage() {
   );
 }
 
-AdminReportChildCommentsPage.Layout = AdminLayout;
+AdminReportChildCommentsPage.Layout = DashboardLayout;

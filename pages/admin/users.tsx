@@ -1,16 +1,16 @@
-import { ComponentType, useMemo } from 'react';
-import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
 import useSWR from 'swr';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import { ComponentType, useMemo } from 'react';
 
-import AdminLayout from '@/components/layout/Admin';
 import { fetcher } from '@/actions/fetcher';
-import DataTable from '@/components/skeleton/table';
 import Container from '@/components/ui/container';
-import TableProperty from '@/components/others/tableProperty';
-import { deleteUserByAdmin } from '@/actions/userActions';
-import { formatFullDate, formatNumericDate } from '@/utils/formats';
+import DataTable from '@/components/skeleton/table';
 import { TableProps } from '@/components/others/table';
+import DashboardLayout from '@/layout/dashboard/layout';
+import { deleteUserByAdmin } from '@/actions/userActions';
+import TableProperty from '@/components/others/tableProperty';
+import { formatFullDate, formatNumericDate } from '@/utils/formats';
 
 const Table: ComponentType<TableProps> = dynamic(
   () => import('@/components/others/table'),
@@ -39,7 +39,7 @@ export default function AdminUsersPage() {
           },
           {
             Header: 'Last Logged Date',
-            accessor: (row) => formatNumericDate(row.last_logged, locale),
+            accessor: (row) => formatNumericDate(row.last_logged, 'fr'),
           },
           {
             Header: 'Creation Date',
@@ -63,7 +63,7 @@ export default function AdminUsersPage() {
         ],
       },
     ],
-    [],
+    [locale, mutate],
   );
 
   if (!users) {
@@ -76,4 +76,4 @@ export default function AdminUsersPage() {
   );
 }
 
-AdminUsersPage.Layout = AdminLayout;
+AdminUsersPage.Layout = DashboardLayout;

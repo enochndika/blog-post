@@ -1,16 +1,16 @@
+import useSWR from 'swr';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import useSWR from 'swr';
 import { ComponentType, useMemo } from 'react';
 
-import AdminLayout from '@/components/layout/Admin';
 import { fetcher } from '@/actions/fetcher';
-import DataTable from '@/components/skeleton/table';
 import Container from '@/components/ui/container';
-import TableProperty from '@/components/others/tableProperty';
+import DataTable from '@/components/skeleton/table';
 import { formatNumericDate } from '@/utils/formats';
-import { deleteCommentByAdmin } from '@/actions/commentActions';
 import { TableProps } from '@/components/others/table';
+import DashboardLayout from '@/layout/dashboard/layout';
+import TableProperty from '@/components/others/tableProperty';
+import { deleteCommentByAdmin } from '@/actions/commentActions';
 
 const Table: ComponentType<TableProps> = dynamic(
   () => import('@/components/others/table'),
@@ -64,7 +64,7 @@ export default function AdminCommentsPage() {
         ],
       },
     ],
-    [],
+    [locale, mutate],
   );
 
   if (!comments) {
@@ -77,4 +77,4 @@ export default function AdminCommentsPage() {
   );
 }
 
-AdminCommentsPage.Layout = AdminLayout;
+AdminCommentsPage.Layout = DashboardLayout;

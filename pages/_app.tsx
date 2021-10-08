@@ -1,15 +1,15 @@
 import '@/styles/global.css';
-import { ThemeProvider } from 'next-themes';
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { I18nextProvider } from 'react-i18next';
 import Head from 'next/head';
-import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
 import { AppProps } from 'next/app';
+import { useRouter } from 'next/router';
+import { ThemeProvider } from 'next-themes';
+import { useTranslation } from 'react-i18next';
+import { I18nextProvider } from 'react-i18next';
 
 import '../i18n';
-import { getCookieFromBrowser } from '@/utils/cookies';
-import api from '@/utils/axios';
+import { getCookieFromBrowser } from '@/config/cookies';
+import api from '@/config/axios';
 import Props from '@/utils/defaultProps';
 
 const Noop = ({ children }: Props) => children;
@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     i18n.changeLanguage(locale);
-  }, [locale]);
+  }, [locale, i18n]);
 
   useEffect(() => {
     if (token) {

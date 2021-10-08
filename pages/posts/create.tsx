@@ -1,14 +1,14 @@
-import dynamic from 'next/dynamic';
-import { useEffect } from 'react';
-import cogoToast from 'cogo-toast';
 import Head from 'next/head';
+import { useEffect } from 'react';
+import dynamic from 'next/dynamic';
+import cogoToast from 'cogo-toast';
 import { useTranslation } from 'react-i18next';
 
-import { getCookieFromBrowser } from '@/utils/cookies';
-import UserLayout from '@/components/layout/user';
+import UserLayout from '@/layout/user';
+import { getCookieFromBrowser } from '@/config/cookies';
 import RedditSkeleton from '@/components/skeleton/reddit';
 
-const CreatePost = dynamic(() => import('@/helpers/createPost'), {
+const CreatePost = dynamic(() => import('@/modules/post/createPost'), {
   ssr: false,
   loading: () => <RedditSkeleton />,
 });
@@ -21,7 +21,7 @@ export default function CreatePostPage() {
     if (!token) {
       cogoToast.info(t('Pages.post.create.redirectNotAUth'));
     }
-  }, [token]);
+  }, [token, t]);
 
   return (
     <>

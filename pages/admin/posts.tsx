@@ -1,17 +1,17 @@
 import useSWR from 'swr';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { ComponentType, useMemo } from 'react';
-import dynamic from 'next/dynamic';
 
-import AdminLayout from '@/components/layout/Admin';
 import { fetcher } from '@/actions/fetcher';
-import DataTable from '@/components/skeleton/table';
-import Container from '@/components/ui/container';
-import TableProperty from '@/components/others/tableProperty';
-import { formatNumericDate } from '@/utils/formats';
 import Image from '@/components/others/image';
-import { deletePostByAdmin } from '@/actions/postActions';
+import Container from '@/components/ui/container';
+import DataTable from '@/components/skeleton/table';
+import { formatNumericDate } from '@/utils/formats';
 import { TableProps } from '@/components/others/table';
+import DashboardLayout from '@/layout/dashboard/layout';
+import { deletePostByAdmin } from '@/actions/postActions';
+import TableProperty from '@/components/others/tableProperty';
 
 const Table: ComponentType<TableProps> = dynamic(
   () => import('@/components/others/table'),
@@ -44,7 +44,7 @@ export default function AdminPostPage() {
             accessor: (row) => (
               <Image
                 src={row.image[0]}
-                className="h-12 w-12 rounded-full"
+                className="w-12 h-12 rounded-full"
                 alt="Post"
                 height={100}
                 width={100}
@@ -73,7 +73,7 @@ export default function AdminPostPage() {
         ],
       },
     ],
-    [],
+    [locale, mutate],
   );
 
   if (!posts) {
@@ -86,4 +86,4 @@ export default function AdminPostPage() {
   );
 }
 
-AdminPostPage.Layout = AdminLayout;
+AdminPostPage.Layout = DashboardLayout;
