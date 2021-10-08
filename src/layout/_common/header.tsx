@@ -3,19 +3,26 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 
 import Navbar from '@/components/ui/navbar';
+import { logout } from '@/actions/authActions';
 import Dropdown from '@/components/ui/dropdown';
 import Language from '@/components/others/language';
 import PlusIcon from '@/components/icons/others/plus';
 import HeaderSearch from '@/modules/others/headerSearch';
 import ThemeChanger from '@/modules/others/themeProvider';
+import { useFetchUserProfile } from '@/actions/userActions';
 import UserCircleIcon from '@/components/icons/human/userCircle';
 import AngleDownIcon from '@/components/icons/direction/angleDown';
-import { logout, useFetchUserProfile } from '@/actions/userActions';
 
 const Header = () => {
   const router = useRouter();
   const { t } = useTranslation();
-  const { user } = useFetchUserProfile();
+  const { user, mutate } = useFetchUserProfile();
+
+  const onLogOut = async () => {
+    await logout();
+    await mutate();
+    await router.push('/');
+  };
 
   const redirectNotAuth = () => {
     router.push('/signin');
@@ -114,7 +121,7 @@ const Header = () => {
                         {t('Layout.header.item.dropdown.likes')}
                       </Dropdown.Item>
                       <Dropdown.Item href="/">
-                        <span onClick={logout}>
+                        <span onClick={onLogOut}>
                           {t('Layout.header.item.logout')}
                         </span>
                       </Dropdown.Item>

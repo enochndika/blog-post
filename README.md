@@ -24,6 +24,12 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
+## Backend (API)
+You can find the backend used for this app [Here](https://github.com/enochndika/fastify-blog-api).
+
+It's a Fastify Server with TypeScript and Prisma ORM
+
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

@@ -1,14 +1,9 @@
 import useSWR from 'swr';
-import Router from 'next/router';
 
-import {
-  setCookie,
-  removeCookie,
-  getCookieFromBrowser,
-} from '@/config/cookies';
 import api from '@/config/axios';
 import { fetcher } from './fetcher';
 import { decodeToken } from '@/utils/formats';
+import { getCookieFromBrowser } from '@/config/cookies';
 import { toastError, toastSuccess } from '@/utils/toast';
 
 const useFetchUserProfile = () => {
@@ -26,44 +21,6 @@ const useFetchUserProfile = () => {
     isError: error,
     mutate,
   };
-};
-
-const signin = async (
-  data: {
-    username: string;
-    password: string;
-  },
-  error: string,
-) => {
-  try {
-    const { data: token } = await api.post(`/auth`, data);
-    await setCookie('blog-jwt-token', token);
-    api.defaults.headers.Authorization = `Bearer ${token}`;
-    return token;
-  } catch (e) {
-    toastError(error);
-  }
-};
-
-const signup = async (
-  values: {
-    username: string;
-    password: string;
-    fullName: string;
-  },
-  errorMessage?: string,
-) => {
-  try {
-    const { data } = await api.post('/users', values);
-    return data;
-  } catch (e) {
-    toastError(errorMessage);
-  }
-};
-
-const logout = async () => {
-  await removeCookie('blog-jwt-token');
-  await Router.push('/');
 };
 
 const updateUser = async (
@@ -89,11 +46,4 @@ const deleteUserByAdmin = async (id: number) => {
   }
 };
 
-export {
-  deleteUserByAdmin,
-  useFetchUserProfile,
-  updateUser,
-  logout,
-  signin,
-  signup,
-};
+export { deleteUserByAdmin, useFetchUserProfile, updateUser };

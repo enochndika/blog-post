@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import Container from '@/components/ui/container';
 import MaleIcon from '@/components/icons/human/male';
 import LockIcon from '@/components/icons/others/lock';
-import { signin, signup } from '@/actions/userActions';
+import { signin, signup } from '@/actions/authActions';
 import { getCookieFromBrowser } from '@/config/cookies';
 import UserMdIcon from '@/components/icons/human/userMdIcon';
 import CircleNotchIcon from '@/components/icons/others/circleNotch';

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 
 import Toggler from '@/components/ui/toggler';
+import { logout } from '@/actions/authActions';
 import { Sidenav } from '@/components/ui/sidenav';
 import { useToggle } from '@/layout/_common/provider';
 import HomeIcon from '@/components/icons/others/home';
@@ -11,9 +12,9 @@ import PlusIcon from '@/components/icons/others/plus';
 import HeaderSearch from '@/modules/others/headerSearch';
 import ThemeChanger from '@/modules/others/themeProvider';
 import { FranceFlag, UsaFlag } from '@/components/ui/flag';
+import { useFetchUserProfile } from '@/actions/userActions';
 import LanguageIcon from '@/components/icons/others/language';
 import UserCircleIcon from '@/components/icons/human/userCircle';
-import { logout, useFetchUserProfile } from '@/actions/userActions';
 
 const SidenavContainer = () => {
   const { t } = useTranslation();
@@ -27,7 +28,7 @@ const SidenavContainer = () => {
   };
 
   const pushNotAuth = () => {
-    closeNav();
+    toggle();
     setTimeout(
       () => cogoToast.info(t('Layout.header.item.post.notLoggedMessage')),
       100,
@@ -36,7 +37,8 @@ const SidenavContainer = () => {
 
   const signOut = async () => {
     await logout();
-    await closeNav();
+    await toggle();
+    await router.push('/');
   };
 
   return (
